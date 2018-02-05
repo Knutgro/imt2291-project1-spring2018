@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <style>
+        * {
+            font-family: Arial;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .error {
+            background-color: rgba(255, 0, 0, 0.1);
+            border-radius: 8px;
+            width: auto;
+            max-width: 80%;
+        }
+
+        .error h1 {
+            background-color: rgba(255, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1,
+        .error .content,
+        .error .stack {
+            padding: 10px;
+            margin: 0px;
+        }
+
+        .error .stack {
+            font-family: "Courier New", monospace;
+            white-space: pre-wrap;
+            font-size: 12px;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="error">
+            <h1>Error</h1>
+
+            <div class="content">
+                {{ msg }}
+            </div>
+            {% if exc %}
+            <div class="stack">{{ exc }}</div>
+            {% endif %}
+        </div>
+    </body>
+</html>
