@@ -10,7 +10,7 @@ $config = array(
      *
      * Example value: array("127.0.0.1")
      */
-    "debug" => true,
+    "debug" => array("127.0.0.1"),
 
     /**
      * Database configuration
