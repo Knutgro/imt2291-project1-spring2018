@@ -13,7 +13,10 @@ Apache HTTPD should be configured to serve files from that directory.
 
 
 # Prosjektdeltakere #
-Her skriver dere inn navnene til de som er deltakere på gruppen
+Simen Lybekk\
+Philip Nyblom\
+Ingve Skåra\
+Knut Grøstad
 
 # Oppgaveteksten # 
 Oppgaveteksten ligger i [Wikien til det originale repositoriet](https://bitbucket.org/okolloen/imt2291-project1-spring2018/wiki/).
