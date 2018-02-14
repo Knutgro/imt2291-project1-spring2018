@@ -28,10 +28,10 @@ function error_message($msg, $exc) {
         }
     }
 
-    echo $twig->render("error.html", array(
+    echo $twig->render("error.html", [
         "msg" => $msg,
         "exc" => $debug_exc,
-    ));
+    ]);
     die();
 
 }
