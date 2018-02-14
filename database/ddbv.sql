@@ -2,102 +2,91 @@
 CREATED BY KNUT GRØSTAD
 PART2 OF ASSIGNMENT4 */
 
-DROP SCHEMA 
+DROP SCHEMA IF EXISTS www_proj1;
+CREATE SCHEMA www_proj1 COLLATE = utf8_general_ci;
 
-IF EXISTS VID;
-	CREATE SCHEMA VID COLLATE = utf8_danish_ci;
-
-USE VID;
+USE www_proj1;
 
 
 create table user  (
-  email			varchar(250) NOT NULL,
-  password		varchar(250)  NOT NULL, 
-  type    	    enum('admin','student','lecturer')  NOT NULL,
-  PRIMARY KEY(email)
+    id              int NOT NULL auto_increment,
+
+    email           tinytext NOT NULL,
+    password        tinytext  NOT NULL, 
+    type            enum('admin','student','lecturer')  NOT NULL,
+
+    PRIMARY KEY(id)
 );
 
 create table video (
-  id      			int NOT NULL auto_increment,
-  title     		varchar(20) NOT NULL,
-  description		varchar(250),
-  videoPath			varchar(250),
-  thumbnailPath		varchar(250),
-  subject			varchar(20) NOT NULL,
-  theme				varchar(20) NOT NULL,
-  ownerEmail		varchar(250) NOT NULL,
-  primary key(id),
-  foreign key(ownerEmail)
-	references user(email)
+    id              int NOT NULL auto_increment,
+    title           text NOT NULL,
+    description     tinytext NOT NULL,
+    videoPath       text NOT NULL,
+    thumbnailPath   text NOT NULL,
+    subject         tinytext NOT NULL,
+    topic           tinytext NOT NULL,
+    user            int NOT NULL,
+
+    primary key(id),
+    foreign key(user) references user(id)
 );
 
 create table rating (
-  videoId	    	int NOT NULL,
-  ownerEmail		varchar(250) NOT NULL,
-  rating        	ENUM('0','1','2','3','4','5'),
-  primary key(videoId, ownerEmail),
-  foreign key(ownerEmail)
-	references user(email),
-  foreign key(videoId)
-	references video(id)
+    video           int NOT NULL,
+    user            int NOT NULL,
+    rating          ENUM('0','1','2','3','4','5') NOT NULL,
+
+    primary key(video, user),
+    foreign key(user)  references user(id),
+    foreign key(video) references video(id)
 );
-  
-  
+
+
 create table comment (
-  id      			int NOT NULL auto_increment,
-  ownerEmail		varchar(250) NOT NULL,
-  videoId			int NOT NULL,
-  commment	    	varchar(250),
-  primary key(id, ownerEmail, videoId),
-  foreign key(ownerEmail)
-	references user(email),
-  foreign key(videoId)
-	references video(id)
+    id              int NOT NULL auto_increment,
+    user            int NOT NULL,
+    video           int NOT NULL,
+    commment        text NOT NULL,
+
+    primary key(id),
+    foreign key(user)  references user(id),
+    foreign key(video) references video(id)
 );
 
 create table playlist (
-  id      			int NOT NULL auto_increment,
-  ownerEmail		varchar(250) NOT NULL,
-  title    			varchar(20) NOT NULL,  
-  description		varchar(250),
-  primary key(id,ownerEmail),
-  foreign key(ownerEmail)
-	references user(email)
+    id              int NOT NULL auto_increment,
+    user            int NOT NULL,
+    title           tinytext NOT NULL,
+    description     text NOT NULL,
+
+    primary key(id),
+    foreign key(user) references user(id)
 );
-  
+
 create table playlistvideos  (
-  playlistId      	int NOT NULL,
-  ownerEmail		varchar(250) NOT NULL,
-  videoId			int NOT NULL,
-  primary key(playlistId,ownerEmail,videoId),
-  foreign key (playlistId)
-	references playlist(id),
-  foreign key (ownerEmail)
-	references user(email),
-  foreign key (videoId)
-	references video(id)
+    playlist        int NOT NULL,
+    video           int NOT NULL,
+
+    primary key (playlist, video),
+    foreign key (playlist) references playlist(id),
+    foreign key (video)    references video(id)
 );
 
 
 create table subscription  (
-  ownerEmail  	    varchar(250) NOT NULL, 
-  playlistId    	int NOT NULL,
-  primary key(ownerEmail,playlistId),
-  foreign key(ownerEmail)
-	references user(email),
-  foreign key(playlistId)
-	references playlist(id)
+    user            int NOT NULL, 
+    playlist        int NOT NULL,
+
+    primary key(user, playlist),
+    foreign key(user)     references user(id),
+    foreign key(playlist) references playlist(id)
 );
 
 
 /* INSERTING VALUES TO DATABASE */  
-INSERT INTO user
+INSERT INTO user (email, password, type)
 VALUES  (
-	'admin','admin','admin'
+    -- Password: "do not use in production"
+    'video-admin@ntnu.no', '$2y$10$7kPPWtRzSWCoAeog/WfQru0rRYQXelbklzg4kvBrcHJIeR5VQfRRe', 'admin'
 );
-
-
-
-
-
-  
