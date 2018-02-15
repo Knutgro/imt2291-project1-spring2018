@@ -1,4 +1,8 @@
 <?php
+declare(strict_types=1);
+
+session_start();
+
 // Define project globals
 define('PROJECT_ROOT', dirname(__FILE__));
 
