@@ -11,9 +11,10 @@ USE www_proj1;
 create table user  (
     id              int NOT NULL auto_increment,
 
-    email           tinytext NOT NULL,
-    password        tinytext  NOT NULL, 
+    email           varchar(255) NOT NULL UNIQUE,  -- MySQL er sær på UCer mot TEXT
+    password        tinytext NOT NULL, 
     type            enum('admin','student','lecturer')  NOT NULL,
+    verified        boolean DEFAULT FALSE,
 
     PRIMARY KEY(id)
 );
@@ -85,8 +86,8 @@ create table subscription  (
 
 
 /* INSERTING VALUES TO DATABASE */  
-INSERT INTO user (email, password, type)
+INSERT INTO user (email, password, type, verified)
 VALUES  (
     -- Password: "do not use in production"
-    'video-admin@ntnu.no', '$2y$10$7kPPWtRzSWCoAeog/WfQru0rRYQXelbklzg4kvBrcHJIeR5VQfRRe', 'admin'
+    'video-admin@ntnu.no', '$2y$10$7kPPWtRzSWCoAeog/WfQru0rRYQXelbklzg4kvBrcHJIeR5VQfRRe', 'admin', 1
 );
