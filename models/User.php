@@ -6,10 +6,16 @@
  * This class is responsible for managing user information as well as 
  */
 class User {
+    const STUDENT = 1;
+    const LECTURER = 2;
+    const ADMIN = 3;
+
     private $id;
     private $email;
     private $password;
     private $type;
+
+    private $verified;
 
 
     /**
@@ -100,9 +106,8 @@ class User {
         $dbh = DB::getPDO();
 
         // Fetch data from DB given ID
-        $stmt = $dbh->prepare("SELECT * FROM user WHERE id = :id");
-        $stmt->bindParam(":id", $id);
-        $stmt->execute();
+        $stmt = $dbh->prepare("SELECT * FROM user WHERE id = ?");
+        $stmt->execute([$id]);
 
         // Return the data as an initialized user object, given the result set
         // isn't empty
@@ -126,9 +131,8 @@ class User {
         $dbh = DB::getPDO();
 
         // Fetch data from DB given ID
-        $stmt = $dbh->prepare("SELECT * FROM user WHERE email = :email");
-        $stmt->bindParam(":email", $email);
-        $stmt->execute();
+        $stmt = $dbh->prepare("SELECT * FROM user WHERE email = ?");
+        $stmt->execute([$email]);
 
         // Return the data as an initialized user object, given the result set
         // isn't empty
@@ -168,4 +172,126 @@ class User {
         return false;
     }
 
+    static function validate($email, $password, $password2, $type)
+    {
+        $errors = [];
+
+        // Verify that email has at least an at sign and a dot after the at
+        $tmp = explode("@", $email);
+        $count_at = count($tmp);
+        $has_dot = strpos($tmp[1], ".") !== false;
+
+        if ($count_at != 2) {
+            $errors[] = "Invalid email";
+        } else if (!$has_dot) {
+            $errors[] = "Invalid email1";
+        }
+
+        // Check that the password is "strong"
+        if (strlen($password) < 8) {
+            $errors[] = "Password should be stronger";
+
+        } else if (!preg_match("/[0-9]+/", $password)) {
+            $errors[] = "Password should be stronger";
+
+        } else if (!preg_match("/[a-zA-Z]+/", $password)) {
+            $errors[] = "Password should be stronger";
+        }
+
+        // Check that the passwords match
+        if ($password !== $password2) {
+            $errors[] = "Passwords do not match";
+        }
+
+        // Check that the user type is valid
+        if (!in_array($type, ["student", "lecturer"])) {
+            $errors[] = "Invalid user type";
+        }
+
+        // Verify that there doesn't exist a user with that email already
+        if (!is_null(User::getByEmail($email))) {
+            $errors[] = "Email already exists";
+        }
+
+        return $errors;
+    }
+
+    /**
+     * Insert the current user into the database.
+     *
+     * This will only take care of fields that are expected on registration!
+     * @returnnmixed False if insertion failed, otherwise the ID of the inserted row.
+     */
+    public function insert() {
+        $sql = "INSERT INTO user (email, password, type) "
+            . "VALUES (:email, :password, :type)";
+
+        $dbh = DB::getPDO();
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindParam("email", $this->email);
+        $stmt->bindParam("password", $this->password);
+        $stmt->bindParam("type", $this->type);
+
+        if ($stmt->execute() === false) {
+            return false;
+        }
+
+        return $dbh->lastInsertId();
+    }
+
+    /**
+     * Check whether an administrator has verified this user's status
+     *
+     * @return bool True if verified, otherwise false
+     */
+    public function isVerified()
+    {
+        return (bool) $this->verified;
+    }
+
+    /**
+     * Set whether an administrator has verified this user's status
+     *
+     * @param bool $flag True if verified, otherwise false
+     */
+    public function setVerified($flag)
+    {
+        $this->verified = $flag;
+    }
+
+    /**
+     * Get the user's access level.
+     *
+     * This value should be compared to the consts User::ADMIN, User::LECTURER
+     * and User::STUDENT.
+     *
+     * @return int The user's access level.
+     */
+    public function getAccessLevel()
+    {
+        if ($this->verified !== true) {
+            return User::STUDENT;
+        }
+
+        switch ($this->type) {
+            case "admin":
+                return User::ADMIN;
+
+            case "lecturer":
+                return User::LECTURER;
+        }
+
+        return User::STUDENT;
+    }
+
+    /**
+     * Check whether the user has access to features required by the given level.
+     *
+     * @param int $accessLevel An access level (User::STUDENT, User::ADMIN etc.)
+     * @return bool True if the user has access, otherwise false
+     */
+    public function is($accessLevel) {
+        return $this->getAccessLevel() >= $accessLevel;
+    }
 }

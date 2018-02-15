@@ -1,0 +1,36 @@
+<style>
+    input:invalid {
+        background: rgba(255, 0, 0, 0.3);
+    }
+</style>
+
+{% if errors %}
+<ul>
+{% for error in errors %}
+    <li>{{ error }}</li>
+{% endfor %}
+{% endif %}
+</ul>
+<form method="post">
+    <div>
+        Email:<br />
+        <input type="email" name="email" pattern="[^@]+@[^@]+\.[^@]{2,}" />
+    </div>
+
+    <div>
+        Password:<br />
+        <input type="password" name="password" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z]).*$" />
+    </div>
+
+    <div>
+        Repeat Password:<br />
+        <input type="password" name="password2" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z]).*$" />
+    </div>
+
+    <div>
+        I am a lecturer:<br />
+        <input type="checkbox" name="is_lecturer" />
+    </div>
+
+    <input type="submit" />
+</form>

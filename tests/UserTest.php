@@ -76,4 +76,77 @@ final class UserTest extends TestCase
         $this->assertTrue(User::doLogin("video-admin@ntnu.no",
             "do not use in production"));
     }
+
+    public function testValidate()
+    {
+        $errors = User::validate("asdf", "aaa", "bbb", "admin");
+
+        $this->assertContains("Invalid email", $errors);
+        $this->assertContains("Password should be stronger", $errors);
+        $this->assertContains("Passwords do not match", $errors);
+        $this->assertContains("Invalid user type", $errors);
+
+        $errors = User::validate("video-admin@ntnu.no", "a23456789", "a23456789",
+            "lecturer");
+        $this->assertContains("Email already exists", $errors);
+
+        $errors = User::validate("test@email.no", "a23456789", "a23456789", "student");
+        $this->assertEmpty($errors);
+    }
+
+    public function testVerifiedFlag()
+    {
+        $user = new User();
+
+        $this->assertFalse($user->isVerified());
+
+        $user->setVerified(true);
+        $this->assertTrue($user->isVerified());
+
+        $user->setVerified(false);
+        $this->assertFalse($user->isVerified());
+    }
+
+    public function testAccessLevel()
+    {
+        // Verify student levels
+        $user = new User(null, null, "student");
+
+        $user->setVerified(false);
+        $this->assertEquals($user->getAccessLevel(), User::STUDENT);
+        $user->setVerified(true);
+        $this->assertEquals($user->getAccessLevel(), User::STUDENT);
+
+        // Verify student levels
+        $user = new User(null, null, "lecturer");
+
+        $user->setVerified(false);
+        $this->assertEquals($user->getAccessLevel(), User::STUDENT);
+        $user->setVerified(true);
+        $this->assertEquals($user->getAccessLevel(), User::LECTURER);
+
+        // Verify student levels
+        $user = new User(null, null, "admin");
+
+        $user->setVerified(false);
+        $this->assertEquals($user->getAccessLevel(), User::STUDENT);
+        $user->setVerified(true);
+        $this->assertEquals($user->getAccessLevel(), User::ADMIN);
+    }
+
+    public function testHasAccess()
+    {
+        $user = new User(null, null, "admin");
+
+        $this->assertTrue($user->is(User::STUDENT));
+        $this->assertFalse($user->is(User::LECTURER));
+        $this->assertFalse($user->is(User::ADMIN));
+
+        $user->setVerified(true);
+
+        $this->assertTrue($user->is(User::STUDENT));
+        $this->assertTrue($user->is(User::LECTURER));
+        $this->assertTrue($user->is(User::ADMIN));
+    }
+
 }
