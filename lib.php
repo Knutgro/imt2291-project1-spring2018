@@ -21,6 +21,10 @@ $twig = new Twig_Environment($loader);
 function error_message($msg, $exc) {
     global $twig, $config;
 
+    // Remove any previous output that might have been buffered. Ensures that
+    // the error page doesn't contain anything other than an error message.
+    ob_clean();
+
     if ($config["debug"] === true) {
         // Debugging is forced on, so let's just save the exception
         $debug_exc = $exc;
