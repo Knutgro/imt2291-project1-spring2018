@@ -43,9 +43,10 @@ div.brand {
     margin: 0 var(--header-margin);
 }
 
-div.brand h1 {
+div.brand h1 a {
     color: white;
     font-size: 20px;
+    text-decoration: none;
 }
 
 /**
@@ -68,7 +69,7 @@ input, .btn {
 
     padding: 0 10px;
     height: 30px;
-    display: block;
+    display: inline-block;
 }
 
 div.search .text {
@@ -110,6 +111,29 @@ div.nav a {
     justify-content: center;
 }
 
+
+/**
+ * Content
+ */
+
+div.content {
+    padding: 15px;
+}
+
+/**
+ * Forms
+ */
+div.control {
+    margin-bottom: 10px;
+}
+
+div.control label {
+    width: 150px;
+    display: inline-block;
+
+    padding-right: 5px;
+    text-align: right;
+}
 
 
 /**

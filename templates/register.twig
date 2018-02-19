@@ -11,26 +11,29 @@
     {% endif %}
     </ul>
     <form method="post">
-        <div>
-            Email:<br />
-            <input type="email" name="email" />
+        <div class="control">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" />
         </div>
 
-        <div>
-            Password:<br />
-            <input type="password" name="password" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z]).*$" />
+        <div class="control">
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z]).*$" />
         </div>
 
-        <div>
-            Repeat Password:<br />
-            <input type="password" name="password2" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z]).*$" />
+        <div class="control">
+            <label for="password2">Repeat Password</label>
+            <input id="password2" type="password" name="password2" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z]).*$" />
         </div>
 
-        <div>
-            I am a lecturer:<br />
+        <div class="control">
+            <label for="password2">I am a lecturer</label>
             <input type="checkbox" name="is_lecturer" />
         </div>
 
-        <input type="submit" />
+        <div class="control">
+            <label></label>
+            <input type="submit" />
+        </div>
     </form>
 {% endblock %}
