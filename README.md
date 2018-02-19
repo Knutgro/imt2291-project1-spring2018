@@ -15,7 +15,6 @@ Apache HTTPD should be configured to serve files from that directory.
 # Prosjektdeltakere #
 Simen Lybekk\
 Philip Nyblom\
-Ingve Skåra\
 Knut Grøstad
 
 # Oppgaveteksten # 
