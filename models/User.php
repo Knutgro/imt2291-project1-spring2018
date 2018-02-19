@@ -87,6 +87,11 @@ class User {
      */
     static function loggedIn()
     {
+        // 
+        if (!array_key_exists("user_id", $_SESSION)) {
+            return null;
+        }
+
         // Bail early if there's no user ID tied to this session.
         if ( (int) $_SESSION["user_id"] <= 0 ) {
             return null;
@@ -179,7 +184,9 @@ class User {
         // Verify that email has at least an at sign and a dot after the at
         $tmp = explode("@", $email);
         $count_at = count($tmp);
-        $has_dot = strpos($tmp[1], ".") !== false;
+        if ($count_at > 1) {
+            $has_dot = strpos($tmp[1], ".") !== false;
+        }
 
         if ($count_at != 2) {
             $errors[] = "Invalid email";
