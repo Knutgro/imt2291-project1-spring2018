@@ -1,0 +1,15 @@
+{% extends "base.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    {% if user %}
+    <p>
+        Hello {{ user.email }}!
+    </p>
+    {% else %}
+    <p>
+        You are not logged in
+    </p>
+    {% endif %}
+{% endblock %}

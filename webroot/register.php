@@ -39,4 +39,4 @@ if (!empty($_POST)) {
 }
 
 
-echo $twig->render('register.html', ["errors" => $errors]);
+echo $twig->render('register.twig', ["errors" => $errors]);

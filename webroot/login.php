@@ -25,4 +25,4 @@ if (!empty($_POST)) {
 }
 
 
-echo $twig->render('login.html', ["error" => $error]);
+echo $twig->render('login.twig', ["error" => $error]);

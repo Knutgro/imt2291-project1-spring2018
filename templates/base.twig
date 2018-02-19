@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/assets/style.css" />
+        <title>{% block title %}{% endblock %} - uToob</title>
+    </head>
+    <body>
+        <header>
+            <div class="brand">
+                <h1>uToob</h1>
+            </div>
+
+            <div class="search">
+                <form action="search.php">
+                    <input type="text" class="text" placeholder="Search..." />
+                    <input type="submit" class="send" />
+                </form>
+            </div>
+
+            <div class="nav">
+                <nav>
+                    <ul>
+                        {% if user %}
+                            <li><a class="btn" href="logout.php">Log out</a></li>
+                        {% else %}
+                            <li><a class="btn" href="login.php">Log in</a></li>
+                            <li><a class="btn" href="register.php">Register</a></li>
+                        {% endif %}
+                    </ul>
+                <nav>
+            </div>
+        </header>
+
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        <div class="content">
+    </body>
+</html>

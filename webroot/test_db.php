@@ -8,6 +8,7 @@ $stmt = $dbh->query("SELECT * FROM user", PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE
 echo "<h2>Manual query</h2>";
 foreach($stmt as $row) {
     var_dump($row);
+    echo "<br /><br />";
 }
 
 echo "<h2>User::getById()</h2>";

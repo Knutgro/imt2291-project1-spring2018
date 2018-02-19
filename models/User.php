@@ -227,7 +227,7 @@ class User {
      * Insert the current user into the database.
      *
      * This will only take care of fields that are expected on registration!
-     * @returnnmixed False if insertion failed, otherwise the ID of the inserted row.
+     * @return mixed False if insertion failed, otherwise the ID of the inserted row.
      */
     public function insert() {
         $sql = "INSERT INTO user (email, password, type) "

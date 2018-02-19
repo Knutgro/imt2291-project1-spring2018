@@ -1,0 +1,153 @@
+:root {
+    --color-base: rgb(244, 41, 41);
+    --input-base: rgb(171, 171, 171);
+
+    --header-margin: 50px;
+}
+
+* {
+    font-family: Helvetica, Arial;
+}
+
+body {
+    margin: 0px;
+}
+
+/**
+ * Header and navigation
+ */
+header {
+    background-color: var(--color-base);
+    height: 40px;
+    display: block;
+}
+
+header > div {
+    position: relative;
+    display: inline-block;
+    width: max-content;
+    height: 100%;
+}
+
+header > div > * {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    margin: 0px;
+}
+
+/**
+ * Site title
+ */
+div.brand {
+    margin: 0 var(--header-margin);
+}
+
+div.brand h1 {
+    color: white;
+    font-size: 20px;
+}
+
+/**
+ * Video search
+ */
+div.search {
+    top: -3px;
+}
+
+input, .btn {
+    border-color: var(--input-base);
+    border-width: 1px;
+    border-radius: 4px;
+
+    background-color: white;
+    color: black;
+
+    font-size: 12px;
+    text-decoration: none;
+
+    padding: 0 10px;
+    height: 30px;
+    display: block;
+}
+
+div.search .text {
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+
+    width: 200px;
+}
+
+div.search .send {
+    border-left: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+/**
+ * User links
+ */
+div.nav {
+    float: right;
+    margin-right: var(--header-margin);
+}
+
+div.nav ul {
+    list-style-type: none;
+    list-style-position: outside;
+}
+
+div.nav li {
+    float: left;
+    margin-right: 0px;
+}
+
+div.nav a {
+    margin: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+/**
+ * Error page and the like
+ */
+dialog {
+    border: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-radius: 8px;
+    width: auto;
+    max-width: 80%;
+}
+
+.error h1 {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0px;
+}
+
+.error .content,
+.error .stack {
+    padding: 10px;
+    margin: 0px;
+}
+
+.error .stack {
+    font-family: "Courier New", monospace;
+    white-space: pre-wrap;
+    font-size: 12px;
+}
+
+input:invalid {
+    background: rgba(255, 0, 0, 0.3);
+}

@@ -36,7 +36,7 @@ function error_message($msg, $exc) {
         }
     }
 
-    echo $twig->render("error.html", [
+    echo $twig->render("error.twig", [
         "msg" => $msg,
         "exc" => $debug_exc,
     ]);
