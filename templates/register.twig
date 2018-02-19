@@ -3,6 +3,8 @@
 {% block title %}Register{% endblock %}
 
 {% block content %}
+    <h2>Register</h2>
+
     {% if errors %}
     <ul>
     {% for error in errors %}
@@ -10,6 +12,7 @@
     {% endfor %}
     {% endif %}
     </ul>
+
     <form method="post">
         <div class="control">
             <label for="email">Email</label>
@@ -27,8 +30,8 @@
         </div>
 
         <div class="control">
-            <label for="password2">I am a lecturer</label>
-            <input type="checkbox" name="is_lecturer" />
+            <label for="is_lecturer">I am a lecturer</label>
+            <input type="checkbox" id="is_lecturer" name="is_lecturer" />
         </div>
 
         <div class="control">
