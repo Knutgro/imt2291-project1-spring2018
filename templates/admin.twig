@@ -1,0 +1,45 @@
+{% extends "base.twig" %}
+
+{% block title %}User Administration{% endblock %}
+
+{% block content %}
+    <h2>User Administration</h2>
+
+    {% if msg %}
+    {{ msg }}
+    {% endif %}
+    {% if error %}
+    {{ error }}
+    {% endif %}
+
+    <h3>Users pending verification</h3>
+    <div class="centered-content">
+        <table>
+            <thead>
+                <tr>
+                    <th>E-mail</th>
+                    <th width="10%">Role</th>
+                    <th width="130px"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if users|length < 1 %}
+                <tr>
+                    <td colspan="3">No users are currently pending verification</td>
+                </tr>
+            {% else %}
+            {% for unverifiedUser in users %}
+                <tr>
+                    <td>{{ unverifiedUser.email }}</td>
+                    <td>{{ unverifiedUser.type }}</td>
+                    <td>
+                        <a class="btn btn-ok" href="/admin.php?action=verify&id={{ unverifiedUser.id }}">Accept</a>
+                        <a class="btn btn-err" href="/admin.php?action=reject&id={{ unverifiedUser.id }}">Reject</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -88,10 +88,10 @@ create table subscription  (
 
 /* INSERTING VALUES TO DATABASE */  
 INSERT INTO user (email, password, type, verified)
-VALUES  (
+VALUES
     -- Password: "do not use in production"
-    'video-admin@ntnu.no', '$2y$10$7kPPWtRzSWCoAeog/WfQru0rRYQXelbklzg4kvBrcHJIeR5VQfRRe', 'admin', 1
-);
+('video-admin@ntnu.no', '$2y$10$7kPPWtRzSWCoAeog/WfQru0rRYQXelbklzg4kvBrcHJIeR5VQfRRe', 'admin', 1),
+('lecturer@ntnu.no', '$2y$10$7kPPWtRzSWCoAeog/WfQru0rRYQXelbklzg4kvBrcHJIeR5VQfRRe', 'lecturer', 0);
 
 INSERT INTO video (id, title, description, videoPath, thumbnailPath, subject, topic, user)
     VALUES (

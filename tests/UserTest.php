@@ -32,6 +32,24 @@ final class UserTest extends TestCase
         $this->assertEquals($user->getEmail(), "my@email.no");
     }
 
+    public function testType()
+    {
+        $user = new User(null, null, "student");
+        $this->assertEquals($user->getType(), "student");
+
+        $user->setType("wrong");
+        $this->assertEquals($user->getType(), "student");
+
+        $user->setType("admin");
+        $this->assertEquals($user->getType(), "admin");
+
+        $user->setType("lecturer");
+        $this->assertEquals($user->getType(), "lecturer");
+
+        $user->setType("student");
+        $this->assertEquals($user->getType(), "student");
+    }
+
     public function testGetLoggedInUser()
     {
         unset($_SESSION["user_id"]);
@@ -139,14 +157,24 @@ final class UserTest extends TestCase
         $user = new User(null, null, "admin");
 
         $this->assertTrue($user->is(User::STUDENT));
+        $this->assertTrue($user->isStudent());
+
         $this->assertFalse($user->is(User::LECTURER));
+        $this->assertFalse($user->isLecturer());
+
         $this->assertFalse($user->is(User::ADMIN));
+        $this->assertFalse($user->isAdmin());
 
         $user->setVerified(true);
 
         $this->assertTrue($user->is(User::STUDENT));
+        $this->assertTrue($user->isStudent());
+
         $this->assertTrue($user->is(User::LECTURER));
+        $this->assertTrue($user->isLecturer());
+
         $this->assertTrue($user->is(User::ADMIN));
+        $this->assertTrue($user->isLecturer());
     }
 
 }

@@ -50,14 +50,46 @@ div.brand h1 a {
 }
 
 /**
+ * Tables
+ */
+div.centered-content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    border-spacing: 0;
+}
+
+table {
+    width: 90%;
+}
+
+td {
+    margin: 0px;
+    padding: 5px;
+
+    border-top-color: var(--input-base);
+    border-top-width: 1px;
+    border-top-style: solid;
+}
+
+/**
  * Video search
  */
 div.search {
     top: -3px;
 }
 
+.pull-right {
+    float: right;
+    display: inline;
+}
+
 input, .btn {
     border-color: var(--input-base);
+    border-style: solid;
     border-width: 1px;
     border-radius: 4px;
 
@@ -69,7 +101,23 @@ input, .btn {
 
     padding: 0 10px;
     height: 30px;
-    display: inline-block;
+
+    /* Text centering for buttons etc. */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-ok {
+    background-color: #d0ffc2;
+    border-color: #00c516;
+    color: #00880f;
+}
+
+.btn-err {
+    background-color: #ffc2c2;
+    border-color: #c50000;
+    color: #880000;
 }
 
 input[type="checkbox"] {

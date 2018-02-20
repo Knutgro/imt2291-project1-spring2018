@@ -20,6 +20,9 @@
                 <nav>
                     <ul>
                         {% if user %}
+                            {% if user.isAdmin %}
+                            <li><a class="btn" href="admin.php">Admin</a></li>
+                            {% endif %}
                             <li><a class="btn" href="logout.php">Log out</a></li>
                         {% else %}
                             <li><a class="btn" href="login.php">Log in</a></li>

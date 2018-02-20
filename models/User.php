@@ -82,6 +82,16 @@ class User {
     }
 
     /**
+     * Get the user's type
+     *
+     * @return string The user's type
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Return the logged in user based on session dataheaders.
      *
      */
@@ -148,6 +158,31 @@ class User {
             return $result;
         }
 
+    }
+
+    /**
+     * Get a list of users that are pending verification as admins or lecturers.
+     *
+     * @param int $id Email of the user that should be loaded
+     */
+    static function getPendingVerification()
+    {
+        // Get the DB handle
+        $dbh = DB::getPDO();
+
+        // Fetch data from DB given ID
+        $stmt = $dbh->prepare("SELECT * FROM user WHERE type != 'student'"
+                            . "AND verified = false;");
+        $stmt->execute();
+        $stmt->setFetchMode(DB::FETCH_OBJECT, "User");
+
+        $users = [];
+
+        foreach ($stmt as $user) {
+            $users[] = $user;
+        }
+
+        return $users;
     }
 
 
@@ -248,6 +283,26 @@ class User {
     }
 
     /**
+     * Update the current user into the database.
+     *
+     * This will only take care of fields that are changeable through the interface!
+     * @return bool True if the update was successful, false otherwise.
+     */
+    public function update() {
+        $sql = "UPDATE user SET type = :type, verified = :verified "
+             . "WHERE id = :id;";
+
+        $dbh = DB::getPDO();
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindParam("id", $this->id);
+        $stmt->bindParam("verified", $this->verified);
+        $stmt->bindParam("type", $this->type);
+
+        return $stmt->execute() !== false;
+    }
+
+    /**
      * Check whether an administrator has verified this user's status
      *
      * @return bool True if verified, otherwise false
@@ -268,6 +323,18 @@ class User {
     }
 
     /**
+     * Set the user's type
+     *
+     * @param string $type One of "student", "admin", "lecturer"
+     */
+    public function setType($type)
+    {
+        if (in_array($type, ["student", "admin", "lecturer"])) {
+            $this->type = $type;
+        }
+    }
+
+    /**
      * Get the user's access level.
      *
      * This value should be compared to the consts User::ADMIN, User::LECTURER
@@ -277,7 +344,7 @@ class User {
      */
     public function getAccessLevel()
     {
-        if ($this->verified !== true) {
+        if ($this->verified != true) {
             return User::STUDENT;
         }
 
@@ -300,5 +367,32 @@ class User {
      */
     public function is($accessLevel) {
         return $this->getAccessLevel() >= $accessLevel;
+    }
+
+    /**
+     * Check whether the user has access privileges matching a student.
+     *
+     * @return bool True if the user has student access, otherwise false.
+     */
+    public function isStudent() {
+        return $this->is(User::STUDENT);
+    }
+
+    /**
+     * Check whether the user has access privileges matching a lecturer.
+     *
+     * @return bool True if the user has lecturer access, otherwise false.
+     */
+    public function isLecturer() {
+        return $this->is(User::LECTURER);
+    }
+
+    /**
+     * Check whether the user has access privileges matching an admin.
+     *
+     * @return bool True if the user has admin access, otherwise false.
+     */
+    public function isAdmin() {
+        return $this->is(User::ADMIN);
     }
 }
