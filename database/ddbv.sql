@@ -92,3 +92,8 @@ VALUES  (
     -- Password: "do not use in production"
     'video-admin@ntnu.no', '$2y$10$7kPPWtRzSWCoAeog/WfQru0rRYQXelbklzg4kvBrcHJIeR5VQfRRe', 'admin', 1
 );
+
+INSERT INTO video (id, title, description, videoPath, thumbnailPath, subject, topic, user)
+    VALUES (
+        1, 'testtest', 'test test','/video','/video','IT','IMT2019',1
+    )
