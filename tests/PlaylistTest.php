@@ -7,10 +7,9 @@ use PHPUnit\Framework\TestCase;
 
 final class PlaylistTest extends TestCase {
 
-    public function testGetPlaylistOwner()
-    {
-        $user = new playlist("my@email.no");
-        $this->assertEquals($user->getUser(), "my@email.no");
+    public function testGetPlaylistOwner() {
+        $user = new playlist(1);
+        $this->assertEquals($user->getUser(), 1);
     }
 
     public function testGetPlaylistByUser() {
@@ -29,7 +28,24 @@ final class PlaylistTest extends TestCase {
 
         $this->assertInstanceOf(Playlist::class, $playlist);
         $this->assertEquals($playlist->getId(), 1);
-
-
     }
+
+    public function testGetVideoByPlaylistId() {
+        $videos = Playlist::getVideosByPlaylistId(1);
+
+        $this->assertInternalType('array',$videos);
+        $this->assertEquals(1,count($videos));
+    }
+
+    public function testSearchPlaylistByKeyword(){
+        $playlist = Playlist::searchPlaylistsByKeyword( "subject");
+
+        $this->assertInternalType('array',$playlist);
+        $this->assertEquals(1,count($playlist));
+        $first = $playlist[0];
+        $this->assertInstanceOf(Playlist::class, $first);
+        $this->assertEquals($first->getUser(), 1);
+    }
+
+    public function test
 }

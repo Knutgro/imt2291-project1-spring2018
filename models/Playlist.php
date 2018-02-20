@@ -51,13 +51,8 @@ class Playlist
     }
 
 
-    public function getVideos()
-    {
-        return $this->videos;
-    }
 
-
-    public function getVideosByPlaylistId($id)
+    static public function getVideosByPlaylistId($id)
     {
         $dbh = DB::getPDO();
         $stmt = $dbh->prepare("SELECT * FROM playlist WHERE id = $id");
@@ -112,8 +107,8 @@ class Playlist
 
     public function insertPlaylist()
     {
-        $sql = "INSERT INTO playlist (user, title, description, subject, topic) "
-            . "VALUES (:ownerEmail, :title, :description, :subject, :topic)";
+        $sql = "INSERT INTO playlist (user, title, description, subject, topic)
+                VALUES (:ownerEmail, :title, :description, :subject, :topic)";
 
         $dbh = DB::getPDO();
         $stmt = $dbh->prepare($sql);
@@ -151,14 +146,19 @@ class Playlist
     }
 
 
-    public function searchPlaylistsByKeyword($keyword)
+    static public function searchPlaylistsByKeyword($keyword)
     {
         $sql = "SELECT * FROM playlist 
-                WHERE title LIKE Concat('%',$keyword,'%')
-                OR subject LIKE Concat('%',$keyword,'%') 
-                OR topic  LIKE Concat('%',$keyword,'%')";
+                WHERE title LIKE Concat('%',:keyword,'%')
+                OR subject LIKE Concat('%',:keyword,'%') 
+                OR topic  LIKE Concat('%',:keyword,'%')";
         $dbh = DB::getPDO();
-        $stmt = $dbh->query($sql, PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Playlist");
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindParam(":keyword", $keyword);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Playlist");
+
+        $results = [];
         foreach ($stmt as $row) {
             $results[] = $row;
         }
@@ -173,7 +173,9 @@ class Playlist
         $sql = "UPDATE playlistvideos AS playlistvideos1
                 Where playlist = :playlistId
                 JOIN playlistvideos AS playlistvideos2
-                ON playlistvideos1.video = :videoId1 AND playlistvideos2.video = :videoId2";
+                ON playlistvideos1.video = :videoId1 
+                AND playlistvideos2.video = :videoId2";
+
         $dbh = DB::getPDO();
         $stmt = $dbh->prepare($sql);
         $stmt->bindParam(':playlistId', $playlistId);

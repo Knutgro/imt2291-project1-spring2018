@@ -94,6 +94,14 @@ VALUES
 ('lecturer@ntnu.no', '$2y$10$7kPPWtRzSWCoAeog/WfQru0rRYQXelbklzg4kvBrcHJIeR5VQfRRe', 'lecturer', 0);
 
 INSERT INTO video (id, title, description, videoPath, thumbnailPath, subject, topic, user)
-    VALUES (
-        1, 'testtest', 'test test','/video','/video','IT','IMT2019',1
-    )
+    VALUES 
+	(1, 'testtest', 'test test', '/video', '/video', 'IT', 'IMT2019', 1),
+	(2, 'testtest2', 'test test2','/video2', '/video2', 'IT', 'IMT2019', 1);
+
+INSERT INTO playlist(id, user, title, description, subject, topic)
+	VALUES (1, 1, 'title', 'description', 'subject', 'topic');
+	
+INSERT INTO playlistvideos(no,playlist,video)
+	VALUES 
+	(1, 1, 1),
+	(2, 1, 2);
