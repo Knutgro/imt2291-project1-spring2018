@@ -121,6 +121,11 @@ Class Video {
         return $results;
     }
 
+    /**
+     * Load video instances from the database, given a search parameter.
+     *
+     * @param string $search what the user want to search for
+     */
     static function getBySearch($search)
     {
         //Get the DB handle
