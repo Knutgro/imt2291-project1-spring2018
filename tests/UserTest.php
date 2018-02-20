@@ -188,16 +188,39 @@ final class UserTest extends TestCase
         $this->assertTrue($user->isLecturer());
     }
 
-    public function testInsert()
+    public function testInsertUpdate()
     {
+        // Prepare a basic user and insert it into the database
         $user = new User("test@user", "test-pass", "student");
         $id = $user->insert();
+        // Ensure that the insert was successful
         $this->assertNotEquals(false, $id);
+        // Verify that the model updated the instance ID.
+        $this->assertEquals($id, $user->getId());
 
+        // Fetch the user from hte database
         $fetchedUser = User::getById($id);
 
+        // Verify that at least one field matches as it should, NOT NULL
+        // constraints should be enough to verify that the other fields at least
+        // holds a value.
         $this->assertInstanceOf(User::class, $fetchedUser);
-        $this->assertEquals($user->getEmail(), $fetchedUser->getEmail());
+
+        // Check that some fields contains defaults before testing update
+        $this->assertFalse($fetchedUser->isVerified());
+        $this->assertEquals("student", $fetchedUser->getType());
+
+        // Change some values and update
+        $user->setVerified(true);
+        $user->setType("admin");
+        $this->assertTrue($user->update());
+
+        // Refetch the user from the database
+        $fetchedUser = User::getById($id);
+
+        // Verify that the fields got changed
+        $this->assertTrue($fetchedUser->isVerified());
+        $this->assertEquals("admin", $fetchedUser->getType());
     }
 
 }

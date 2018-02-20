@@ -279,7 +279,9 @@ class User {
             return false;
         }
 
-        return $dbh->lastInsertId();
+        // Update the instance ID and return it
+        $this->id = $dbh->lastInsertId();
+        return $this->id;
     }
 
     /**
