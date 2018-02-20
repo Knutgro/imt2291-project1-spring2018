@@ -40,25 +40,25 @@ final class UserTest extends TestCase
     public function testGetEmail()
     {
         $user = new User("my@email.no");
-        $this->assertEquals($user->getEmail(), "my@email.no");
+        $this->assertEquals("my@email.no", $user->getEmail());
     }
 
     public function testType()
     {
         $user = new User(null, null, "student");
-        $this->assertEquals($user->getType(), "student");
+        $this->assertEquals("student", $user->getType());
 
         $user->setType("wrong");
-        $this->assertEquals($user->getType(), "student");
+        $this->assertEquals("student", $user->getType());
 
         $user->setType("admin");
-        $this->assertEquals($user->getType(), "admin");
+        $this->assertEquals("admin", $user->getType());
 
         $user->setType("lecturer");
-        $this->assertEquals($user->getType(), "lecturer");
+        $this->assertEquals("lecturer", $user->getType());
 
         $user->setType("student");
-        $this->assertEquals($user->getType(), "student");
+        $this->assertEquals("student", $user->getType());
     }
 
     public function testGetLoggedInUser()
@@ -77,7 +77,7 @@ final class UserTest extends TestCase
         $user = User::getById(1);  // The admin user should have ID 1 in the DB
 
         $this->assertInstanceOf(User::class, $user);
-        $this->assertEquals($user->getId(), 1);
+        $this->assertEquals(1, $user->getId());
 
         $this->assertNull(User::getById(-1));
     }
@@ -88,7 +88,7 @@ final class UserTest extends TestCase
         $user = User::getByEmail($email);  // The admin user should have ID 1 in the DB
 
         $this->assertInstanceOf(User::class, $user);
-        $this->assertEquals($user->getEmail(), $email);
+        $this->assertEquals($email, $user->getEmail());
 
         $this->assertNull(User::getByEmail("invalid"));
     }
