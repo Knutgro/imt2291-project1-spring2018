@@ -72,6 +72,10 @@ input, .btn {
     display: inline-block;
 }
 
+input[type="checkbox"] {
+    height: auto;
+}
+
 div.search .text {
     border-bottom-right-radius: 0px;
     border-top-right-radius: 0px;
