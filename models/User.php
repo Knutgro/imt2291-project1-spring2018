@@ -97,7 +97,7 @@ class User {
      */
     static function loggedIn()
     {
-        // 
+        // Check that the key exists, to avoid E_NOTICE
         if (!array_key_exists("user_id", $_SESSION)) {
             return null;
         }
