@@ -47,5 +47,4 @@ final class PlaylistTest extends TestCase {
         $this->assertEquals($first->getUser(), 1);
     }
 
-    public function test
 }
