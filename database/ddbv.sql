@@ -1,6 +1,4 @@
-/* 
-CREATED BY KNUT GRØSTAD
-PART2 OF ASSIGNMENT4 */
+
 
 DROP SCHEMA IF EXISTS www_proj1;
 CREATE SCHEMA www_proj1 COLLATE = utf8_general_ci;
@@ -60,12 +58,15 @@ create table playlist (
     user            int NOT NULL,
     title           tinytext NOT NULL,
     description     text NOT NULL,
+    subject         tinytext NOT NULL,
+    topic           tinytext NOT NULL,
 
     primary key(id),
     foreign key(user) references user(id)
 );
 
 create table playlistvideos  (
+	no				int NOT NULL,
     playlist        int NOT NULL,
     video           int NOT NULL,
 
