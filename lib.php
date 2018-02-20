@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+error_reporting(E_ALL);
 
 session_start();
 
@@ -23,7 +24,9 @@ function error_message($msg, $exc) {
 
     // Remove any previous output that might have been buffered. Ensures that
     // the error page doesn't contain anything other than an error message.
-    ob_clean();
+    if (ob_get_length() > 0) {
+        ob_clean();
+    }
 
     if ($config["debug"] === true) {
         // Debugging is forced on, so let's just save the exception

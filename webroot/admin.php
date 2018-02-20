@@ -1,6 +1,9 @@
 <?php
 require_once dirname(dirname(__FILE__)) . "/lib.php";
 
+$error = "";
+$msg = "";
+
 $user = User::loggedIn();
 
 
@@ -12,7 +15,7 @@ if (is_null($user) || !$user->is(User::ADMIN)) {
 
 
 // Handle user actions submitted to this page
-$action = $_GET["action"];
+$action = array_key_exists("action", $_GET) ? $_GET["action"] : null;
 if (in_array($action, ["verify", "reject"])) {
 
     $managedUser = User::getById( $_GET["id"] );
