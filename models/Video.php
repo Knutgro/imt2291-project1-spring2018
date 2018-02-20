@@ -53,7 +53,7 @@ Class Video {
      *
      * @param int $id ID of the video that should be loaded
      */
-    public function getById($id)
+    static function getById($id)
     {
         //Get the DB handle
         $dbh = DB::getPDO();
@@ -77,7 +77,7 @@ Class Video {
      *
      * @param string $subject Subject of the video that should be loaded
      */
-    public function getBySubject($subject)
+    static function getBySubject($subject)
     {
         //Get the DB handle
         $dbh = DB::getPDO();
@@ -101,7 +101,7 @@ Class Video {
      *
      * @param int $user user ID of the owner of the video
      */
-    public function getByUser($user)
+    static function getByUser($user)
     {
         //Get the DB handle
         $dbh = DB::getPDO();
@@ -116,6 +116,32 @@ Class Video {
         // isn't empty
         foreach ($stmt as $video) {
             $results[] = $video;
+        }
+
+        return $results;
+    }
+
+    static function getBySearch($search)
+    {
+        //Get the DB handle
+        $dbh = DB::getPDO();
+
+        // Fetch data from DB given search
+        $stmt = $dbh->prepare("SELECT video.* FROM video 
+                                  LEFT JOIN user ON user.id=video.user
+                                      WHERE video.subject LIKE :search OR 
+                                      video.title LIKE :search OR 
+                                      video.topic LIKE :search OR
+                                      user.email LIKE :search");
+        $stmt->bindValue(':search', "%{$search}%");
+
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Video");
+        $results = [];
+        // Return the data as an initialized video object, given the result set
+        // isn't empty
+        foreach ($stmt as $row) {
+            $results[] = $row;
         }
 
         return $results;

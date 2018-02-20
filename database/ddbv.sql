@@ -97,3 +97,8 @@ INSERT INTO video (id, title, description, videoPath, thumbnailPath, subject, to
     VALUES (
         1, 'testtest', 'test test','/video','/video','IT','IMT2019',1
     )
+
+INSERT INTO video (id, title, description, videoPath, thumbnailPath, subject, topic, user)
+VALUES (
+  2, 'testtest', 'test testo','/video','/video','SMF','SMF2019',1
+)
