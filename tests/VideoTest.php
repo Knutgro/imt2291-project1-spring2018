@@ -31,6 +31,33 @@ class VideoTest extends TestCase
         $video = Video::getByUser( "1");
 
         $this->assertInternalType('array',$video);
+        $this->assertEquals(2,count($video));
+        $first = $video[0];
+        $this->assertInstanceOf(Video::class, $first);
+        $this->assertEquals($first->getUser(), 1);
+    }
+
+    public function testGetVideoBySearch ()
+    {
+        $video = Video::getBySearch( "testtest");
+
+        $this->assertInternalType('array',$video);
+        $this->assertEquals(2,count($video));
+        $first = $video[0];
+        $this->assertInstanceOf(Video::class, $first);
+        $this->assertEquals($first->getUser(), 1);
+
+        $video = Video::getBySearch( "IMT2019");
+
+        $this->assertInternalType('array',$video);
+        $this->assertEquals(1,count($video));
+        $first = $video[0];
+        $this->assertInstanceOf(Video::class, $first);
+        $this->assertEquals($first->getUser(), 1);
+
+        $video = Video::getBySearch( "SMF");
+
+        $this->assertInternalType('array',$video);
         $this->assertEquals(1,count($video));
         $first = $video[0];
         $this->assertInstanceOf(Video::class, $first);
