@@ -9,6 +9,17 @@ use PHPUnit\Framework\TestCase;
 
 final class UserTest extends TestCase
 {
+    public function setUp()
+    {
+        $dbh = DB::getPDO();
+        $dbh->beginTransaction();
+    }
+
+    public function tearDown()
+    {
+        $dbh = DB::getPDO();
+        $dbh->rollBack();
+    }
 
     public function testPasswordSetVerify()
     {
@@ -175,6 +186,18 @@ final class UserTest extends TestCase
 
         $this->assertTrue($user->is(User::ADMIN));
         $this->assertTrue($user->isLecturer());
+    }
+
+    public function testInsert()
+    {
+        $user = new User("test@user", "test-pass", "student");
+        $id = $user->insert();
+        $this->assertNotEquals(false, $id);
+
+        $fetchedUser = User::getById($id);
+
+        $this->assertInstanceOf(User::class, $fetchedUser);
+        $this->assertEquals($user->getEmail(), $fetchedUser->getEmail());
     }
 
 }
