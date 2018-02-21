@@ -9,6 +9,7 @@ if (!is_null(User::loggedIn())) {
 }
 
 
+$errors = "";
 // Handle register request
 if (!empty($_POST)) {
 
@@ -32,7 +33,7 @@ if (!empty($_POST)) {
             header("Location: /");
             die();
         } else {
-            $error = "Wrong email or password";
+            $errors[] = "Something failed";
         }
     }
 
