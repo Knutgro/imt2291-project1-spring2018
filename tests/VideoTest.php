@@ -15,7 +15,7 @@ class VideoTest extends TestCase
         $video = Video::getByID( 1);
 
         $this->assertInstanceOf(Video::class, $video);
-        $this->assertEquals($video->getId(), 1);
+        $this->assertEquals(1 , $video->getId());
     }
 
     public function testGetVideoBySubject ()
@@ -34,7 +34,7 @@ class VideoTest extends TestCase
         $this->assertEquals(2,count($video));
         $first = $video[0];
         $this->assertInstanceOf(Video::class, $first);
-        $this->assertEquals($first->getUser(), 1);
+        $this->assertEquals(1 , $first->getUser());
     }
 
     public function testGetVideoBySearch ()
@@ -45,7 +45,7 @@ class VideoTest extends TestCase
         $this->assertEquals(2,count($video));
         $first = $video[0];
         $this->assertInstanceOf(Video::class, $first);
-        $this->assertEquals($first->getUser(), 1);
+        $this->assertEquals(1 ,$first->getUser());
 
         $video = Video::getBySearch( "IMT2019");
 
@@ -53,7 +53,7 @@ class VideoTest extends TestCase
         $this->assertEquals(1,count($video));
         $first = $video[0];
         $this->assertInstanceOf(Video::class, $first);
-        $this->assertEquals($first->getUser(), 1);
+        $this->assertEquals(1 , $first->getUser());
 
         $video = Video::getBySearch( "SMF");
 
@@ -61,6 +61,6 @@ class VideoTest extends TestCase
         $this->assertEquals(1,count($video));
         $first = $video[0];
         $this->assertInstanceOf(Video::class, $first);
-        $this->assertEquals($first->getUser(), 1);
+        $this->assertEquals(1 , $first->getUser());
     }
 }

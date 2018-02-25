@@ -9,6 +9,7 @@ if (!is_null(User::loggedIn())) {
 }
 
 
+$error = "";
 // Handle log in request
 if (!empty($_POST)) {
 

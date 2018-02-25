@@ -51,7 +51,7 @@ final class PlaylistTest extends TestCase {
     }
 
 
-    public function testInsertPlaylist(){
+    public function testInsertPlaylistAndVideo(){
         $playlist = new playlist(1, "test-title", "test-description", "test-subject", "test-topic");
         $id = $playlist->insertPlaylist();
         $this->assertNotEquals(false, $id);
@@ -71,5 +71,4 @@ final class PlaylistTest extends TestCase {
         $playlist->changeVideoOrder(1,3);
         $this->assertEquals($playlist->getVideoOrderNo(1), 3);
     }
-
 }
