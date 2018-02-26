@@ -46,7 +46,7 @@ create table comment (
     id              int NOT NULL auto_increment,
     user            int NOT NULL,
     video           int NOT NULL,
-    commment        text NOT NULL,
+    comment        text NOT NULL,
 
     primary key(id),
     foreign key(user)  references user(id),
