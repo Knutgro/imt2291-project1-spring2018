@@ -47,6 +47,19 @@ function error_message($msg, $exc) {
 
 }
 
+function http_404_page( $noun = null ) {
+    global $twig;
+
+    http_response_code(404);
+
+    echo $twig->render("http-404.twig", [
+        "path" => $_SERVER["REQUEST_URI"],
+        "noun" => $noun,
+    ]);
+    die();
+
+}
+
 set_exception_handler(function ($exc) {
     error_message("An internal server error has occurred", $exc);
 });

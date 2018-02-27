@@ -21,6 +21,24 @@ class Comment
         return $this->user;
     }
 
+    /**
+     * Get the User that posted this comment
+     * @return User The commenter
+     */
+    public function getCommenter()
+    {
+        return User::getById($this->user);
+    }
+
+    /**
+     * Get the comment text
+     * @return string Comment text
+     */
+    public function getText()
+    {
+        return $this->comment;
+    }
+
     public function getId()
     {
         return $this->id;

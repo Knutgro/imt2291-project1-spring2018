@@ -1,0 +1,17 @@
+{% extends "base.twig" %}
+
+{% block title %}{{ noun ? noun : "Page" }} not found{% endblock %}
+
+{% block content %}
+<dialog open>
+    <div class="error">
+        <h1>{{ noun ? noun : "Page" }} not found</h1>
+
+        <div class="content">
+            We were unable to find a resource that matches your request. Please
+            check that the URL is correct.
+        </div>
+        <div class="stack">{{ path }}</div>
+    </div>
+</dialog>
+{% endblock %}

@@ -3,13 +3,47 @@
 {% block title %}{{"Hello World"}}{% endblock %}
 
 {% block content %}
+<div class="video-watch">
+    <div class="playbox "><!-- with-sidebar for playlist box -->
+        <div class="video">
+            <video autoplay controls src="{{ video.videoPath }}"></video>
+        </div>
+        <div class="sidebox">
+            ahuehue
+        </div>
+    </div>
 
-    <video width = "320" height = "240" autoplay>
-        <source src= {{ result.videoPath }} type = "video/mp4">
-    </video>
+    <div class="video-desc">
+        <h2>{{ video.title }}</h2>
+        <div class="uploader"><a href="user.php?id={{ video.user }}">{{ video.uploader.email }}</a></div>
+        <p>
+            {{ video.description }}
+        </p>
+        <div class="course">{{ video.subject }} - {{ video.topic }}</div>
+    </div>
+</div>
 
+<h3>Comments</h3>
+{% if user %}
+<div class="comment-box">
+    <div class="control">
+        <textarea name="comment"></textarea>
+    </div>
+    <div class="control">
+        <input type="submit" />
+    </div>
+</div>
+{% endif %}
 
-
-{{ error }}
+<div class="comments">
+{% for comment in comments %}
+    <div class="comment">
+        <div class="response">{{ comment.text }}</div>
+        <div class="user">{{ comment.commenter.email }}</div>
+    </div>
+{% else %}
+    There are no comments for this video
+{% endfor %}
+</div>
 
 {% endblock %}

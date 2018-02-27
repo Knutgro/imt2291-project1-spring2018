@@ -62,6 +62,16 @@ Class Video {
         return $this->user;
     }
 
+    /**
+     * Get the Video owner as a User instance
+     *
+     * @return User the Video's owner
+     */
+    public function getUploader() 
+    {
+        return User::getById( $this-> user );
+    }
+
 
     /**
      * Get the Video title
