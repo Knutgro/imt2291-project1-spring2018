@@ -3,18 +3,33 @@
 {% block title %}Search results{% endblock %}
 
 {% block content %}
+   <style>
+        img {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            width: 150px;
+        }
+
+        img:hover {
+            box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+        }
+   </style>
+
     <h2>Search Results</h2>
     <div class = "search-results">
         {% for video in result %}
             <div class = "result">
-            <a href = "watch.php?v = {{ video.id }}">
+            <a href = "watch.php?v={{ video.id }}">
                     {{ video.subject }}
                     {#{{ video.title }}#}
                     {{ video.title }}
                     {{ video.topic }} <br>
             </a>
             </div>
-            <img src = "{{video.thumbnailPath}}" alt = "Heyo" height = "100" width = "100"> <br> <br>
+        <a target="_blank" href="watch.php?v={{ video.id }}">
+            <img src = "{{video.thumbnailPath}}" alt = "Heyo" style="width: 150px">
+        </a>
         {% endfor %}
     </div>
 
