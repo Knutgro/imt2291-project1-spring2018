@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Knut
- * Date: 26.02.2018
- * Time: 18.47
- */
+
 
 class Comment
 {
@@ -31,7 +26,7 @@ class Comment
         return $this->id;
     }
 
-
+    /** Returns comment object from a given comment id */
     static public function getCommentById($id)
     {
         // Get the DB handle
@@ -47,7 +42,7 @@ class Comment
         $result = $stmt->fetch();
         return $result;
     }
-
+    /** Returns Comment id if successful insertion, false if not */
     public function insertComment()
     {
         $sql = "INSERT INTO comment (user, video, comment)
@@ -65,7 +60,7 @@ class Comment
         }
         return $this->id = $dbh->lastInsertId();
     }
-
+    /** Returns an array of comment objects which matches the given video id */
     static public function getCommentsByVideoId($video)
     {
         // Get the DB handle

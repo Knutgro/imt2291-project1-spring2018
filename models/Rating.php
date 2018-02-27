@@ -33,10 +33,10 @@ class Rating
         return $this->rating;
     }
 
-
+    /** Returns true if rating was inserted and false if it was not */
     public function insertRating()
     {
-        $sql = "INSERT INTO playlist (video, user, rating)
+        $sql = "INSERT INTO rating (video, user, rating)
                 VALUES (:video, :user, :rating)";
 
         $dbh = DB::getPDO();
@@ -44,27 +44,27 @@ class Rating
 
         $stmt->bindParam(":video", $this->video);
         $stmt->bindParam(":user", $this->user);
-        $stmt->bindParam(":comment", $this->rating);
+        $stmt->bindParam(":rating", $this->rating);
 
         return $stmt->execute();
     }
 
-
-    public function getUserRating($user)
+    /** Returns rating from a given user and video */
+    static public function getUserRating($user, $video)
     {
         $dbh = DB::getPDO();
-        $stmt = $dbh->prepare("SELECT rating FROM rating WHERE user = $user");
+        $stmt = $dbh->prepare("SELECT rating FROM rating WHERE user = $user AND video = $video");
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_COLUMN);
 
         return $result;
     }
 
-
-    public function getTotalRating($video)
+    /** Returns Total average rating from a given video  */
+    static public function getTotalRating($video)
     {
         $dbh = DB::getPDO();
-        $stmt = $dbh->prepare("SELECT AVG(rating) FROM rating WHERE video = $video");
+        $stmt = $dbh->prepare("SELECT AVG(rating) average FROM rating WHERE video = $video");
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_COLUMN);
 
