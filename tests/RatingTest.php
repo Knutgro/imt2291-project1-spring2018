@@ -5,6 +5,17 @@ require_once dirname(__FILE__) . "/../lib.php";
 use PHPUnit\Framework\TestCase;
 
 final class RatingTest extends TestCase {
+    public function setUp()
+    {
+        $dbh = DB::getPDO();
+        $dbh->beginTransaction();
+    }
+
+    public function tearDown()
+    {
+        $dbh = DB::getPDO();
+        $dbh->rollBack();
+    }
 
  public function testInsertRating()
  {
