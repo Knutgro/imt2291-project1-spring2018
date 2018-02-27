@@ -7,5 +7,6 @@ $result = Video::getBySearch($search);
 
 
 echo $twig->render('search.twig', [
-    "result"=> $result,
+    "result" => $result,
+    "searchTerm" => $search,
     ]);

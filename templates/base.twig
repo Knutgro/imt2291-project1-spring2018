@@ -11,7 +11,7 @@
 
             <div class="search">
                 <form action="search.php">
-                    <input type="text" name="q" class="text" placeholder="Search..." />
+                    <input type="text" name="q" class="text" placeholder="Search..." value="{{ (searchTerm) ? searchTerm : "" }}" />
                     <input type="submit" class="send" />
                 </form>
             </div>
