@@ -4,18 +4,16 @@
 
 {% block content %}
     <h2>Search Results</h2>
-    <div>
+    <a>
         {% for video in result %}
             {{ video.subject }}
+            <a href="watch.php"> {{ video.title }} </a> <br>
+            {{ video.topic }} <br>
+            <img src = "{{video.thumbnailPath}}" alt="Heyo" height = "100" width = "100"> <br>
         {% endfor %}
     </div>
 
-{#
-    {{ dump (result) }}
-    {% for video in result %}
-        {{ video }}
-        {% endfor %}
-#}
+
     {{ error }}
 
 

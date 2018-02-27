@@ -48,6 +48,64 @@ Class Video {
         return $this->user;
     }
 
+
+    /**
+     * Get the Video title
+     *
+     * @return string the Video's title
+     */
+
+     public function getTitle()
+    {
+        return $this->title;
+    }
+
+
+    /**
+     * Get the Video ThumbnailPath
+     *
+     * @return string the Video's ThumbnailPath
+     */
+
+    public function getThumbnailPath()
+    {
+        return $this->thumbnailPath;
+    }
+
+    /**
+     * Get the Video path
+     *
+     * @return string the Video's videoPath
+     */
+
+    public function getVideoPath()
+    {
+        return $this->videoPath;
+    }
+
+
+    /**
+     * Get the Video topic
+     *
+     * @return string the Video's topic
+     */
+
+    public function getTopic()
+    {
+        return $this->topic;
+    }
+
+    /**
+     * Get the Video description
+     *
+     * @return string the Video's description
+     */
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
     /**
      * Load a video instance from the database, given video ID.
      *

@@ -42,7 +42,7 @@ class VideoTest extends TestCase
         $video = Video::getBySearch( "testtest");
 
         $this->assertInternalType('array',$video);
-        $this->assertEquals(2,count($video));
+        $this->assertEquals(1,count($video));
         $first = $video[0];
         $this->assertInstanceOf(Video::class, $first);
         $this->assertEquals(1 ,$first->getUser());
