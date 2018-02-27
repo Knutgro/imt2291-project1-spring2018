@@ -20,10 +20,10 @@ class VideoTest extends TestCase
 
     public function testGetVideoBySubject ()
     {
-        $video = Video::getBySubject( "IT");
+        $video = Video::getBySubject( "IMT2019");
 
         $this->assertInstanceOf(Video::class, $video);
-        $this->assertEquals($video->getSubject(), "IT");
+        $this->assertEquals($video->getSubject(), "IMT2019");
     }
 
     public function testGetVideoByUser ()

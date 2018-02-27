@@ -96,8 +96,8 @@ VALUES
 INSERT INTO video (id, title, description, videoPath, thumbnailPath, subject, topic, user)
     VALUES 
 	(1, 'The most amazing video in the world, how it ends might surprise you!', 'test test', '/assets/video/1.mp4',
-        '/assets/thumbnail/1.png', 'IT', 'IMT2019', 1),
-	(2, 'testtest', 'test testo','/video','/assets/thumbnail/2.png','SMF','SMF2019',1);
+        '/assets/thumbnail/1.png', 'IMT2019', 'IT', 1),
+	(2, 'testtest', 'test testo','/video','/assets/thumbnail/2.png','SMF2019','SMF',1);
 
 INSERT INTO playlist(id, user, title, description, subject, topic)
 	VALUES 
