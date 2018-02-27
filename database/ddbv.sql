@@ -34,7 +34,7 @@ create table video (
 create table rating (
     video           int NOT NULL,
     user            int NOT NULL,
-    rating          ENUM('0','1','2','3','4','5') NOT NULL,
+    rating          int NOT NULL,
 
     primary key(video, user),
     foreign key(user)  references user(id),
@@ -46,7 +46,7 @@ create table comment (
     id              int NOT NULL auto_increment,
     user            int NOT NULL,
     video           int NOT NULL,
-    commment        text NOT NULL,
+    comment        text NOT NULL,
 
     primary key(id),
     foreign key(user)  references user(id),

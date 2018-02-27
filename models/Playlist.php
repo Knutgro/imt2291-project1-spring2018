@@ -1,8 +1,6 @@
 <?php
 /**
  * Playlist class
- * Class containing video objects
- *
  */
 
 class Playlist
@@ -16,7 +14,7 @@ class Playlist
     private $lastInserted;
 
 
-    public function __construct($user = null, $title = null, $description = null, $subject = null, $topic = null, $lastInserted = 1)
+    public function __construct($user = null, $title = null, $description = null, $subject = null, $topic = null, $lastInserted = 0)
     {
         $this->user = $user;
         $this->title = $title;
@@ -51,11 +49,16 @@ class Playlist
     }
 
 
+    public function getLastInserted()
+    {
+        return $this->lastInserted;
+    }
 
+    /** Returns an array with video ids from the specified playlistId from the table playlistvideos*/
     static public function getVideosByPlaylistId($id)
     {
         $dbh = DB::getPDO();
-        $stmt = $dbh->prepare("SELECT * FROM playlist WHERE id = $id");
+        $stmt = $dbh->prepare("SELECT * FROM playlistvideos WHERE playlist = $id ORDER BY no");
         $stmt->execute();
 
         // Return the data as an initialized user object, given the result set
@@ -68,7 +71,19 @@ class Playlist
     }
 
 
+    /** Returns a videos order number from its video id*/
+    static public function getVideoOrderNo($id)
+    {
+        $dbh = DB::getPDO();
+        $stmt = $dbh->prepare("SELECT no FROM playlistvideos WHERE video = $id ");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_COLUMN);
 
+        return $result;
+    }
+
+
+    /**Returns a playlist object from the database based on its id*/
     static function getPlaylistById($id)
     {
         // Get the DB handle
@@ -83,10 +98,10 @@ class Playlist
         $stmt->setFetchMode(DB::FETCH_OBJECT, "Playlist");
         $result = $stmt->fetch();
         return $result;
-
     }
 
 
+    /**Returns an array of playlists based on its owner id*/
     static function getPlaylistByUser($user)
     {
         // Get the DB handle
@@ -105,47 +120,46 @@ class Playlist
     }
 
 
+    /**Inserts a playlist in the database*/
     public function insertPlaylist()
     {
         $sql = "INSERT INTO playlist (user, title, description, subject, topic)
-                VALUES (:ownerEmail, :title, :description, :subject, :topic)";
+                VALUES (:user, :title, :description, :subject, :topic)";
 
         $dbh = DB::getPDO();
         $stmt = $dbh->prepare($sql);
 
-        $stmt->bindParam(":ownerEmail", $this->user);
+        $stmt->bindParam(":user", $this->user);
         $stmt->bindParam(":title", $this->title);
         $stmt->bindParam(":description", $this->description);
         $stmt->bindParam(":subject", $this->subject);
         $stmt->bindParam(":topic", $this->topic);
 
-        if (!$stmt->execute()) {
+        if ($stmt->execute() === false) {
             return false;
         }
-
-        return $dbh->lastInsertId();
+        return $this->id = $dbh->lastInsertId();
     }
 
 
-    public function insertVideo($videoId)
+    /** Inserts a video into a given playlist */
+    public function insertVideo($videoId, $playlistId)
     {
         $sql = "INSERT INTO playlistvideos (no, playlist, video)
-                VALUES (:no, :playlist, :video)";
-
+                VALUES (:num, :playlist, :video)";
         $dbh = DB::getPDO();
         $stmt = $dbh->prepare($sql);
-        $stmt->bindParam(":no",$this->lastInserted);
-        $stmt->bindParam(":playlistId", $this->id);
-        $stmt->bindParam(":videoId", $videoId);
 
-        if (!$stmt->execute()) {
-            return false;
-        }
-        $this->lastInserted += 1;
-        return true;
+        $stmt->bindParam(":num",$this->lastInserted);
+        $stmt->bindParam(":playlist",$playlistId);
+        $stmt->bindParam(":video",$videoId);
+
+        return $stmt->execute();
+
     }
 
 
+    /** Returns an array with playlist objects, based on a search keyword*/
     static public function searchPlaylistsByKeyword($keyword)
     {
         $sql = "SELECT * FROM playlist 
@@ -162,30 +176,34 @@ class Playlist
         foreach ($stmt as $row) {
             $results[] = $row;
         }
-        if ($results) {
-            return $results;
-        } else
-            return false;
+        return $results;
     }
 
 
-    public function changeVideoOrder($playlistId, $videoId1, $videoId2) {
-        $sql = "UPDATE playlistvideos AS playlistvideos1
-                Where playlist = :playlistId
-                JOIN playlistvideos AS playlistvideos2
-                ON playlistvideos1.video = :videoId1 
-                AND playlistvideos2.video = :videoId2";
-
+    /** Changes the order of two videos in a playlist*/
+    public function changeVideoOrder($videoId1, $videoId2)
+    {
+        $video1 = self::getVideoOrderNo($videoId1);
+        $video2 = self::getVideoOrderNo($videoId2);
         $dbh = DB::getPDO();
-        $stmt = $dbh->prepare($sql);
-        $stmt->bindParam(':playlistId', $playlistId);
-        $stmt->bindParam(':videoId1', $videoId1);
-        $stmt->bindParam(':videoId2', $videoId2);
-        if($stmt->execute()) {
-            return true;
-        }
-        else
-            return false;
-    }
 
+        $sql = "UPDATE playlistvideos SET no = :video2 WHERE playlist = :id AND video = :video1Id";
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindParam(":video2", $video2);
+        $stmt->bindParam(":video1Id", $videoId1);
+        $stmt->bindParam(":id", $this->id);
+
+        if ($stmt->execute()) {
+            $sql2 = "UPDATE playlistvideos SET no = :video1 WHERE playlist = :id AND video = :video2Id";
+            $stmt2 = $dbh->prepare($sql2);
+            $stmt2->bindParam(":video1", $video1);
+            $stmt2->bindParam(":video2Id", $videoId2);
+            $stmt2->bindParam(":id", $this->id);
+
+            if ($stmt2->execute()){
+                return true;
+            }
+        }
+        return false;
+    }
 }
