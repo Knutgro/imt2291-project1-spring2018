@@ -87,7 +87,7 @@ div.search {
     display: inline;
 }
 
-input, .btn {
+input, textarea, .btn {
     border-color: var(--input-base);
     border-style: solid;
     border-width: 1px;
@@ -122,6 +122,17 @@ input, .btn {
 
 input[type="checkbox"] {
     height: auto;
+}
+
+input:not([type]),
+input[type="text"],
+input[type="file"] {
+    width: 250px;
+}
+
+textarea {
+    width: 250px;
+    height: 100px;
 }
 
 div.search .text {
@@ -187,6 +198,13 @@ div.control label {
     text-align: right;
 }
 
+div.control .note {
+    margin-left: 150px;
+    padding: 10px;
+    color: gray;
+    font-size: 12px;
+}
+
 
 /**
  * Error page and the like
@@ -224,6 +242,13 @@ dialog {
     font-size: 12px;
 }
 
-input:invalid {
+input:invalid,
+textarea:invalid {
     background: rgba(255, 0, 0, 0.3);
+}
+
+input:required:invalid,
+textarea:required:invalid {
+    background: white;
+    border-color: #c50000;
 }

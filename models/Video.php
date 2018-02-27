@@ -15,6 +15,20 @@ Class Video {
     private $topic;
     private $user;
 
+    public function __construct($user=null, $data=null, $videoPath=null, $thumbnailPath=null)
+    {
+        if ($user) {
+            $this->user = $user->getId();
+
+            $this->title = $data["title"];
+            $this->description = $data["description"];
+            $this->subject = $data["subject"];
+            $this->topic = $data["topic"];
+            $this->videoPath = $videoPath;
+            $this->thumbnailPath = $thumbnailPath;
+        }
+    }
+
     /**
      * Get the Video ID
      *
@@ -209,4 +223,36 @@ Class Video {
 
         return $results;
     }
+
+    /**
+     * Insert the current video into the database.
+     *
+     * This will only take care of fields that are expected on upload
+     * @return mixed False if insertion failed, otherwise the ID of the inserted row.
+     */
+    public function insert() {
+        $sql = "INSERT INTO video (title, description, videoPath, "
+            . "                    thumbnailPath, subject, topic, user) "
+            . "VALUES (:title, :desc, :video, :thumb, :subject, :topic, :user)";
+
+        $dbh = DB::getPDO();
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindParam("title", $this->title);
+        $stmt->bindParam("desc", $this->description);
+        $stmt->bindParam("video", $this->videoPath);
+        $stmt->bindParam("thumb", $this->thumbnailPath);
+        $stmt->bindParam("subject", $this->subject);
+        $stmt->bindParam("topic", $this->topic);
+        $stmt->bindParam("user", $this->user);
+
+        if ($stmt->execute() === false) {
+            return false;
+        }
+
+        // Update the instance ID and return it
+        $this->id = $dbh->lastInsertId();
+        return $this->id;
+    }
+
 }

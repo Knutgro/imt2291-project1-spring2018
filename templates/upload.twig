@@ -1,0 +1,72 @@
+{% extends "base.twig" %}
+
+{% block title %}Upload video{% endblock %}
+
+{% block content %}
+    <h2>Upload video</h2>
+
+    {% if errors %}
+    <ul>
+    {% for error in errors %}
+        <li>{{ error }}</li>
+    {% endfor %}
+    {% endif %}
+    </ul>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="control">
+            <label for="title">Title</label>
+            <input id="title" required name="title" value="{{ data["title"] }}" />
+            <div class="note">
+                The title of this lecture
+            </div>
+        </div>
+
+        <div class="control">
+            <label for="subject">Subject</label>
+            <input id="subject" required name="subject" value="{{ data["subject"] }}" />
+            <div class="note">
+                The course code for the course this video lecture belongs to
+            </div>
+        </div>
+
+        <div class="control">
+            <label for="topic">Topic</label>
+            <input id="topic" required name="topic" value="{{ data["topic"] }}" />
+            <div class="note">
+                A concrete topic that the video is about, e.g. "Thermal Optics"
+                or "Victorian Music"
+            </div>
+        </div>
+
+        <div class="control">
+            <label for="video">Video</label>
+            <input id="video" required type="file" name="video" />
+            <div class="note">
+                The recording of the video lecture
+            </div>
+        </div>
+
+        <div class="control">
+            <label for="thumbnail">Thumbnail</label>
+            <input id="thumbnail" required type="file" name="thumbnail" />
+            <div class="note">
+                An image that should be displayed in search results
+            </div>
+        </div>
+
+
+        <div class="control">
+            <label for="description">Description</label>
+            <textarea required id="description" name="description">{{ data["description"] }}</textarea>
+            <div class="note">
+                A detailed explanation of what this lecture is about
+            </div>
+        </div>
+
+        <div class="control">
+            <label></label>
+            <input type="submit" />
+        </div>
+    </form>
+{% endblock %}

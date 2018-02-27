@@ -3,3 +3,6 @@
 /composer.phar
 /vendor
 /.idea
+/webroot/assets/.DS_Store
+webroot/assets/thumbnail/*
+webroot/assets/video/*
