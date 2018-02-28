@@ -49,7 +49,7 @@ echo $twig->render('watch.twig', [
     "video"    => $video,
     "comments" => Comment::getCommentsByVideoId($video->getId()),
     "rating"   => Rating::getTotalRating($video->getId()),
-    "myrating" => Rating::getUserRating($user->getId(), $video->getId()),
+    "myrating" => $user ? Rating::getUserRating($user->getId(), $video->getId()) : null,
 
     "error"    => $error,
 ]);
