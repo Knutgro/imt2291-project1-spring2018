@@ -46,7 +46,7 @@ final class PlaylistTest extends TestCase {
 
     public function testSearchPlaylistByKeyword()
     {
-        $playlist = Playlist::searchPlaylistsByKeyword( "subject");
+        $playlist = Playlist::searchPlaylistsByKeyword( "ntnu");
 
         $this->assertInternalType('array',$playlist);
         $this->assertEquals(1,count($playlist));
@@ -75,7 +75,19 @@ final class PlaylistTest extends TestCase {
     public function testChangeVideoOrder()
     {
         $playlist = Playlist::getPlaylistById(1);
-        $playlist->changeVideoOrder(1,3);
-        $this->assertEquals($playlist->getVideoOrderNo(1), 3);
+        $playlist->changeVideoOrder(1,2);
+        $this->assertEquals($playlist->getVideoOrderNo(1), 2);
+    }
+
+    public function testRemoveVideoFromPlaylist()
+    {
+        $playlist = Playlist::getPlaylistById(1);
+        $playlist->removeVideoFromPlaylist(1);
+        $videos = Playlist::getVideosByPlaylistId(1);
+
+        $this->assertInternalType('array',$videos);
+        $this->assertEquals(1,count($videos));
+
+        $this->assertEquals($playlist->getVideoOrderNo(2), 1);
     }
 }

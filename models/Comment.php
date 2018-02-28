@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Comment class
+ * Manages comments on videos
+ */
 
 class Comment
 {
@@ -8,14 +11,28 @@ class Comment
     private $video;
     private $comment;
 
-
+    /**
+     * Comment constructor.
+     *
+     * All fields are optional in order to allow for PDO class fetching. If any
+     * of these fields are null on database actions, the database will throw an
+     * error so everything's A-OK.
+     *
+     * @param int $user id for the comment
+     * @param int $video id for the video
+     * @param string $comment for the comment
+     */
     public function __construct($user = null, $video = null, $comment = null)
     {
         $this->user = $user;
         $this->video = $video;
         $this->comment = $comment;
     }
-
+    /**
+     * Get the comment's user id
+     *
+     * @return int the users id
+     */
     public function getUser()
     {
         return $this->user;
@@ -38,13 +55,20 @@ class Comment
     {
         return $this->comment;
     }
-
+    /**
+     * Get the comment's  id
+     *
+     * @return int the comment's id
+     */
     public function getId()
     {
         return $this->id;
     }
-
-    /** Returns comment object from a given comment id */
+    /**
+     * Finds a comment of a given id
+     * @param $id comment id
+     * @return object Comment which has the given id
+     */
     static public function getCommentById($id)
     {
         // Get the DB handle
@@ -60,7 +84,11 @@ class Comment
         $result = $stmt->fetch();
         return $result;
     }
-    /** Returns Comment id if successful insertion, false if not */
+    /**
+     * Insert the loaded comment into the databse.
+     * @return mixed False if insertion failed,
+     * otherwise it returns the id of the inserted comment.
+     */
     public function insertComment()
     {
         $sql = "INSERT INTO comment (user, video, comment)
@@ -78,7 +106,11 @@ class Comment
         }
         return $this->id = $dbh->lastInsertId();
     }
-    /** Returns an array of comment objects which matches the given video id */
+    /**
+     * Finds comments by a given video id.
+     * @param $video video id.
+     * @return array of comment objects.
+     */
     static public function getCommentsByVideoId($video)
     {
         // Get the DB handle

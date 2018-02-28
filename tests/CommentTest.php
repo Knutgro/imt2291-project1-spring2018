@@ -30,7 +30,7 @@ final class CommentTest extends TestCase {
 
     public function testGetCommentById()
     {
-        $comment = Comment::getCommentById(1);  // The admin user should have ID 1 in the DB
+        $comment = Comment::getCommentById(1);
 
         $this->assertInstanceOf(Comment::class, $comment);
         $this->assertEquals($comment->getId(), 1);
