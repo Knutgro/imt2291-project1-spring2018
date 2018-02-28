@@ -309,6 +309,11 @@ textarea:required:invalid {
     border-color: #c50000;
 }
 
+input:disabled,
+select:disabled {
+    background-color: lightgray;
+}
+
 
 /**
  * Video playback

@@ -172,6 +172,31 @@ class User {
     }
 
     /**
+     * Get a list of users that are verified, or do not need verification.
+     *
+     * @param int $id Email of the user that should be loaded
+     */
+    static function getRegisteredUsers()
+    {
+        // Get the DB handle
+        $dbh = DB::getPDO();
+
+        // Fetch data from DB given ID
+        $stmt = $dbh->prepare("SELECT * FROM user WHERE type = 'student' OR "
+                            . "verified = true;");
+        $stmt->execute();
+        $stmt->setFetchMode(DB::FETCH_OBJECT, "User");
+
+        $users = [];
+
+        foreach ($stmt as $user) {
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
+    /**
      * Get a list of users that are pending verification as admins or lecturers.
      *
      * @param int $id Email of the user that should be loaded
