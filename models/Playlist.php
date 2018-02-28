@@ -228,6 +228,7 @@ class Playlist
     {
         $sql = "INSERT INTO playlistvideos (no, playlist, video)
                 VALUES (:num, :playlist, :video)";
+        $this->lastInserted++;
         $dbh = DB::getPDO();
         $stmt = $dbh->prepare($sql);
 
@@ -235,7 +236,12 @@ class Playlist
         $stmt->bindParam(":playlist",$playlistId);
         $stmt->bindParam(":video",$videoId);
 
-        return $stmt->execute();
+        if($stmt->execute())
+            return true;
+        else {
+            $this->lastInserted--;
+            return false;
+        }
 
     }
 
@@ -330,7 +336,13 @@ class Playlist
         $dbh = DB::getPDO();
         $sql = "DELETE FROM playlistvideos WHERE video = $video";
         $stmt = $dbh->prepare($sql);
-        return $stmt->execute();
+        if($stmt->execute()) {
+            $this->lastInserted--;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     /**
      * Finds the video id from its order number in a loaded playlist.
