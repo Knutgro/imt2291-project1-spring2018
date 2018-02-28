@@ -1,6 +1,6 @@
 {% extends "base.twig" %}
 
-{% block title %}{{"Hello World"}}{% endblock %}
+{% block title %}{{ video.title }}{% endblock %}
 
 {% block content %}
 <div class="video-watch">
@@ -15,6 +15,37 @@
 
     <div class="video-desc">
         <h2>{{ video.title }}</h2>
+        <div class="ratings">
+            <div class="rating">
+                Rating:
+                {% if rating %}
+                {{ rating|number_format(1) }} / 5 stars
+                {% else %}
+                Unrated
+                {% endif %}
+            </div>
+            {% if user %}
+                {% if myrating %}
+                <div class="rating">You: {{ myrating|number_format(1) }} / 5 stars</div>
+                {% endif %}
+                {% if user.isStudent and not user.isLecturer %}
+                <div class="rate">
+                    <form method="post">
+                        <input type="hidden" name="action" value="rate">
+                        <select name="rating">
+                            <option value="0">☆☆☆☆☆</option>
+                            <option value="1">★☆☆☆☆</option>
+                            <option value="2">★★☆☆☆</option>
+                            <option value="3">★★★☆☆</option>
+                            <option value="4">★★★★☆</option>
+                            <option value="5">★★★★★</option>
+                        </select>
+                        <input type="submit" value="Rate" />
+                    </form>
+                </div>
+                {% endif %}
+            {% endif %}
+        </div>
         <div class="uploader"><a href="user.php?id={{ video.user }}">{{ video.uploader.email }}</a></div>
         <p>
             {{ video.description }}
@@ -23,16 +54,23 @@
     </div>
 </div>
 
+{% if error %}
+<div class="error">{{error}}</div>
+{% endif %}
+
 <h3>Comments</h3>
 {% if user %}
-<div class="comment-box">
-    <div class="control">
-        <textarea name="comment"></textarea>
+<form method="POST">
+    <input type="hidden" name="action" value="comment" />
+    <div class="comment-box">
+        <div class="control">
+            <textarea name="comment"></textarea>
+        </div>
+        <div class="control">
+            <input type="submit" />
+        </div>
     </div>
-    <div class="control">
-        <input type="submit" />
-    </div>
-</div>
+</form>
 {% endif %}
 
 <div class="comments">

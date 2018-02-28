@@ -62,7 +62,7 @@ class Rating
      * Insert the current rating into the database.
      * @return bool False if insertion failed, otherwise true.
      */
-    public function insertRating()
+    public function insert()
     {
         $sql = "INSERT INTO rating (video, user, rating)
                 VALUES (:video, :user, :rating)";

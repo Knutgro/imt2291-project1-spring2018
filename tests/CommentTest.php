@@ -27,10 +27,12 @@ final class CommentTest extends TestCase {
         $this->assertEquals($user->getUser(), 1);
     }
 
-    public function testInsertComment()
+    
+    public function testInsert()
+
     {
         $comment = new Comment(1, 1, "hello world");
-        $id = $comment->insertComment();
+        $id = $comment->insert();
         $this->assertNotEquals(false, $id);
 
         $fetchedComment = Comment::getCommentById($id);
@@ -50,13 +52,22 @@ final class CommentTest extends TestCase {
 
     public function testGetCommentByVideoId()
     {
-        $comment = Comment::getCommentsByVideoId( 1);
+        $comments = Comment::getCommentsByVideoId(1);
 
-        $this->assertInternalType('array',$comment);
-        $this->assertEquals(1,count($comment));
-        $first = $comment[0];
+        $this->assertInternalType('array', $comments);
+        $this->assertNotEquals(0, count($comments));
+
+        $first = $comments[0];
         $this->assertInstanceOf(Comment::class, $first);
-        $this->assertEquals($first->getUser(), 1);
+
+        // Verify that we have at least one resulting comment from the admin/test user
+        $found = false;
+        foreach ($comments as $comment) {
+            if ($comment->getUser() == 1) {
+                $found = true;
+            }
+        }
+        $this->assertTrue($found);
 
     }
 }

@@ -6,8 +6,8 @@
 {% block content %}
 
 
-    <h2>Search Results</h2>
     <div class = "search-results">
+        <h1>Search Results</h1>
         {% for video in result %}
             <a href="watch.php?v={{ video.id }}">
                 <div class="result">
@@ -29,6 +29,26 @@
         {% endfor %}
     </div>
 
+    <div class = "search-results">
+        <h1>Search Results playlists</h1>
+        {% for playlist in playlistResult %}
+            <a href="playlistSelect.php?v={{ playlist.id }}">
+                <div class="result">
+                    <div class="search-thumb">
+                        <img src="{{playlist.getVideos.video.thumbnailPath}}" alt="Heyo">
+                    </div>
+                    <div class="main-result">
+                        <div class="main-search">
+                            <div class="videoTitle"> {{ playlist.title }}</div>
+                            <div class="searchTopic"> Topic: {{ playlist.topic }} </div>
+                            <div class="searchSubject"> Subject: {{ playlist.subject }} </div>
+                            <div class="searchDescription"> Description: {{ playlist.description }}</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
 
     {{ error }}
 

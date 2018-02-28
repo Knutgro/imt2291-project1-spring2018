@@ -1,0 +1,35 @@
+{% extends "base.twig" %}
+
+{% block title %}Search results{% endblock %}
+
+
+{% block content %}
+
+
+    <div class = "search-results">
+        <h1>Search Results</h1>
+        {% for video in result %}
+            <a href="watch.php?v={{ video.id }}?p={{ playlistSearch }}?i={{ video.id}}">
+                <div class="result">
+                    <div class="search-thumb">
+                        <img src="{{video.thumbnailPath}}" alt="Heyo">
+                    </div>
+                    <div class="main-result">
+                        <div class="main-search">
+                            {#<a href="watch.php?v={{ video.id }}">#}
+                            <div class="videoTitle"> {{ video.title }}</div>
+                            {#</a>#}
+                            <div class="searchTopic"> Topic: {{ video.topic }} </div>
+                            <div class="searchSubject"> Subject: {{ video.subject }} </div>
+                            <div class="searchDescription"> Description: {{ video.description }}</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    {{ error }}
+
+
+{% endblock %}

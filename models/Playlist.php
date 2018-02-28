@@ -90,21 +90,43 @@ class Playlist
     }
 
     /**
+     * Finds all videos associated with the current playlist.
+     *
+     * @return array of video objects
+     */
+
+    public function getVideos()
+    {
+        return Playlist::getVideosByPlaylistId($this->id);
+    }
+
+    /**
      * Finds all videos associated with a given playlist's id.
      *
      * @param int $id ID of the playlist that contains the videos
-     * @return array of video ids
+     * @return array of video objects
      */
+
+
     static public function getVideosByPlaylistId($id)
     {
         $dbh = DB::getPDO();
-        $stmt = $dbh->prepare("SELECT * FROM playlistvideos WHERE playlist = $id ORDER BY no");
-        $stmt->execute();
+        //$stmt = $dbh->prepare("SELECT * FROM playlistvideos WHERE playlist = $id ORDER BY no");
+        $stmt = $dbh->prepare("SELECT video.* FROM playlistvideos
+                                        LEFT JOIN video ON video.id=playlistvideos.video
+                                        WHERE playlist = :id ORDER BY no");
+        $stmt->bindValue(':id', $id);
 
-        // Return the data as an initialized user object, given the result set
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Video");
+        $results = [];
+        // Return the data as an initialized video object, given the result set
         // isn't empty
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
+        foreach ($stmt as $row) {
+            $results[] = $row;
+        }
+
+        return $results;
     }
 
     /**

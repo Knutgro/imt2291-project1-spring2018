@@ -28,7 +28,7 @@
                     <td colspan="3">No users are currently pending verification</td>
                 </tr>
             {% else %}
-            {% for unverifiedUser in users %}
+            {% for unverifiedUser in pendingUsers %}
                 <tr>
                     <td>{{ unverifiedUser.email }}</td>
                     <td>{{ unverifiedUser.type }}</td>
@@ -39,6 +39,36 @@
                 </tr>
             {% endfor %}
             {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Registered users</h3>
+    <div class="centered-content">
+        <table>
+            <thead>
+                <tr>
+                    <th>E-mail</th>
+                    <th width="10%">Role</th>
+                    <th width="130px"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for registeredUser in users %}
+                <form action="/admin.php?action=role&id={{ registeredUser.id }}" method="post">
+                    <tr>
+                        <td>{{ registeredUser.email }}</td>
+                        <td colspan="2">
+                            <select name="role" {{ user.id == registeredUser.id ? "disabled" }}>
+                                <option value="student" {{ registeredUser.type == "student" ? "selected" }}>Student</option>
+                                <option value="lecturer" {{ registeredUser.type == "lecturer" ? "selected" }}>Lecturer</option>
+                                <option value="admin" {{ registeredUser.type == "admin" ? "selected" }}>Admin</option>
+                            </select>
+                            <input type="submit" value="Change role" {{ user.id == registeredUser.id ? "disabled" }} />
+                        </td>
+                    </tr>
+                </form>
+            {% endfor %}
             </tbody>
         </table>
     </div>

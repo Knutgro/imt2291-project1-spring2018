@@ -17,10 +17,10 @@ final class RatingTest extends TestCase {
         $dbh->rollBack();
     }
 
- public function testInsertRating()
+ public function testInsert()
  {
      $rating = new rating(2, 1, 2);
-     $inserted = $rating->insertRating();
+     $inserted = $rating->insert();
      $this->assertNotEquals(false, $inserted);
 
      $fetchedRating = rating::getUserRating(2,1);

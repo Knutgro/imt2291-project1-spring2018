@@ -89,7 +89,7 @@ div.search {
     display: inline;
 }
 
-input, textarea, .btn {
+input, textarea, .btn, select {
     border-color: var(--input-base);
     border-style: solid;
     border-width: 1px;
@@ -244,6 +244,16 @@ dialog {
     font-size: 12px;
 }
 
+
+/**
+ * Search page
+ */
+.search-results {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .search-thumb {
     max-height: 200px;
     width: 200px;
@@ -282,7 +292,6 @@ a {
 }
 
 .searchDescription{
-    width: 500px;
     height: 55px;
     word-break: keep-all;
     overflow: hidden;
@@ -300,6 +309,11 @@ textarea:required:invalid {
     border-color: #c50000;
 }
 
+input:disabled,
+select:disabled {
+    background-color: lightgray;
+}
+
 
 /**
  * Video playback
@@ -307,6 +321,10 @@ textarea:required:invalid {
 .playbox {
     display: grid;
     grid-template-columns: auto 0px;
+}
+
+.playbox:not(.with-sidebar) .sidebox {
+    display: none;
 }
 
 .playbox.with-sidebar {
@@ -348,6 +366,19 @@ textarea:required:invalid {
 
 
 /**
+ * Ratings
+ */
+.ratings {
+    text-align: right;
+    float: right;
+    color: gray;
+}
+
+.rate {
+    margin-top: 5px;
+}
+
+/**
  * Comments
  */
 .comment-box textarea {
@@ -376,4 +407,27 @@ textarea:required:invalid {
 
 .comment .user::before {
     content: "– ";
+}
+
+.badge {
+    background: red;
+    color: white;
+    padding: 2px;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-size: 10px;
+    animation: flash 1s ease-out;
+    animation-iteration-count: infinite; 
+}
+
+@keyframes flash {
+    0% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 1.0;
+    }
+    100% {
+        opacity: 0.3;
+    }
 }
