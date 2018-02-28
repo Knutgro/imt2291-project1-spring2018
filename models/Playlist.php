@@ -90,11 +90,24 @@ class Playlist
     }
 
     /**
+     * Finds all videos associated with the current playlist.
+     *
+     * @return array of video objects
+     */
+
+    public function getVideos()
+    {
+        return Playlist::getVideosByPlaylistId($this->id);
+    }
+
+    /**
      * Finds all videos associated with a given playlist's id.
      *
      * @param int $id ID of the playlist that contains the videos
-     * @return array of video ids
+     * @return array of video objects
      */
+
+
     static public function getVideosByPlaylistId($id)
     {
         $dbh = DB::getPDO();

@@ -6,8 +6,8 @@ $search = $_GET["v"];
 $result = Playlist::getVideosByPlaylistId($search);
 
 
-echo $twig->render('search.twig', [
+echo $twig->render('playlistSelect.twig', [
     "result" => $result,
-    "searchTerm" => $search,
+    "playlistSearch" => $search,
     "user" => User::loggedIn()
 ]);
