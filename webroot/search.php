@@ -9,4 +9,5 @@ $result = Video::getBySearch($search);
 echo $twig->render('search.twig', [
     "result" => $result,
     "searchTerm" => $search,
+    "user" => User::loggedIn()
     ]);

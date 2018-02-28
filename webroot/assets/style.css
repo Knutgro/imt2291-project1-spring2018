@@ -292,7 +292,6 @@ a {
 }
 
 .searchDescription{
-    width: 500px;
     height: 55px;
     word-break: keep-all;
     overflow: hidden;
