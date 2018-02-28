@@ -24,7 +24,9 @@
                             <li><a class="btn" href="upload.php">Upload</a></li>
                             {% endif %}
                             {% if user.isAdmin %}
-                            <li><a class="btn" href="admin.php">Admin</a></li>
+                                <li><a class="btn" href="admin.php">Users 
+                                        {% if user.pendingUserCount > 0 %}<span class="badge">{{ user.pendingUserCount }}</span>{% endif %}
+                                            </a></li>
                             {% endif %}
                             <li><a class="btn" href="logout.php">Log out</a></li>
                         {% else %}

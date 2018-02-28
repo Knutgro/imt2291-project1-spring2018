@@ -161,6 +161,17 @@ class User {
     }
 
     /**
+     * Returns the amount of users that are currently pending admin verification.
+     *
+     * This is a class method to easily provide access inside twig.
+     * @return int Number of users that are pending verification.
+     */
+    public function getPendingUserCount()
+    {
+        return count(self::getPendingVerification());
+    }
+
+    /**
      * Get a list of users that are pending verification as admins or lecturers.
      *
      * @param int $id Email of the user that should be loaded

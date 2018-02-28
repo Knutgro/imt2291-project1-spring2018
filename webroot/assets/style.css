@@ -403,3 +403,26 @@ textarea:required:invalid {
 .comment .user::before {
     content: "– ";
 }
+
+.badge {
+    background: red;
+    color: white;
+    padding: 2px;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-size: 10px;
+    animation: flash 1s ease-out;
+    animation-iteration-count: infinite; 
+}
+
+@keyframes flash {
+    0% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 1.0;
+    }
+    100% {
+        opacity: 0.3;
+    }
+}
