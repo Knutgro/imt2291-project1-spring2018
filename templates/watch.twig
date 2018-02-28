@@ -23,16 +23,23 @@
     </div>
 </div>
 
+{% if error %}
+<div class="error">{{error}}</div>
+{% endif %}
+
 <h3>Comments</h3>
 {% if user %}
-<div class="comment-box">
-    <div class="control">
-        <textarea name="comment"></textarea>
+<form method="POST">
+    <input type="hidden" name="action" value="comment" />
+    <div class="comment-box">
+        <div class="control">
+            <textarea name="comment"></textarea>
+        </div>
+        <div class="control">
+            <input type="submit" />
+        </div>
     </div>
-    <div class="control">
-        <input type="submit" />
-    </div>
-</div>
+</form>
 {% endif %}
 
 <div class="comments">

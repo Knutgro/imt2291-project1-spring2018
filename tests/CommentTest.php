@@ -16,10 +16,10 @@ final class CommentTest extends TestCase {
 
 
 
-    public function testInsertComment()
+    public function testInsert()
     {
         $comment = new Comment(1, 1, "hello world");
-        $id = $comment->insertComment();
+        $id = $comment->insert();
         $this->assertNotEquals(false, $id);
 
         $fetchedComment = Comment::getCommentById($id);

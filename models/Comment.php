@@ -89,7 +89,7 @@ class Comment
      * @return mixed False if insertion failed,
      * otherwise it returns the id of the inserted comment.
      */
-    public function insertComment()
+    public function insert()
     {
         $sql = "INSERT INTO comment (user, video, comment)
                 VALUES (:user, :video, :comment)";
@@ -116,7 +116,7 @@ class Comment
         // Get the DB handle
         $dbh = DB::getPDO();
 
-        $sql = "SELECT * FROM comment WHERE video = ?";
+        $sql = "SELECT * FROM comment WHERE video = ? ORDER BY id DESC";
         $stmt = $dbh->prepare($sql);
         $stmt->execute([$video]);
         $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Comment");
