@@ -4,32 +4,28 @@
 
 
 {% block content %}
-    <style>
-        img:hover {
-            opacity: 0.7;
-        }
-    </style>
+
 
     <h2>Search Results</h2>
     <div class = "search-results">
         {% for video in result %}
-            <div class="result">
-                <div class="search-thumb">
-                    <a target="_blank" href="watch.php?v={{ video.id }}">
+            <a href="watch.php?v={{ video.id }}">
+                <div class="result">
+                    <div class="search-thumb">
                         <img src="{{video.thumbnailPath}}" alt="Heyo">
-                    </a>
-                </div>
-                <div class="main-result">
-                    <div class="main-search">
-                        <a href="watch.php?v={{ video.id }}">
+                    </div>
+                    <div class="main-result">
+                        <div class="main-search">
+                           {#<a href="watch.php?v={{ video.id }}">#}
                             <div class="videoTitle"> {{ video.title }}</div>
-                        </a>
-                        <div class="searchSubject"> {{ video.subject }} </div>
-                        <div class="searchTopic"> {{ video.topic }} </div>
-                        <div class="searchDescription">{{ video.description }}</div>
+                            {#</a>#}
+                            <div class="searchTopic"> Topic: {{ video.topic }} </div>
+                            <div class="searchSubject"> Subject: {{ video.subject }} </div>
+                            <div class="searchDescription"> Description: {{ video.description }}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         {% endfor %}
     </div>
 
