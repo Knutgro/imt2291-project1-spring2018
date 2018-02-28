@@ -89,7 +89,7 @@ div.search {
     display: inline;
 }
 
-input, textarea, .btn {
+input, textarea, .btn, select {
     border-color: var(--input-base);
     border-style: solid;
     border-width: 1px;
@@ -359,6 +359,19 @@ textarea:required:invalid {
     margin-bottom: 20px;
 }
 
+
+/**
+ * Ratings
+ */
+.ratings {
+    text-align: right;
+    float: right;
+    color: gray;
+}
+
+.rate {
+    margin-top: 5px;
+}
 
 /**
  * Comments
