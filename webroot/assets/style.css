@@ -309,6 +309,10 @@ textarea:required:invalid {
     grid-template-columns: auto 0px;
 }
 
+.playbox:not(.with-sidebar) .sidebox {
+    display: none;
+}
+
 .playbox.with-sidebar {
     grid-template-columns: auto var(--video-sidebox-width);
 }
