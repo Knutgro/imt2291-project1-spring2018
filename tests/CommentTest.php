@@ -8,13 +8,24 @@ use PHPUnit\Framework\TestCase;
 
 final class CommentTest extends TestCase {
 
+
+    public function setUp()
+    {
+        $dbh = DB::getPDO();
+        $dbh->beginTransaction();
+    }
+
+    public function tearDown()
+    {
+        $dbh = DB::getPDO();
+        $dbh->rollBack();
+    }
+
     public function testGetUser()
     {
         $user = new Comment(1);
         $this->assertEquals($user->getUser(), 1);
     }
-
-
 
     public function testInsertComment()
     {

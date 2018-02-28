@@ -7,6 +7,18 @@ use PHPUnit\Framework\TestCase;
 
 final class PlaylistTest extends TestCase {
 
+    public function setUp()
+    {
+        $dbh = DB::getPDO();
+        $dbh->beginTransaction();
+    }
+
+    public function tearDown()
+    {
+        $dbh = DB::getPDO();
+        $dbh->rollBack();
+    }
+
     public function testGetPlaylistOwner()
     {
         $user = new playlist(1);

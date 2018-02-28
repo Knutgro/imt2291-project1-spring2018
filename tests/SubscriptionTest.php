@@ -6,6 +6,19 @@ use PHPUnit\Framework\TestCase;
 
 final class SubscriptionTest extends TestCase {
 
+    public function setUp()
+    {
+        $dbh = DB::getPDO();
+        $dbh->beginTransaction();
+    }
+
+    public function tearDown()
+    {
+        $dbh = DB::getPDO();
+        $dbh->rollBack();
+    }
+
+
     public function testGetId()
     {
         $user = new subscription(1,1);
