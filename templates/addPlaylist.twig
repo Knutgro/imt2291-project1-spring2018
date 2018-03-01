@@ -2,16 +2,15 @@
 {% block title %}New playlist{% endblock %}
 
 {% block content %}
-    <h1>New Playlist</h1>
-    <link rel="stylesheet" href="../webroot/assets/style.css" />
+    <h2>New Playlist</h2>
 
     {% if errors %}
         <ul>
         {% for error in errors %}
             <li>{{ error }}</li>
         {% endfor %}
+        </ul>
     {% endif %}
-    </ul>
 
     <form method="post">
         <div class="control">
@@ -34,15 +33,15 @@
             <input id="topic" type="text" name="topic" />
         </div>
         <h2>Videos</h2>
-        <div class = "vidwrapper">
+        <div class="vidwrapper">
 
-            {% for video in result %}
+            {% for video in videos %}
             <div class="vidbox">
                 <div>
                     <label for="videoTitle">{{ video.title }}</label>
                     <div class="videoData">  {{ video.topic }} </div>
                     <div class="videoData"> {{ video.subject }} </div>
-                    <input type="checkbox" name="video[]" id = "video" value = "{{ video.id }}" />
+                    <input type="checkbox" name="video[]" id="video" value="{{ video.id }}" />
                 </div>
             </div>
             {% endfor %}
