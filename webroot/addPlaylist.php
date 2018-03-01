@@ -38,7 +38,7 @@ if (!empty($_POST)) {
     }
 
     // Insert into DB
-    $playlist = new Playlist(1, $title, $description, $subject, $topic);
+    $playlist = new Playlist($user->getId(), $title, $description, $subject, $topic);
 
     // Verify and either redirect or error
     if (empty($errors)) {
