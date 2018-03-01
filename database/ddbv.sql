@@ -118,11 +118,6 @@ INSERT INTO comment(user, video, comment)
     VALUES
     (1, 1, "WOAH");
 
-INSERT INTO rating(video, user, rating)
-    VALUES
-    (1, 1, 5),
-    (1, 2, 2);
-
 
 INSERT INTO subscription(user, playlist)
     VALUES
