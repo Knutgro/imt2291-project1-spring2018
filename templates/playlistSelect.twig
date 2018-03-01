@@ -7,7 +7,13 @@
 
 
     <div class = "search-results">
-        <h1>{{ currentPlaylist.title }}</h1>
+        <h2>{{ currentPlaylist.title }}</h2>
+        <a class="btn btn-err" href="/subscribe.php?p={{ playlist.id }}">Subscribe</a>
+        <div class="playlist-info">{{ currentPlaylist.subject }} - {{ currentPlaylist.topic }}</div>
+        <p>
+            {{ currentPlaylist.description }}
+        </p>
+        <h3>Videos</h3>
         {% set i = 0 %}
         {% for video in result %}
             {% set i = i + 1 %}
