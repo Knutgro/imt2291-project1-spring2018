@@ -4,12 +4,26 @@
 
 {% block content %}
 <div class="video-watch">
-    <div class="playbox "><!-- with-sidebar for playlist box -->
+    <div class="playbox{{ playlist ? " with-sidebar" }}">
         <div class="video">
             <video autoplay controls src="{{ video.videoPath }}"></video>
         </div>
         <div class="sidebox">
-            ahuehue
+            <a class="btn btn-err subscribe">Subscribe</a>
+            <h3>{{ playlist.title }}</h3>
+            <span>{{ playlist.subject }} - {{ playlist.topic }}</span>
+            <p>
+                {{ playlist.description }}
+            </p>
+
+            <h4>Up next</h4>
+            {% if upnext %}
+            <img src="{{ upnext.thumbnailPath }}" />
+            <strong>{{ upnext.title }}</strong>
+            <a class="btn" href="/watch.php?v={{upnext.id}}&p={{playlist.id}}&i={{videoInd + 1}}">Play next</a>
+            {% else %}
+            <span>You are at the end of the playlist</span>
+            {% endif %}
         </div>
     </div>
 

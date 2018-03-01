@@ -9,7 +9,7 @@
     <div class = "search-results">
         <h1>{{ currentPlaylist.title }}</h1>
         {% for video in result %}
-            <a href="watch.php?v={{ video.id }}?p={{ playlistSearch }}?i={{ video.id}}">
+            <a href="watch.php?v={{ video.id }}&p={{ playlistSearch }}&i={{ video.id}}">
                 <div class="result">
                     <div class="search-thumb">
                         <img src="{{video.thumbnailPath}}" alt="Heyo">

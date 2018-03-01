@@ -30,13 +30,13 @@
     </div>
 
     {% if playlistResult %}
-        <div class = "search-results">
+        <div class="search-results">
             <h1>Search Results Playlists</h1>
             {% for playlist in playlistResult %}
                 <a href="playlistSelect.php?v={{ playlist.id }}">
                     <div class="result">
                         <div class="search-thumb">
-                            <img src="{{playlist.videos[0].thumbnailPath }}" alt="Heyo">
+                            <img src="{{ playlist.videos[0].thumbnailPath }}" alt="Heyo">
                         </div>
                         <div class="main-result">
                             <div class="main-search">

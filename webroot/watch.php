@@ -12,6 +12,15 @@ if (!$video) {
     http_404_page("Video");
 }
 
+$playlist = null;
+$nextVideo = null;
+$playIndex = (int) $_GET["i"];
+if (!empty($_GET["p"])) {
+    $playlist = Playlist::getPlaylistById($_GET["p"]);
+
+    $nextVideo = $playlist->getVideos()[ $playIndex ]; // playIndex is one-indexed, so no need to increment
+}
+
 
 $error = "";
 if ($user && !empty($_POST)) {
@@ -50,6 +59,10 @@ echo $twig->render('watch.twig', [
     "comments" => Comment::getCommentsByVideoId($video->getId()),
     "rating"   => Rating::getTotalRating($video->getId()),
     "myrating" => $user ? Rating::getUserRating($user->getId(), $video->getId()) : null,
+
+    "playlist" => $playlist,
+    "videoInd" => $playIndex,
+    "upnext"   => $nextVideo,
 
     "error"    => $error,
 ]);
