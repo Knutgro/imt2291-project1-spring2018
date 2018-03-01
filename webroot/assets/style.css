@@ -337,7 +337,7 @@ select:disabled {
     background: black;
     color: white;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: hidden;
     padding: 10px;
 }
 
