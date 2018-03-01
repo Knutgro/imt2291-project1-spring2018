@@ -7,7 +7,17 @@
 
 
     <div class = "search-results">
-        <h1>{{ currentPlaylist.title }}</h1>
+        <h2>{{ currentPlaylist.title }}</h2>
+        {% if sub %}
+        <a class="btn subscribe" href="/subscribe.php?p={{ currentPlaylist.id }}">Unsubscribe</a>
+        {% else %}
+        <a class="btn btn-err subscribe" href="/subscribe.php?p={{ currentPlaylist.id }}">Subscribe</a>
+        {% endif %}
+        <div class="playlist-info">{{ currentPlaylist.subject }} - {{ currentPlaylist.topic }}</div>
+        <p>
+            {{ currentPlaylist.description }}
+        </p>
+        <h3>Videos</h3>
         {% set i = 0 %}
         {% for video in result %}
             {% set i = i + 1 %}

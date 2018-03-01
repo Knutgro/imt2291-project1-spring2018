@@ -265,6 +265,13 @@ dialog {
     margin-left: auto;
     margin-right: auto;
 }
+
+.search-results .playlist-info {
+    font-size: 12px;
+    font-style: italic;
+    margin-top: 10px;
+}
+
 /*
 .search-thumb img:hover {
     opacity: 0.7;

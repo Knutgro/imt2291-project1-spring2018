@@ -19,25 +19,24 @@ final class RatingTest extends TestCase {
 
  public function testInsert()
  {
-     $rating = new rating(2, 1, 2);
+     $rating = new rating(2, 2, 2);
      $inserted = $rating->insert();
      $this->assertNotEquals(false, $inserted);
 
-     $fetchedRating = rating::getUserRating(2,1);
+     $fetchedRating = rating::getUserRating(2, 1);
 
      $this->assertEquals($rating->getRating(), $fetchedRating);
-
  }
 
  public function testGetUserRating()
  {
-     $rating = Rating::getUserRating(1,1);
-     $this->assertEquals(5,$rating);
+     $rating = Rating::getUserRating(1, 1);
+     $this->assertEquals(5, $rating);
  }
 
  public function testGetTotalRating()
  {
      $totalRating = Rating::getTotalRating(1);
-     $this->assertEquals(7/2,$totalRating);
+     $this->assertEquals(7 / 2, $totalRating);
  }
 }

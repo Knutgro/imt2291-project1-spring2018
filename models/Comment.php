@@ -85,7 +85,7 @@ class Comment
         return $result;
     }
     /**
-     * Insert the loaded comment into the databse.
+     * Insert the loaded comment into the database.
      * @return mixed False if insertion failed,
      * otherwise it returns the id of the inserted comment.
      */

@@ -9,7 +9,11 @@
             <video autoplay controls src="{{ video.videoPath }}"></video>
         </div>
         <div class="sidebox">
-            <a class="btn btn-err subscribe">Subscribe</a>
+            {% if sub %}
+            <a class="btn subscribe" href="/subscribe.php?p={{ playlist.id }}">Unsubscribe</a>
+            {% else %}
+            <a class="btn btn-err subscribe" href="/subscribe.php?p={{ playlist.id }}">Subscribe</a>
+            {% endif %}
             <h3>{{ playlist.title }}</h3>
             <span>{{ playlist.subject }} - {{ playlist.topic }}</span>
             <p>

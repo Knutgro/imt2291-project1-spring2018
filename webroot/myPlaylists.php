@@ -14,6 +14,7 @@ if (is_null($user) || !$user->is(User::ADMIN || $user->is(User::LECTURER))) {
     die();
 }
 
+//Stores the playlists of the given user.
 $playlists = Playlist::getPlaylistByUser($user->getId());
 
 if (!empty($_POST)) {
