@@ -95,6 +95,11 @@ final class PlaylistTest extends TestCase {
 
     public function testGetVideoByPlaylistId()
     {
+        $dbh = DB::getPDO();
+        $stmt = $dbh->prepare("INSERT INTO playlistvideos (playlist, video, no) VALUES (?, ?, 0);");
+        $this->assertTrue($stmt->execute([$this->id, $this->video1id]));
+        $this->assertTrue($stmt->execute([$this->id, $this->video2id]));
+
         $videos = Playlist::getVideosByPlaylistId($this->id);
 
         $this->assertInternalType('array', $videos);
