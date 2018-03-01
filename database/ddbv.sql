@@ -103,7 +103,7 @@ INSERT INTO video (id, title, description, videoPath, thumbnailPath, subject, to
 
 INSERT INTO playlist(id, user, title, description, subject, topic)
 	VALUES 
-	(1, 1, 'title', 'description', 'subject', 'topic');
+	(1, 1, 'Super cool IT videos', 'This is a collection of super cool IT videos', 'IMT2019 and SMF2019', 'IT');
 	
 INSERT INTO playlistvideos(no,playlist,video)
 	VALUES 

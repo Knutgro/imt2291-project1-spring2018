@@ -29,27 +29,31 @@
         {% endfor %}
     </div>
 
-    <div class = "search-results">
-        <h1>Search Results Playlists</h1>
-        {% for playlist in playlistResult %}
-            <a href="playlistSelect.php?v={{ playlist.id }}">
-                <div class="result">
-                    <div class="search-thumb">
-                        <img src="{{playlist.videos[0].thumbnailPath }}" alt="Heyo">
-                    </div>
-                    <div class="main-result">
-                        <div class="main-search">
-                            <div class="videoTitle"> {{ playlist.title }}</div>
-                            <div class="searchTopic"> Topic: {{ playlist.topic }} </div>
-                            <div class="searchSubject"> Subject: {{ playlist.subject }} </div>
-                            <div class="searchDescription"> Description: {{ playlist.description }}</div>
+    {% if playlistResult %}
+        <div class = "search-results">
+            <h1>Search Results Playlists</h1>
+            {% for playlist in playlistResult %}
+                <a href="playlistSelect.php?v={{ playlist.id }}">
+                    <div class="result">
+                        <div class="search-thumb">
+                            <img src="{{playlist.videos[0].thumbnailPath }}" alt="Heyo">
+                        </div>
+                        <div class="main-result">
+                            <div class="main-search">
+                                <div class="videoTitle"> {{ playlist.title }}</div>
+                                <div class="searchTopic"> Topic: {{ playlist.topic }} </div>
+                                <div class="searchSubject"> Subject: {{ playlist.subject }} </div>
+                                <div class="searchDescription"> Description: {{ playlist.description }}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
-        {% endfor %}
-    </div>
-
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if not result and not playlistResult %}
+        <div class="search-results">There were no search results :( </div>
+    {% endif %}
     {{ error }}
 
 

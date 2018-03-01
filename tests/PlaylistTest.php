@@ -52,7 +52,7 @@ final class PlaylistTest extends TestCase {
         $videos = Playlist::getVideosByPlaylistId(1);
 
         $this->assertInternalType('array',$videos);
-        $this->assertEquals(1,count($videos));
+        $this->assertEquals(2,count($videos));
     }
 
 
