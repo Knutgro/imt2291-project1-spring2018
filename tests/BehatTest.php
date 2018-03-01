@@ -20,7 +20,7 @@ use Behat\Mink\Element\NodeElement;
  * the new one should give the same result as preceeding tests directly.
  */
 final class BehatTest extends TestCase {
-    protected $baseUrl = "http://localhost:8000/";
+    protected $baseUrl = "http://localhost/";
 
 
     /**
