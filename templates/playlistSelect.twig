@@ -8,7 +8,7 @@
 
     <div class = "search-results">
         <h2>{{ currentPlaylist.title }}</h2>
-        <a class="btn btn-err" href="/subscribe.php?p={{ playlist.id }}">Subscribe</a>
+        <a class="btn btn-err" href="/subscribe.php?p={{ currentPlaylist.id }}">Subscribe</a>
         <div class="playlist-info">{{ currentPlaylist.subject }} - {{ currentPlaylist.topic }}</div>
         <p>
             {{ currentPlaylist.description }}
