@@ -78,11 +78,11 @@
 
 {% if user and user.id == video.user %}
 <h3>Add to playlist</h3>
-<form method="post">
+<form method="post" id="playlistForm">
     <input type="hidden" name="action" value="playlist" />
     <div class="control">
         <label for="playlist">Playlist</label>
-        <select name="playlist">
+        <select name="playlist" id="playlist">
             {% for myPlaylist in myPlaylists %}
             <option value="{{myPlaylist.id}}">{{myPlaylist.title}}</option>
             {% endfor %}
@@ -98,7 +98,7 @@
 
 <h3>Comments</h3>
 {% if user %}
-<form method="POST">
+<form method="post">
     <input type="hidden" name="action" value="comment" />
     <div class="comment-box">
         <div class="control">

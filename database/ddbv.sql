@@ -28,7 +28,7 @@ create table video (
     user            int NOT NULL,
 
     primary key(id),
-    foreign key(user) references user(id)
+    foreign key(user) references user(id) ON DELETE CASCADE
 );
 
 create table rating (
@@ -37,8 +37,8 @@ create table rating (
     rating          int NOT NULL,
 
     primary key(video, user),
-    foreign key(user)  references user(id),
-    foreign key(video) references video(id)
+    foreign key(user)  references user(id) ON DELETE CASCADE,
+    foreign key(video) references video(id) ON DELETE CASCADE
 );
 
 
@@ -49,8 +49,8 @@ create table comment (
     comment        text NOT NULL,
 
     primary key(id),
-    foreign key(user)  references user(id),
-    foreign key(video) references video(id)
+    foreign key(user)  references user(id) ON DELETE CASCADE,
+    foreign key(video) references video(id) ON DELETE CASCADE
 );
 
 create table playlist (
@@ -62,7 +62,7 @@ create table playlist (
     topic           tinytext NOT NULL,
 
     primary key(id),
-    foreign key(user) references user(id)
+    foreign key(user) references user(id) ON DELETE CASCADE
 );
 
 create table playlistvideos  (
@@ -71,8 +71,8 @@ create table playlistvideos  (
     video           int NOT NULL,
 
     primary key (playlist, video),
-    foreign key (playlist) references playlist(id),
-    foreign key (video)    references video(id)
+    foreign key (playlist) references playlist(id) ON DELETE CASCADE,
+    foreign key (video)    references video(id) ON DELETE CASCADE
 );
 
 
@@ -81,8 +81,8 @@ create table subscription  (
     playlist        int NOT NULL,
 
     primary key(user, playlist),
-    foreign key(user)     references user(id),
-    foreign key(playlist) references playlist(id)
+    foreign key(user)     references user(id) ON DELETE CASCADE,
+    foreign key(playlist) references playlist(id) ON DELETE CASCADE
 );
 
 

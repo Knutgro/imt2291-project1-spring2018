@@ -6,7 +6,7 @@
 {% block content %}
 
 
-    <div class = "search-results">
+    <div class="search-results">
         <h2>{{ currentPlaylist.title }}</h2>
         {% if sub %}
         <a class="btn subscribe" href="/subscribe.php?p={{ currentPlaylist.id }}">Unsubscribe</a>
@@ -22,7 +22,7 @@
         {% for video in result %}
             {% set i = i + 1 %}
             <a href="watch.php?v={{ video.id }}&p={{ playlistSearch }}&i={{ i }}">
-                <div class="result">
+                <div class="result" id="playlist-{{currentPlaylist.id}}-video-{{video.id}}">
                     <div class="search-thumb">
                         <img src="{{video.thumbnailPath}}" alt="Heyo">
                     </div>

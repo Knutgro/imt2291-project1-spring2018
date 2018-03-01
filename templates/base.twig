@@ -29,9 +29,9 @@
                                         {% if user.pendingUserCount > 0 %}<span class="badge">{{ user.pendingUserCount }}</span>{% endif %}
                                             </a></li>
                             {% endif %}
-                            <li><a class="btn" href="logout.php">Log out</a></li>
+                            <li><a class="btn" href="logout.php" id="btn-logout">Log out</a></li>
                         {% else %}
-                            <li><a class="btn" href="login.php">Log in</a></li>
+                            <li><a class="btn" href="login.php" id="btn-login">Log in</a></li>
                             <li><a class="btn" href="register.php">Register</a></li>
                         {% endif %}
                     </ul>
