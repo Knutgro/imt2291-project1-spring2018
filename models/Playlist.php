@@ -154,8 +154,8 @@ class Playlist
     static public function getVideoOrderNo($id)
     {
         $dbh = DB::getPDO();
-        $stmt = $dbh->prepare("SELECT no FROM playlistvideos WHERE video = $id ");
-        $stmt->execute();
+        $stmt = $dbh->prepare("SELECT no FROM playlistvideos WHERE video = ?");
+        $stmt->execute([$id]);
         $result = $stmt->fetch(PDO::FETCH_COLUMN);
 
         return $result;
@@ -352,9 +352,9 @@ class Playlist
 
         }
         $dbh = DB::getPDO();
-        $sql = "DELETE FROM playlistvideos WHERE video = $video";
+        $sql = "DELETE FROM playlistvideos WHERE video = ? AND playlist = ?";
         $stmt = $dbh->prepare($sql);
-        if($stmt->execute()) {
+        if($stmt->execute([$video, $this->id])) {
             $this->lastInserted--;
             return true;
         }
@@ -372,9 +372,9 @@ class Playlist
     public function getIdByOrderNo($no)
     {
         $dbh = DB::getPDO();
-        $sql = "SELECT video FROM playlistvideos WHERE no = $no";
+        $sql = "SELECT video FROM playlistvideos WHERE no = ?";
         $stmt = $dbh->prepare($sql);
-        $stmt->execute();
+        $stmt->execute([$no]);
         $result = $stmt->fetch(PDO::FETCH_COLUMN);
 
         return $result;
@@ -389,9 +389,9 @@ class Playlist
     public function countVideos($playlist)
     {
         $dbh = DB::getPDO();
-        $sql = "SELECT COUNT(*) FROM playlistvideos WHERE playlist = $playlist";
+        $sql = "SELECT COUNT(*) FROM playlistvideos WHERE playlist = ?";
         $stmt = $dbh->prepare($sql);
-        $stmt->execute();
+        $stmt->execute([$playlist]);
         $result = $stmt->fetch(PDO::FETCH_COLUMN);
 
         return $result;
