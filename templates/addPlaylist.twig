@@ -38,10 +38,10 @@
             {% for video in videos %}
             <div class="vidbox">
                 <div>
+                    <input type="checkbox" name="video[]" id="video" value="{{ video.id }}" />
                     <label for="videoTitle">{{ video.title }}</label>
                     <div class="videoData">  {{ video.topic }} </div>
                     <div class="videoData"> {{ video.subject }} </div>
-                    <input type="checkbox" name="video[]" id="video" value="{{ video.id }}" />
                 </div>
             </div>
             {% endfor %}

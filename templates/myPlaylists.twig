@@ -7,10 +7,8 @@
     {% if playlists != null %}
         <div class = "vidwrapper">
         {% for playlist in playlists %}
-            <form method="post">
                 <div class = "vidbox">
                     <div class="playlist">
-                        <input type="radio" name="playlist" id="playlist" value="{{ playlist.id }}" />
                         <div class="playlistTitle">  {{ playlist.title }} </div>
                         <div class="playlistTopic">  {{ playlist.topic }} </div>
                         <div class="PlaylistSubject">  {{ playlist.subject }} </div>
@@ -23,12 +21,9 @@
                             <div class="videoNo">  {{ order}} </div>
                             <div class="title">  {{ video.title }} </div>
                         {% endfor %}
+                        <a class="btn" href="editPlaylist.php?playlist={{ playlist.id }}">Edit</a>
                     </div>
                 </div>
-                <div class="submitbutton">
-                    <input type="submit" value = "Edit"/>
-                </div>
-            </form>
         {% endfor %}
 
     </div>
