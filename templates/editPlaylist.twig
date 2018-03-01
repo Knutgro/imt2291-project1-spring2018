@@ -3,39 +3,44 @@
 
 {% block content %}
 <h2>{{playlistObject.title}}</h2>
+{% if videos %}
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
-{% if errors %}
-    <ul>
-        {% for error in errors %}
-            <li>{{ error }}</li>
+        <h2>Videos</h2>
+            <form method="post">
+                <div class="vidwrapper">
+                {% for video in videos %}
+                        <div class="vidbox">
+                            <div>
+                            <input type="checkbox" name="video[]" id="video" value="{{ video.id }}" />
+                            <label for="videoTitle">{{ video.title }}</label>
+                            <div class="videoData">  {{ video.topic }} </div>
+                            <div class="videoData"> {{ video.subject }} </div>
+
+                            </div>
+                        </div>
+
         {% endfor %}
-    </ul>
+                    </div>
+                    <div class="submitbutton">
+                        <label></label>
+                        <input type="submit" value = "Remove" name = "remove" />
+                    </div>
+                    <div class="submitbutton">
+                        <label></label>
+                        <input type="submit" value = "Swap order" name = "swap" />
+                    </div>
+            </form>
+{% else %}
+    <p></p>
 {% endif %}
 
-    <h2>Videos</h2>
-        <form method="post">
-            <div class="vidwrapper">
-            {% for video in videos %}
-                    <div class="vidbox">
-                        <div>
-                        <input type="checkbox" name="video[]" id="video" value="{{ video.id }}" />
-                        <label for="videoTitle">{{ video.title }}</label>
-                        <div class="videoData">  {{ video.topic }} </div>
-                        <div class="videoData"> {{ video.subject }} </div>
 
-                        </div>
-                    </div>
-
-    {% endfor %}
-                </div>
-                <div class="submitbutton">
-                    <label></label>
-                    <input type="submit" value = "Remove" name = "remove" />
-                </div>
-                <div class="submitbutton">
-                    <label></label>
-                    <input type="submit" value = "Swap order" name = "swap" />
-                </div>
-        </form>
 
 {% endblock %}

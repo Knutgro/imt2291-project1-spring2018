@@ -4,15 +4,22 @@ require_once dirname(dirname(__FILE__)) . "/lib.php";
 
 // Redirect the user away if they are already logged in
 $user = User::loggedIn();
+// Checking if user has permissions
 if (is_null($user) || !$user->isLecturer()) {
     header("Location: /");
     die();
 }
 
+// Handle form submission
 $errors = [];
+
+// Getting playlist object from playlist id sent from form
 $playlistObject = Playlist::getPlaylistById($_GET["playlist"]);
+
+// Getting video objects from playlist id.
 $videos = $playlistObject->getVideosByPlaylistId($_GET["playlist"]);
 
+// Performs video removal or video swap depending on which button is activated.
 if (!empty($_POST)) {
     if (isset($_POST['remove'])) {
         if ($_POST["video"]) {
@@ -31,7 +38,7 @@ if (!empty($_POST)) {
         }
 
     }
-
+    // Landing page if
     if (empty($errors)) {
         header("Location: /myPlaylists.php");
         die();

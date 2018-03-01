@@ -9,18 +9,20 @@ if (is_null($user) || !$user->isLecturer()) {
     die();
 }
 
+// Getting the users videos
 $userVideos = Video::getByUser($user->getId());
 
 // Handle form submission
 $errors = [];
 
-//make playlist and add required attributes and movies to that playlist
+// Make playlist and add required attributes and movies to that playlist
 if (!empty($_POST)) {
     $title = $_POST["title"];
     $subject = $_POST["subject"];
     $topic = $_POST["topic"];
     $description = $_POST["description"];
 
+    // Validating attributes
     if (empty($title)) {
         $errors[] = "Title can't be empty";
     }
@@ -51,7 +53,7 @@ if (!empty($_POST)) {
         }
 
     }
-
+    // Landing page if successful insert
     if (empty($errors)) {
         header("Location: /playlistSelect.php?v=${id}");
         die();
