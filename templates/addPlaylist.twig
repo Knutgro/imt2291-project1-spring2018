@@ -1,0 +1,59 @@
+{% extends "base.twig" %}
+{% block title %}New playlist{% endblock %}
+
+{% block content %}
+    <h1>New Playlist</h1>
+    <link rel="stylesheet" href="../webroot/assets/style.css" />
+
+    {% if errors %}
+        <ul>
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    {% endif %}
+    </ul>
+
+    <form method="post">
+        <div class="control">
+            <label for="title">Title</label>
+            <input id="title" type="text" name="title" />
+        </div>
+
+        <div class="control">
+            <label for="description">Description</label>
+            <input id="description" type="text" name="description" />
+        </div>
+
+        <div class="control">
+            <label for="subject">Subject</label>
+            <input id="subject" type="text" name="subject" />
+        </div>
+
+        <div class="control">
+            <label for="topic">Topic</label>
+            <input id="topic" type="text" name="topic" />
+        </div>
+        <h2>Videos</h2>
+        <div class = "vidwrapper">
+
+            {% for video in result %}
+            <div class="vidbox">
+                <div>
+                    <label for="videoTitle">{{ video.title }}</label>
+                    <div class="videoData">  {{ video.topic }} </div>
+                    <div class="videoData"> {{ video.subject }} </div>
+                    <input type="checkbox" name="video[]" id = "video" value = "{{ video.id }}" />
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="submitbutton">
+            <label></label>
+            <input type="submit" />
+        </div>
+    </form>
+{% endblock %}
+
+
+

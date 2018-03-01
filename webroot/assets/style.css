@@ -431,3 +431,52 @@ select:disabled {
         opacity: 0.3;
     }
 }
+
+.flex-container {
+    display:inline-block;
+    background-color: #f1f1f1;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.flex-container > div {
+    background-color: red;
+    color: white;
+    width: 350px;
+    margin: 20px;
+    text-align: center;
+    line-height: 60px;
+    font-size: 30px;
+    opacity: 0.9 ;
+}
+
+.vidwrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) ) ;
+    background-color: #fff;
+    color: red;
+}
+
+.vidbox {
+    background-color: #ff5f44;
+    color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 150%;
+
+}
+
+
+.submitbutton{
+    display:block;
+}
+
+.grid {
+    display:grid;
+    grid-template-columns: 200px 200px 200px;
+    grid-template-rows: 200px 100px;
+    grid-auto-rows: 100px;
+    grid-gap: 20px;
+}
+

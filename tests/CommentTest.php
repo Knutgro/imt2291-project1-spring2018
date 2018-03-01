@@ -26,7 +26,7 @@ final class CommentTest extends TestCase {
         $user = new Comment(1);
         $this->assertEquals($user->getUser(), 1);
     }
-    
+
     public function testInsert()
 
     {
