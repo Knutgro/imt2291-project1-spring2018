@@ -19,7 +19,7 @@
             <h4>Up next</h4>
             {% if upnext %}
             <img src="{{ upnext.thumbnailPath }}" />
-            <strong>{{ upnext.title }}</strong>
+            <div class="next-title">{{ upnext.title }}</div>
             <a class="btn" href="/watch.php?v={{upnext.id}}&p={{playlist.id}}&i={{videoInd + 1}}">Play next</a>
             {% else %}
             <span>You are at the end of the playlist</span>
