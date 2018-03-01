@@ -12,18 +12,6 @@ if (!$video) {
     http_404_page("Video");
 }
 
-$playlist = null;
-$nextVideo = null;
-$playIndex = (int) $_GET["i"];
-if (!empty($_GET["p"])) {
-    $playlist = Playlist::getPlaylistById($_GET["p"]);
-
-    $videos = $playlist->getVideos();
-    if ( count($videos) > $playIndex ) {
-        $nextVideo = $videos[ $playIndex ]; // playIndex is one-indexed, so no need to increment
-    }
-}
-
 
 $error = "";
 if ($user && !empty($_POST)) {
@@ -55,6 +43,27 @@ if ($user && !empty($_POST)) {
 }
 
 
+$playlist = null;
+$nextVideo = null;
+$playIndex = (int) $_GET["i"];
+$isSubscribed = false;
+if (!empty($_GET["p"])) {
+    $playlist = Playlist::getPlaylistById($_GET["p"]);
+
+    if ($playlist) {
+        $videos = $playlist->getVideos();
+        if ( count($videos) > $playIndex ) {
+            $nextVideo = $videos[ $playIndex ]; // playIndex is one-indexed, so no need to increment
+        }
+    }
+}
+
+if ($user && $playlist)  {
+    $sub = Subscription::getSubscription($user->getId(),
+        $playlist->getId());
+}
+
+
 echo $twig->render('watch.twig', [
     "user"     => $user,
 
@@ -66,6 +75,7 @@ echo $twig->render('watch.twig', [
     "playlist" => $playlist,
     "videoInd" => $playIndex,
     "upnext"   => $nextVideo,
+    "sub"      => $sub,
 
     "error"    => $error,
 ]);

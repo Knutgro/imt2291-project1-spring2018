@@ -43,6 +43,7 @@ class Subscription
     {
         return $this->playlist;
     }
+
     /**
      * Finds subscriptions by a given user id.
      * @param $id user id.
@@ -63,6 +64,30 @@ class Subscription
             $results[] = $row;
         }
         return $results;
+    }
+
+    /**
+     * Checks whether there's a subscription between the user and the playlist
+     *
+     * @param $user The ID of the user
+     * @param $playlist The ID of the playlist
+     * @return Sibscription instance if subscribed, otherwise null
+     */
+    static public function getSubscription($user, $playlist)
+    {
+        // Get the DB handle
+        $dbh = DB::getPDO();
+
+        $sql = "SELECT * FROM subscription WHERE user = ? AND playlist = ?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute([$user, $playlist]);
+
+        $stmt->setFetchMode(DB::FETCH_OBJECT, "Subscription");
+        $result = $stmt->fetch();
+
+        if ($result !== false) {
+            return $result;
+        }
     }
 
     /**

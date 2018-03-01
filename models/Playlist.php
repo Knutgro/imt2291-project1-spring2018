@@ -42,7 +42,6 @@ class Playlist
      *
      * @return int The playlist id
      */
-
     public function getId()
     {
         return $this->id;
@@ -73,7 +72,6 @@ class Playlist
      *
      * @return string The description of the playlist
      */
-
     public function getDescription()
     {
         return $this->description;
@@ -84,7 +82,6 @@ class Playlist
      *
      * @return string The topic of the playlist
      */
-
     public function getTopic()
     {
         return $this->topic;
@@ -95,7 +92,6 @@ class Playlist
      *
      * @return string The subject of the playlist
      */
-
     public function getSubject()
     {
         return $this->subject;
@@ -116,7 +112,6 @@ class Playlist
      *
      * @return array of video objects
      */
-
     public function getVideos()
     {
         return Playlist::getVideosByPlaylistId($this->id);
@@ -128,8 +123,6 @@ class Playlist
      * @param int $id ID of the playlist that contains the videos
      * @return array of video objects
      */
-
-
     static public function getVideosByPlaylistId($id)
     {
         $dbh = DB::getPDO();
@@ -194,7 +187,6 @@ class Playlist
      * @param int $user ID of the owner of playlist's.
      * @return array of playlist objects
      */
-
     static function getPlaylistByUser($user)
     {
         // Get the DB handle
@@ -337,8 +329,10 @@ class Playlist
         }
         return false;
     }
+
     /**
      * Removes a video from a loded playlist.
+     *
      * Function changes the to be removed video's order number to
      * the last number and deletes it, without disturbing the video order
      * in the playlist.
@@ -366,6 +360,7 @@ class Playlist
             return false;
         }
     }
+
     /**
      * Finds the video id from its order number in a loaded playlist.
      * @param int $no video order number.
@@ -381,6 +376,7 @@ class Playlist
 
         return $result;
     }
+
     /**
      * Counts number of videos in a playlist.
      * @param $playlist playlist id.
