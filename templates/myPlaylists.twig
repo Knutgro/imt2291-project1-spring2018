@@ -1,0 +1,44 @@
+{% extends "base.twig" %}
+{% block title %}My Playlists{% endblock %}
+
+{% block content %}
+    <h1>My Playlists</h1>
+
+    {% if playlists != null %}
+        <div class = "vidwrapper">
+        {% for playlist in playlists %}
+            <form method="post">
+                <div class = "vidbox">
+                    <div class="playlist">
+                        <input type="radio" name="playlist" id="playlist" value="{{ playlist.id }}" />
+                        <div class="playlistTitle">  {{ playlist.title }} </div>
+                        <div class="playlistTopic">  {{ playlist.topic }} </div>
+                        <div class="PlaylistSubject">  {{ playlist.subject }} </div>
+                        <div class="PlaylistDescription">  {{ playlist.description }} </div>
+
+                        {% set  videos = playlist.getVideosByPlaylistId(playlist.getId()) %}
+
+                        {% for video in videos %}
+                            {% set order = playlist.getVideoOrderNo(video.getId()) %}
+                            <div class="videoNo">  {{ order}} </div>
+                            <div class="title">  {{ video.title }} </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="submitbutton">
+                    <input type="submit" value = "Edit"/>
+                </div>
+            </form>
+        {% endfor %}
+
+    </div>
+    {% else %}
+        <div class = "text" >
+            <p> There doesn't seems to be anything here..</p>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+
+
