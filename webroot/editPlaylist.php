@@ -6,7 +6,7 @@ require_once dirname(dirname(__FILE__)) . "/lib.php";
 $user = User::loggedIn();
 // Checking if user has permissions
 if (is_null($user) || !$user->isLecturer()) {
-    header("Location: /");
+    header("Location: .");
     die();
 }
 
@@ -15,6 +15,14 @@ $errors = [];
 
 // Getting playlist object from playlist id sent from form
 $playlistObject = Playlist::getPlaylistById($_GET["playlist"]);
+if (!$playlistObject) {
+    http_404_page("Playlist");
+}
+
+if ($playlistObject->getUser() != $user->getId()) {
+    header("Location: .");
+    die();
+}
 
 // Getting video objects from playlist id.
 $videos = $playlistObject->getVideosByPlaylistId($_GET["playlist"]);
