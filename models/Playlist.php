@@ -148,14 +148,16 @@ class Playlist
 
     /**
      * Finds a given video's order number in its playlist.
-     * @param video $id of video
+     * @param int $video The video's ID
+     * @param int $playlist The playlist's ID
      * @return int order number of the video
      */
-    static public function getVideoOrderNo($id)
+    static public function getVideoOrderNo($video, $playlist)
     {
         $dbh = DB::getPDO();
-        $stmt = $dbh->prepare("SELECT no FROM playlistvideos WHERE video = ?");
-        $stmt->execute([$id]);
+        $stmt = $dbh->prepare("SELECT no FROM playlistvideos WHERE video = ? "
+                            . "AND playlist = ?");
+        $stmt->execute([$video, $playlist]);
         $result = $stmt->fetch(PDO::FETCH_COLUMN);
 
         return $result;
@@ -299,8 +301,8 @@ class Playlist
      */
     public function changeVideoOrder($videoId1, $videoId2)
     {
-        $video1 = self::getVideoOrderNo($videoId1);
-        $video2 = self::getVideoOrderNo($videoId2);
+        $video1 = self::getVideoOrderNo($videoId1, $this->id);
+        $video2 = self::getVideoOrderNo($videoId2, $this->id);
         $dbh = DB::getPDO();
 
         $sql = "UPDATE playlistvideos SET no = :video2 WHERE playlist = :id AND video = :video1Id";

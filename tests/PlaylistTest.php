@@ -135,7 +135,7 @@ final class PlaylistTest extends TestCase {
     {
         $playlist = Playlist::getPlaylistById(1);
         $playlist->changeVideoOrder(1, 2);
-        $this->assertEquals($playlist->getVideoOrderNo(1), 2);
+        $this->assertEquals($playlist->getVideoOrderNo(1, 1), 2);
     }
     /**
      * @depends testGetPlaylistById
