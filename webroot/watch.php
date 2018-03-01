@@ -40,6 +40,28 @@ if ($user && !empty($_POST)) {
             $error = "Unable to submit rating";
         }
     }
+
+    if ( $_POST["action"] == "playlist" )
+    {
+        $playlist = Playlist::getPlaylistById( $_POST["playlist"] );
+
+        if (!$playlist) {
+            $error = "Unknown playlist";
+
+        } else if ($video->getUser() != $user->getId()) {
+            $error = "You can only add your own videos to playlists";
+
+        } else {
+            $result = $playlist->insertVideo($video->getId());
+
+            if ($result) {
+                header("Location: playlistSelect.php?v=" . $playlist->getId());
+                die();
+            } else {
+                $error = "This video is already in that playlist";
+            }
+        }
+    }
 }
 
 
@@ -76,6 +98,7 @@ echo $twig->render('watch.twig', [
     "videoInd" => $playIndex,
     "upnext"   => $nextVideo,
     "sub"      => $sub,
+    "myPlaylists" => $user ? Playlist::getPlaylistByUser($user->getId()) : null,
 
     "error"    => $error,
 ]);

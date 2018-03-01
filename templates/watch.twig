@@ -76,6 +76,26 @@
 <div class="error">{{error}}</div>
 {% endif %}
 
+{% if user and user.id == video.user %}
+<h3>Add to playlist</h3>
+<form method="post">
+    <input type="hidden" name="action" value="playlist" />
+    <div class="control">
+        <label for="playlist">Playlist</label>
+        <select name="playlist">
+            {% for myPlaylist in myPlaylists %}
+            <option value="{{myPlaylist.id}}">{{myPlaylist.title}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="control">
+        <label></label>
+        <input type="submit" value="Add to playlist" />
+    </div>
+</form>
+{% endif %}
+
 <h3>Comments</h3>
 {% if user %}
 <form method="POST">

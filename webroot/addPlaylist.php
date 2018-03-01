@@ -45,7 +45,8 @@ if (!empty($_POST)) {
 
         $id = $playlist->insertPlaylist();
         foreach ($_POST["video"] as $video) {
-            if ($playlist->insertVideo($video, $id) === false) {
+            if ($playlist->insertVideo($video) === false) {
+                $video = Video::getById($video);
                 $errors[] = "Unable to add video " . $video->getTitle() . " to the playlist.";
             }
         }
