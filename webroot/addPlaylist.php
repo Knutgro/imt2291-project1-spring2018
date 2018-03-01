@@ -13,6 +13,8 @@ $userVideos = Video::getByUser($user->getId());
 
 // Handle form submission
 $errors = [];
+
+//make playlist and add required attributes and movies to that playlist
 if (!empty($_POST)) {
     $title = $_POST["title"];
     $subject = $_POST["subject"];

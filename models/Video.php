@@ -15,6 +15,19 @@ Class Video {
     private $topic;
     private $user;
 
+
+    /**
+     * Video constructor.
+     *
+     * All fields are optional in order to allow for PDO class fetching. If any
+     * of these fields are null on database actions, the database will throw an
+     * error so everything's A-OK.
+     *
+     * @param int $user set user ID
+     * @param array $data containing value for all the key metadata $title $description $subject $topic
+     * @param string $videoPath set the path for the video
+     * @param string $thumbnailPath set the path for the thumbnail of the video
+     */
     public function __construct($user=null, $data=null, $videoPath=null, $thumbnailPath=null)
     {
         if ($user) {
@@ -134,6 +147,7 @@ Class Video {
      * Load a video instance from the database, given video ID.
      *
      * @param int $id ID of the video that should be loaded
+     * @return object of video where the id is the given id.
      */
     static function getById($id)
     {
@@ -158,6 +172,7 @@ Class Video {
      * Load a video instance from the database, given video subject.
      *
      * @param string $subject Subject of the video that should be loaded
+     * @return array of video objects for given subject.
      */
     static function getBySubject($subject)
     {
@@ -182,6 +197,7 @@ Class Video {
      * Load a video instance from the database, given video user ID.
      *
      * @param int $user user ID of the owner of the video
+     * @return array of video objects for given user ID.
      */
     static function getByUser($user)
     {
@@ -207,6 +223,7 @@ Class Video {
      * Load video instances from the database, given a search parameter.
      *
      * @param string $search what the user want to search for
+     * @return array of video objects where the search term was found.
      */
     static function getBySearch($search)
     {
