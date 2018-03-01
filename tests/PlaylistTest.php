@@ -7,11 +7,48 @@ use PHPUnit\Framework\TestCase;
 
 final class PlaylistTest extends TestCase {
 
+    private $id;
+    private $user;
+    private $playlist;
+    private $video1;
+    private $video2;
+    private $video1id;
+    private $video2id;
+
+
+    /**
+     * Create a video that should be used during testing
+     *
+     * @return Video A pre-constructed video instance ready to be inserted and
+     * tested against.
+     */
+    public function createDummyVideo()
+    {
+        return new Video( $this->user, [
+            "title" => "title",
+            "description" => "description",
+            "subject" => "subject",
+            "topic" => "topic",
+        ], "videoPath", "thumbnailPath");
+    }
 
     public function setUp()
     {
         $dbh = DB::getPDO();
         $dbh->beginTransaction();
+
+        $this->user = new User( "mock@email.donotuse", "nopass", "lecturer" );
+        $this->user->insert();
+
+        $this->playlist = new Playlist( $this->user->getId(), "title", "desc", "subj", "topic" );
+        $this->id = $this->playlist->insertPlaylist();
+
+        $this->video1 = $this->createDummyVideo();
+        $this->video1id = $this->video1->insert();
+
+        $this->video2 = $this->createDummyVideo();
+        $this->video2id = $this->video2->insert();
+
     }
 
     public function tearDown()
@@ -20,37 +57,45 @@ final class PlaylistTest extends TestCase {
         $dbh->rollBack();
     }
 
-    public function testGetPlaylistOwner()
+    /**
+     * @Depends setUp()
+     **/
+    public function testGetId()
     {
-        $user = new playlist(1);
-        $this->assertEquals($user->getUser(), 1);
+        $playlistId = $this->playlist->getId();
+        $this->assertEquals($playlistId, $this->id);
     }
 
-
+    /**
+     * @Depends setUp()
+     * @Depends testGetId()
+     **/
     public function testGetPlaylistByUser()
     {
-        $playlist = Playlist::getPlaylistByUser( "1");
+        $playlist = Playlist::getPlaylistByUser( $this->user->getId());
 
         $this->assertInternalType('array', $playlist);
         $this->assertTrue(count($playlist) >= 1);
         $first = $playlist[0];
         $this->assertInstanceOf(Playlist::class, $first);
-        $this->assertEquals($first->getUser(), 1);
+        $this->assertEquals($first->getUser(), $this->user->getId());
     }
-
-
+    /**
+     * @Depends setUp()
+     * @Depends testGetId()
+     **/
     public function testGetPlaylistById()
     {
-        $playlist = Playlist::getPlaylistByid(1);  // The admin user should have ID 1 in the DB
+        $playlist = Playlist::getPlaylistByid($this->id);
 
         $this->assertInstanceOf(Playlist::class, $playlist);
-        $this->assertEquals($playlist->getId(), 1);
+        $this->assertEquals($playlist->getId(), $this->id);
     }
 
 
     public function testGetVideoByPlaylistId()
     {
-        $videos = Playlist::getVideosByPlaylistId(1);
+        $videos = Playlist::getVideosByPlaylistId($this->id);
 
         $this->assertInternalType('array', $videos);
         $this->assertEquals(2, count($videos));
@@ -59,16 +104,18 @@ final class PlaylistTest extends TestCase {
 
     public function testSearchPlaylistByKeyword()
     {
-        $playlist = Playlist::searchPlaylistsByKeyword( "ntnu");
+        $playlist = Playlist::searchPlaylistsByKeyword($this->playlist->getTopic());
 
         $this->assertInternalType('array', $playlist);
         $this->assertTrue(count($playlist) >= 1);
         $first = $playlist[0];
         $this->assertInstanceOf(Playlist::class, $first);
-        $this->assertEquals($first->getUser(), 1);
+        $this->assertEquals($first->getUser(), $this->id);
     }
 
-
+    /**
+     * @depends testGetPlaylistById
+     */
     public function testInsertPlaylistAndVideo()
     {
         $playlist = new playlist(1, "test-title", "test-description", "test-subject", "test-topic");
@@ -84,14 +131,16 @@ final class PlaylistTest extends TestCase {
         $this->assertNotEquals(false, $video);
     }
 
-
     public function testChangeVideoOrder()
     {
         $playlist = Playlist::getPlaylistById(1);
         $playlist->changeVideoOrder(1, 2);
         $this->assertEquals($playlist->getVideoOrderNo(1), 2);
     }
-
+    /**
+     * @depends testGetPlaylistById
+     * @depends testGetVideoByPlaylistId
+     */
     public function testRemoveVideoFromPlaylist()
     {
         $playlist = Playlist::getPlaylistById(1);

@@ -38,7 +38,7 @@ if (!empty($_POST)) {
         }
 
     }
-    // Landing page if
+    // Landing page if no errors
     if (empty($errors)) {
         header("Location: /editPlaylist.php?playlist=" . $playlistObject->getId());
         die();
