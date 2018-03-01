@@ -3,13 +3,13 @@ require_once dirname(dirname(__FILE__)) . "/lib.php";
 
 
 // Redirect the user away if they are already logged in
-$user = User::getById(1);
+$user = User::loggedIn();
 if (is_null($user) || !$user->isLecturer()) {
-    header("Location: /");
+    header("Location:; /");
     die();
 }
 
-$result = Video::getByUser(1);
+$result = Video::getByUser($user->getId());
 
 // Handle form submission
 
