@@ -332,6 +332,7 @@ select:disabled {
 }
 
 .playbox .sidebox {
+    box-sizing: border-box;
     height: 100%;
     background: black;
     color: white;
