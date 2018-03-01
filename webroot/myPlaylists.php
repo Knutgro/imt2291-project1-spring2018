@@ -10,7 +10,7 @@ $user = User::loggedIn();
 
 // Redirect the user away if they aren't logged in or doesn't have admin privileges
 if (is_null($user) || !$user->isLecturer()) {
-    header("Location: /");
+    header("Location: .");
     die();
 }
 

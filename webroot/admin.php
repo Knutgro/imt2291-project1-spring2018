@@ -9,7 +9,7 @@ $user = User::loggedIn();
 
 // Redirect the user away if they aren't logged in or doesn't have admin privileges
 if (is_null($user) || !$user->is(User::ADMIN)) {
-    header("Location: /");
+    header("Location: .");
     die();
 }
 
@@ -38,7 +38,7 @@ if (in_array($action, ["verify", "reject"])) {
 
     if ($managedUser->update()) {
 
-        header("Location: /admin.php");
+        header("Location: admin.php");
         die();
 
     } else {
@@ -61,7 +61,7 @@ if ($action == "role" && $_GET["id"] !== $user->getId()) {
 
     if ($managedUser->update()) {
 
-        header("Location: /admin.php");
+        header("Location: admin.php");
         die();
 
     } else {

@@ -4,7 +4,7 @@ require_once dirname(dirname(__FILE__)) . "/lib.php";
 
 // Redirect the user away if they are already logged in
 if (!is_null(User::loggedIn())) {
-    header("Location: /");
+    header("Location: .");
     die();
 }
 
@@ -30,7 +30,7 @@ if (!empty($_POST)) {
         $user = new User($email, $password, $type);
 
         if ($user->insert() !== false) {
-            header("Location: /");
+            header("Location: .");
             die();
         } else {
             $errors[] = "Something failed";

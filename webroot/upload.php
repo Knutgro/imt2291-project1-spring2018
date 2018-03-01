@@ -5,7 +5,7 @@ require_once dirname(dirname(__FILE__)) . "/lib.php";
 // Redirect the user away if they are already logged in
 $user = User::loggedIn();
 if (is_null($user) || !$user->isLecturer()) {
-    header("Location: /");
+    header("Location: .");
     die();
 }
 
@@ -20,8 +20,8 @@ function move_file( $field )
     $hash = hash_file("sha1", $_FILES[$field]["tmp_name"]);
     $type = explode("/", mime_content_type($_FILES[$field]["tmp_name"]))[1];
 
-    $target = "/assets/${field}/${hash}.${type}";
-    $dest = dirname( __FILE__ ) . $target;
+    $target = "assets/${field}/${hash}.${type}";
+    $dest = dirname( __FILE__ ) . "/" . $target;
 
     if (move_uploaded_file($_FILES[$field]["tmp_name"], $dest)) {
         return $target;
@@ -68,7 +68,7 @@ if (!empty($_POST)) {
         $video = new Video($user, $data, $videoFile, $thumbFile);
         // Verify and either redirect or error
         if ($video->insert() !== false) {
-            header("Location: /watch.php?v=" . $video->getId());
+            header("Location: watch.php?v=" . $video->getId());
             die();
         } else {
             $errors[] = "Something failed";

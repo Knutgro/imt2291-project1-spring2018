@@ -4,7 +4,7 @@ require_once dirname(dirname(__FILE__)) . "/lib.php";
 
 // Redirect the user away if they are already logged in
 if (!is_null(User::loggedIn())) {
-    header("Location: /");
+    header("Location: .");
     die();
 }
 
@@ -18,7 +18,7 @@ if (!empty($_POST)) {
     $password = $_POST["password"];
 
     if (User::doLogin($email, $password)) {
-        header("Location: /");
+        header("Location: .");
         die();
     } else {
         $error = "Wrong email or password";

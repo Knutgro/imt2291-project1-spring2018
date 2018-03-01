@@ -5,7 +5,7 @@ require_once dirname(dirname(__FILE__)) . "/lib.php";
 // Redirect the user away if they are already logged in
 $user = User::loggedIn();
 if (is_null($user) || !$user->isLecturer()) {
-    header("Location:; /");
+    header("Location: .");
     die();
 }
 
@@ -56,7 +56,7 @@ if (!empty($_POST)) {
     }
     // Landing page if successful insert
     if (empty($errors)) {
-        header("Location: /playlistSelect.php?v=${id}");
+        header("Location: playlistSelect.php?v=${id}");
         die();
     }
 }

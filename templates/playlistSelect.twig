@@ -9,9 +9,9 @@
     <div class="search-results">
         <h2>{{ currentPlaylist.title }}</h2>
         {% if sub %}
-        <a class="btn subscribe" href="/subscribe.php?p={{ currentPlaylist.id }}">Unsubscribe</a>
+        <a class="btn subscribe" href="subscribe.php?p={{ currentPlaylist.id }}">Unsubscribe</a>
         {% else %}
-        <a class="btn btn-err subscribe" href="/subscribe.php?p={{ currentPlaylist.id }}">Subscribe</a>
+        <a class="btn btn-err subscribe" href="subscribe.php?p={{ currentPlaylist.id }}">Subscribe</a>
         {% endif %}
         <div class="playlist-info">{{ currentPlaylist.subject }} - {{ currentPlaylist.topic }}</div>
         <p>
