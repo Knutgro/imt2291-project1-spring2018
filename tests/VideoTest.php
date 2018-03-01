@@ -57,12 +57,16 @@ class VideoTest extends TestCase
         $this->assertEquals(1 , $first->getUser());
     }
 
+    /*
+     * Test the search function, by trying out different search words,
+     *   that should be in the database at all times
+     */
     public function testGetVideoBySearch ()
     {
         $video = Video::getBySearch( "testtest");
 
         $this->assertInternalType('array',$video);
-        $this->assertEquals(1,count($video));
+        $this->assertTrue(count($video) > 0);
         $first = $video[0];
         $this->assertInstanceOf(Video::class, $first);
         $this->assertEquals(1 ,$first->getUser());
@@ -70,7 +74,7 @@ class VideoTest extends TestCase
         $video = Video::getBySearch( "IMT2019");
 
         $this->assertInternalType('array',$video);
-        $this->assertEquals(1,count($video));
+        $this->assertTrue(count($video) > 0);
         $first = $video[0];
         $this->assertInstanceOf(Video::class, $first);
         $this->assertEquals(1 , $first->getUser());
@@ -78,7 +82,7 @@ class VideoTest extends TestCase
         $video = Video::getBySearch( "SMF");
 
         $this->assertInternalType('array',$video);
-        $this->assertEquals(1,count($video));
+        $this->assertTrue(count($video) > 0);
         $first = $video[0];
         $this->assertInstanceOf(Video::class, $first);
         $this->assertEquals(1 , $first->getUser());

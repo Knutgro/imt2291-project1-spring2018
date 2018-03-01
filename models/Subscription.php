@@ -55,7 +55,7 @@ class Subscription
         $dbh = DB::getPDO();
 
         $sql = "SELECT playlist.* FROM subscription 
-                  LEFT JOIN playlist ON subscription.user=playlist.user
+                  LEFT JOIN playlist ON subscription.playlist=playlist.id
                     WHERE subscription.user = ?";
         $stmt = $dbh->prepare($sql);
         $stmt->execute([$id]);
