@@ -494,9 +494,13 @@ select:disabled {
     background-color: hotpink;
     color: #fff;
     border-radius: 5px;
-    padding: 20px;
+    padding: 11px;
     font-size: 150%;
 
+}
+
+.vidbox .search-thumb {
+    padding: 0px;
 }
 
 .submitbutton{

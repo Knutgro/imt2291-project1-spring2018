@@ -3,37 +3,55 @@
 
 {% block content %}
     <h1>My Playlists</h1>
+    <p>
+        <a href="/addPlaylist.php" class="btn btn-ok">New playlists</a>
+    </p>
 
-    {% if playlists != null %}
-        <div class = "vidwrapper">
+    {% if playlists %}
+        <div class="vidwrapper">
         {% for playlist in playlists %}
-                <div class = "vidbox">
-                    <div class="playlist">
-                        <div class="playlistTitle">  {{ playlist.title }} </div>
-                        <div class="playlistTopic">  {{ playlist.topic }} </div>
-                        <div class="PlaylistSubject">  {{ playlist.subject }} </div>
-                        <div class="PlaylistDescription">  {{ playlist.description }} </div>
-
-                        {% set  videos = playlist.getVideosByPlaylistId(playlist.getId()) %}
-
-                        {% for video in videos %}
-                            {% set order = playlist.getVideoOrderNo(video.getId()) %}
-                            <div class="videoNo">  {{ order}} </div>
-                            <div class="title">  {{ video.title }} </div>
-                        {% endfor %}
-                        <a class="btn" href="editPlaylist.php?playlist={{ playlist.id }}">Edit</a>
+            <div class = "vidbox">
+                <div class="playlist">
+                    <div class="search-thumb">
+                        <img src="{{ playlist.videos[0].thumbnailPath }}" alt="Heyo">
                     </div>
+                    <div class="playlistTitle">  {{ playlist.title }} </div>
+                    <a class="btn" href="editPlaylist.php?playlist={{ playlist.id }}">Edit</a>
+                    <a class="btn" href="playlistSelect.php?v={{ playlist.id }}">View</a>
                 </div>
+            </div>
         {% endfor %}
-
     </div>
     {% else %}
-        <div class = "text" >
+        <div class="text" >
+            <p> There doesn't seems to be anything here..</p>
+        </div>
+    {% endif %}
+
+
+    <h1>My Videos</h1>
+    <p>
+        <a href="/upload.php" class="btn btn-ok">Upload</a>
+    </p>
+
+    {% if playlists %}
+        <div class="vidwrapper">
+        {% for video in videos %}
+            <div class = "vidbox">
+                <div class="playlist">
+                    <div class="search-thumb">
+                        <img src="{{ video.thumbnailPath }}" alt="Heyo">
+                    </div>
+                    <div class="playlistTitle">  {{ video.title }} </div>
+                    <a class="btn" href="watch.php?v={{ video.id }}">Play</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <div class="text" >
             <p> There doesn't seems to be anything here..</p>
         </div>
     {% endif %}
 
 {% endblock %}
-
-
-
