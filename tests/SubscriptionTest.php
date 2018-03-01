@@ -71,13 +71,13 @@ final class SubscriptionTest extends TestCase {
 
     public function testGetSubscriptionsByUserId()
     {
-        $subscriptions = Subscription::getSubscriptionsByUserId(1);
+        $playlist = Subscription::getSubscriptionsByUserId(1);
 
-        $this->assertInternalType('array',$subscriptions);
-        $this->assertTrue(count($subscriptions) >= 1);
+        $this->assertInternalType('array',$playlist);
+        $this->assertTrue(count($playlist) >= 1);
 
-        $first = $subscriptions[0];
-        $this->assertInstanceOf(Subscription::class, $first);
+        $first = $playlist[0];
+        $this->assertInstanceOf(playlist::class, $first);
         $this->assertEquals($first->getUser(), 1);
     }
 

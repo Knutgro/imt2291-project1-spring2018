@@ -59,7 +59,7 @@ class Subscription
                     WHERE subscription.user = ?";
         $stmt = $dbh->prepare($sql);
         $stmt->execute([$id]);
-        $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Subscription");
+        $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "playlist");
         $results = [];
 
         foreach ($stmt as $row) {
