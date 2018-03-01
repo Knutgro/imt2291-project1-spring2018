@@ -18,7 +18,10 @@ $playIndex = (int) $_GET["i"];
 if (!empty($_GET["p"])) {
     $playlist = Playlist::getPlaylistById($_GET["p"]);
 
-    $nextVideo = $playlist->getVideos()[ $playIndex ]; // playIndex is one-indexed, so no need to increment
+    $videos = $playlist->getVideos();
+    if ( count($videos) > $playIndex ) {
+        $nextVideo = $videos[ $playIndex ]; // playIndex is one-indexed, so no need to increment
+    }
 }
 
 
