@@ -54,7 +54,9 @@ class Subscription
         // Get the DB handle
         $dbh = DB::getPDO();
 
-        $sql = "SELECT * FROM subscription WHERE user = ?";
+        $sql = "SELECT playlist.* FROM subscription 
+                  LEFT JOIN playlist ON subscription.user=playlist.user
+                    WHERE subscription.user = ?";
         $stmt = $dbh->prepare($sql);
         $stmt->execute([$id]);
         $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Subscription");
