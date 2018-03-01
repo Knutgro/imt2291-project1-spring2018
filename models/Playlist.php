@@ -80,6 +80,28 @@ class Playlist
     }
 
     /**
+     * Get the playlist's topic
+     *
+     * @return string The topic of the playlist
+     */
+
+    public function getTopic()
+    {
+        return $this->topic;
+    }
+
+    /**
+     * Get the playlist's subject
+     *
+     * @return string The subject of the playlist
+     */
+
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    /**
      * Get the playlist's last inserted video id
      *
      * @return int The video id of last inserted in playlist

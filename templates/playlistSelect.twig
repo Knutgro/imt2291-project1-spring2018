@@ -7,7 +7,7 @@
 
 
     <div class = "search-results">
-        <h1>Search Results</h1>
+        <h1>{{ currentPlaylist.title }}</h1>
         {% for video in result %}
             <a href="watch.php?v={{ video.id }}?p={{ playlistSearch }}?i={{ video.id}}">
                 <div class="result">
