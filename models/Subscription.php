@@ -28,7 +28,7 @@ class Subscription
      * @return int user id
      */
 
-    public function getId()
+    public function getUser()
     {
         return $this->user;
     }
@@ -64,15 +64,29 @@ class Subscription
         }
         return $results;
     }
+
     /**
      * Insert the loaded subscription into the database.
      * @return mixed False if insertion failed,
      * otherwise true.
      */
-    public function insertSubscription()
+    public function insert()
     {
         $sql = "INSERT INTO subscription (user, playlist)
                 VALUES (:user, :playlist)";
+
+        $dbh = DB::getPDO();
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindParam(":user", $this->user);
+        $stmt->bindParam(":playlist", $this->playlist);
+        return $stmt->execute();
+    }
+
+    public function delete()
+    {
+        $sql = "DELETE FROM subscription WHERE user = :user AND "
+             . "playlist = :playlist";
 
         $dbh = DB::getPDO();
         $stmt = $dbh->prepare($sql);

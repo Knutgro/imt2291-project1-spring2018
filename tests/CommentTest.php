@@ -28,7 +28,6 @@ final class CommentTest extends TestCase {
     }
 
     public function testInsert()
-
     {
         $comment = new Comment(1, 1, "hello world");
         $id = $comment->insert();

@@ -103,12 +103,26 @@ INSERT INTO video (id, title, description, videoPath, thumbnailPath, subject, to
 
 INSERT INTO playlist(id, user, title, description, subject, topic)
 	VALUES 
-	(1, 1, 'Super cool IT videos', 'This is a collection of super cool IT videos', 'IMT2019', 'IT');
+	(1, 1, 'Super cool IT videos', 'This is a collection of super cool IT videos', 'IMT2019', 'Bad memes'),
+	(2, 1, 'Music games', 'All kinds of videos related to music games', 'IMT4302', 'Rhythm Games');
 	
-INSERT INTO playlistvideos(no,playlist,video)
+INSERT INTO playlistvideos(no, playlist, video)
 	VALUES 
 	(1, 1, 1),
-	(2, 1, 2);
+	(2, 1, 2),
+        (1, 2, 3),
+        (2, 2, 4);
+
+INSERT INTO comment(user, video, comment)
+    VALUES
+    (1, 1, "WOAH");
+
+INSERT INTO rating(video, user, rating)
+    VALUES
+    (1, 1, 5),
+    (1, 2, 2);
 
 
-
+INSERT INTO subscription(user, playlist)
+    VALUES
+    (1, 1);
