@@ -2,6 +2,7 @@
 
 /**
  * Rating class
+ *
  * Manages a video's rating
  */
 class Rating
@@ -27,6 +28,7 @@ class Rating
         $this->video = $video;
         $this->rating = $rating;
     }
+
     /**
      * Get the rating's user id
      *
@@ -52,7 +54,6 @@ class Rating
      *
      * @return int rating
      */
-
     public function getRating()
     {
         return $this->rating;
@@ -60,6 +61,7 @@ class Rating
 
     /**
      * Insert the current rating into the database.
+     *
      * @return bool False if insertion failed, otherwise true.
      */
     public function insert()
@@ -76,8 +78,10 @@ class Rating
 
         return $stmt->execute();
     }
+
     /**
      * Finds the rating of a given user on a given video
+     *
      * @param $user user id of rating
      * @param $video video id of rating
      * @return int user's rating of a video
@@ -94,6 +98,7 @@ class Rating
 
     /**
      * Finds the total rating of a given video.
+     *
      * @param $video video id of total rating
      * @return int total rating of a video.
      */

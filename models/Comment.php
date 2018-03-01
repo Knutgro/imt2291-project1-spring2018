@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Comment class
+ *
  * Manages comments on videos
  */
-
 class Comment
 {
     private $id;
@@ -28,6 +29,7 @@ class Comment
         $this->video = $video;
         $this->comment = $comment;
     }
+
     /**
      * Get the comment's user id
      *
@@ -40,6 +42,7 @@ class Comment
 
     /**
      * Get the User that posted this comment
+     *
      * @return User The commenter
      */
     public function getCommenter()
@@ -49,12 +52,14 @@ class Comment
 
     /**
      * Get the comment text
+     *
      * @return string Comment text
      */
     public function getText()
     {
         return $this->comment;
     }
+
     /**
      * Get the comment's  id
      *
@@ -64,8 +69,10 @@ class Comment
     {
         return $this->id;
     }
+
     /**
      * Finds a comment of a given id
+     *
      * @param $id comment id
      * @return object Comment which has the given id
      */
@@ -84,10 +91,12 @@ class Comment
         $result = $stmt->fetch();
         return $result;
     }
+
     /**
      * Insert the loaded comment into the database.
-     * @return mixed False if insertion failed,
-     * otherwise it returns the id of the inserted comment.
+     *
+     * @return mixed False if insertion failed,  otherwise it returns the id of
+     *   the inserted comment.
      */
     public function insert()
     {
@@ -106,8 +115,10 @@ class Comment
         }
         return $this->id = $dbh->lastInsertId();
     }
+
     /**
      * Finds comments by a given video id.
+     *
      * @param $video video id.
      * @return array of comment objects.
      */

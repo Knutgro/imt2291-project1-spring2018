@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Playlist class
+ *
  * Manages playlist and its videos.
  */
-
 class Playlist
 {
     private $id;
@@ -37,6 +38,7 @@ class Playlist
         $this->topic = $topic;
         $this->lastInserted = $lastInserted;
     }
+
     /**
      * Get the playlist's id
      *
@@ -126,7 +128,6 @@ class Playlist
     static public function getVideosByPlaylistId($id)
     {
         $dbh = DB::getPDO();
-        //$stmt = $dbh->prepare("SELECT * FROM playlistvideos WHERE playlist = $id ORDER BY no");
         $stmt = $dbh->prepare("SELECT video.* FROM playlistvideos
                                         LEFT JOIN video ON video.id=playlistvideos.video
                                         WHERE playlist = :id ORDER BY no");
@@ -135,6 +136,7 @@ class Playlist
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Video");
         $results = [];
+
         // Return the data as an initialized video object, given the result set
         // isn't empty
         foreach ($stmt as $row) {
@@ -192,15 +194,18 @@ class Playlist
         // Get the DB handle
         $dbh = DB::getPDO();
 
+        // Run the query
         $sql = "SELECT * FROM playlist WHERE user = ?";
         $stmt = $dbh->prepare($sql);
         $stmt->execute([$user]);
         $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Playlist");
-        $results = [];
 
+        // Turn the resultset into an array
+        $results = [];
         foreach ($stmt as $row) {
             $results[] = $row;
         }
+
         return $results;
     }
 
@@ -230,7 +235,6 @@ class Playlist
         return $this->id = $dbh->lastInsertId();
     }
 
-
     /**
      * Inserts a video into a playlist
      *
@@ -242,20 +246,21 @@ class Playlist
     {
         $sql = "INSERT INTO playlistvideos (no, playlist, video)
                 VALUES (:num, :playlist, :video)";
-        $this->lastInserted++;
         $dbh = DB::getPDO();
         $stmt = $dbh->prepare($sql);
 
-        $stmt->bindParam(":num",$this->lastInserted);
+        // Insert values
+        $stmt->bindValue(":num", $this->lastInserted + 1);
         $stmt->bindParam(":playlist",$playlistId);
         $stmt->bindParam(":video",$videoId);
 
-        if($stmt->execute())
-            return true;
-        else {
-            $this->lastInserted--;
-            return false;
+        // Increment the last inserted ID if the insert was successful
+        $success = $stmt->execute();
+        if ($success) {
+            $this->lastInserted++;
         }
+
+        return $success;
 
     }
 
@@ -291,7 +296,9 @@ class Playlist
 
     /**
      * Changes the order of videos in a loaded playlist
+     *
      * If an update fails, order numbers are changed back.
+     *
      * @param $videoId1 video id of the first video to be swapped.
      * @param $videoId2 video id of the second video to be swapped.
      * @return bool False if swap failed, true if it was successful
@@ -336,6 +343,7 @@ class Playlist
      * Function changes the to be removed video's order number to
      * the last number and deletes it, without disturbing the video order
      * in the playlist.
+     *
      * @param $video video id of the video to be deleted from the playlist
      * @return bool False if remove failed, true if it was successful
      */
@@ -363,6 +371,7 @@ class Playlist
 
     /**
      * Finds the video id from its order number in a loaded playlist.
+     *
      * @param int $no video order number.
      * @return video id belonging to the given order number.
      */
@@ -379,6 +388,7 @@ class Playlist
 
     /**
      * Counts number of videos in a playlist.
+     *
      * @param $playlist playlist id.
      * @return int of how many videos in a given playlist.
      */
