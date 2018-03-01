@@ -5,11 +5,17 @@ require_once dirname(__FILE__) . "/../lib.php";
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Unit tests on the Subscription database model
+ */
 final class SubscriptionTest extends TestCase {
 
     private $user;
     private $playlist;
 
+    /**
+     * Prepare DB transaction and test data
+     */
     public function setUp()
     {
         $dbh = DB::getPDO();
@@ -23,32 +29,34 @@ final class SubscriptionTest extends TestCase {
         $this->playlist->insertPlaylist();
     }
 
+    /**
+     * DB cleanup
+     */
     public function tearDown()
     {
         $dbh = DB::getPDO();
         $dbh->rollBack();
     }
 
-
-    public function testGetId()
-    {
-        $subscription = new Subscription(1, 1);
-        $this->assertEquals($subscription->getUser(), 1);
-    }
-
+    /**
+     * Verify that we can insert and delete subscriptions from the database
+     */
     public function testInsertDelete()
     {
+        $userId = $this->user->getId();
+        $playlistId = $this->playlist->getId();
+
         // Add new subscription
-        $subscription = new Subscription(2, 1);
+        $subscription = new Subscription($userId, $playlistId);
         $outcome = $subscription->insert();
         $this->assertTrue($outcome);
 
         // Verify that the subscription were sent to the database
-        $subscriptions = Subscription::getSubscriptionsByUserId(2);
+        $subscriptions = Subscription::getSubscriptionsByUserId($userId);
 
         $found = false;
         foreach ($subscriptions as $subscription) {
-            if ($subscription->getUser() == 2 && $subscription->getPlaylist() == 1) {
+            if ($subscription->getUser() == $userId && $subscription->getPlaylist() == $playlistId) {
                 $found = true;
             }
         }
@@ -58,31 +66,49 @@ final class SubscriptionTest extends TestCase {
         $this->assertTrue($subscription->delete());
 
         // Verify that we can't find it in the database anymore
-        $subscriptions = Subscription::getSubscriptionsByUserId(2);
+        $subscriptions = Subscription::getSubscriptionsByUserId($userId);
 
         $found = false;
         foreach ($subscriptions as $subscription) {
-            if ($subscription->getUser() == 2 && $subscription->getPlaylist() == 1) {
+            if ($subscription->getUser() == $userId && $subscription->getPlaylist() == $playlistId) {
                 $found = true;
             }
         }
         $this->assertFalse($found);
     }
 
+    /**
+     * Test that Subscription::getSubscription returns a list of subscriptions
+     * for the given user
+     */
     public function testGetSubscriptionsByUserId()
     {
-        $subscriptions = Subscription::getSubscriptionsByUserId(1);
+        $userId = $this->user->getId();
+        $playlistId = $this->playlist->getId();
 
+        // Verify that there's currently no subscriptions for this test user
+        $subscriptions = Subscription::getSubscriptionsByUserId($userId);
         $this->assertInternalType('array',$subscriptions);
-        $this->assertTrue(count($subscriptions) >= 1);
+        $this->assertEquals(0, count($subscriptions));
+
+        // Insert a sub into the DB manually
+        $dbh = DB::getPDO();
+        $stmt = $dbh->prepare("INSERT INTO subscription (user, playlist) VALUES (?, ?);");
+        $this->assertTrue($stmt->execute([$userId, $playlistId]));
+
+        // Check that we got a subscription back
+        $subscriptions = Subscription::getSubscriptionsByUserId($userId);
+        $this->assertInternalType('array',$subscriptions);
+        $this->assertEquals(1, count($subscriptions));
 
         $first = $subscriptions[0];
         $this->assertInstanceOf(Subscription::class, $first);
-        $this->assertEquals($first->getUser(), 1);
+        $this->assertEquals($userId, $first->getUser());
+        $this->assertEquals($playlistId, $first->getPlaylist());
     }
 
     /**
-     * Test that Subscription::getsubscription returns a subscription instance
+     * Test that Subscription::getSubscription returns a subscription instance
      * for valid lookups
      */
     public function testGetSubscription()

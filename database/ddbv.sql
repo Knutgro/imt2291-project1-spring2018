@@ -117,8 +117,3 @@ INSERT INTO playlistvideos(no, playlist, video)
 INSERT INTO comment(user, video, comment)
     VALUES
     (1, 1, "WOAH");
-
-
-INSERT INTO subscription(user, playlist)
-    VALUES
-    (1, 1);
