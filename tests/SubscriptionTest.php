@@ -44,11 +44,11 @@ final class SubscriptionTest extends TestCase {
         $this->assertTrue($outcome);
 
         // Verify that the subscription were sent to the database
-        $subscriptions = Subscription::getSubscriptionsByUserId(1);
+        $subscriptions = Subscription::getSubscriptionsByUserId(2);
 
         $found = false;
         foreach ($subscriptions as $subscription) {
-            if ($subscription->getUser() == 1 && $subscription->getPlaylist() == 1) {
+            if ($subscription->getUser() == 2 && $subscription->getPlaylist() == 1) {
                 $found = true;
             }
         }
@@ -58,11 +58,11 @@ final class SubscriptionTest extends TestCase {
         $this->assertTrue($subscription->delete());
 
         // Verify that we can't find it in the database anymore
-        $subscriptions = Subscription::getSubscriptionsByUserId(1);
+        $subscriptions = Subscription::getSubscriptionsByUserId(2);
 
         $found = false;
         foreach ($subscriptions as $subscription) {
-            if ($subscription->getUser() == 1 && $subscription->getPlaylist() == 1) {
+            if ($subscription->getUser() == 2 && $subscription->getPlaylist() == 1) {
                 $found = true;
             }
         }
@@ -71,13 +71,13 @@ final class SubscriptionTest extends TestCase {
 
     public function testGetSubscriptionsByUserId()
     {
-        $playlist = Subscription::getSubscriptionsByUserId(1);
+        $subscriptions = Subscription::getSubscriptionsByUserId(1);
 
-        $this->assertInternalType('array',$playlist);
-        $this->assertTrue(count($playlist) >= 1);
+        $this->assertInternalType('array',$subscriptions);
+        $this->assertTrue(count($subscriptions) >= 1);
 
-        $first = $playlist[0];
-        $this->assertInstanceOf(playlist::class, $first);
+        $first = $subscriptions[0];
+        $this->assertInstanceOf(Subscription::class, $first);
         $this->assertEquals($first->getUser(), 1);
     }
 

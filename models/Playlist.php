@@ -252,7 +252,7 @@ class Playlist
         $stmt = $dbh->prepare($sql);
 
         // Insert values
-        $stmt->bindParam(":playlist",$this->getId());
+        $stmt->bindValue(":playlist",$this->getId());
         $stmt->bindParam(":video",$videoId);
 
         return $stmt->execute();

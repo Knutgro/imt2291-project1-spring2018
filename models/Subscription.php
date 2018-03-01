@@ -49,9 +49,9 @@ class Subscription
      * @param $id user id.
      * @return array of subscription objects.
      */
-    static public function getSubscriptionsByUserId($id)
+    static public function getPlaylistSubscriptionsByUserId($id)
     {
-        // Get the DB handle
+        /* Get the DB handle */
         $dbh = DB::getPDO();
 
         $sql = "SELECT playlist.* FROM subscription 
@@ -67,6 +67,29 @@ class Subscription
         }
         return $results;
     }
+
+    /**
+     * Finds subscriptions by a given user id.
+     * @param $id user id.
+     * @return array of subscription objects.
+     */
+    static public function getSubscriptionsByUserId($id)
+    {
+        // Get the DB handle
+        $dbh = DB::getPDO();
+
+        $sql = "SELECT * FROM subscription WHERE user = ?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute([$id]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Subscription");
+        $results = [];
+
+        foreach ($stmt as $row) {
+            $results[] = $row;
+        }
+        return $results;
+    }
+
 
     /**
      * Checks whether there's a subscription between the user and the playlist
