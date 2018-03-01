@@ -14,7 +14,7 @@ if (is_null($user)) {
 
 // Extract data
 $playlistId = $_GET["p"];
-$playlist = Video::getById($playlistId);
+$playlist = Playlist::getPlaylistById($playlistId);
 
 if (!$playlist) {
     http_404_page("Playlist");
