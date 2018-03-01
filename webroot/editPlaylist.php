@@ -40,7 +40,7 @@ if (!empty($_POST)) {
     }
     // Landing page if
     if (empty($errors)) {
-        header("Location: /myPlaylists.php");
+        header("Location: /editPlaylist.php?playlist=" . $playlistObject->getId());
         die();
     }
 }

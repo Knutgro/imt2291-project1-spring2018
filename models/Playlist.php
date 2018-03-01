@@ -154,8 +154,8 @@ class Playlist
     static public function getVideoOrderNo($id)
     {
         $dbh = DB::getPDO();
-        $stmt = $dbh->prepare("SELECT no FROM playlistvideos WHERE video = $id ");
-        $stmt->execute();
+        $stmt = $dbh->prepare("SELECT no FROM playlistvideos WHERE video = ?");
+        $stmt->execute([$id]);
         $result = $stmt->fetch(PDO::FETCH_COLUMN);
 
         return $result;
@@ -242,26 +242,20 @@ class Playlist
      * @param $playlistId playlist id where the video is to be inserted.
      * @return bool False if insertion failed, true if it was successful
      */
-    public function insertVideo($videoId, $playlistId)
+    public function insertVideo($videoId)
     {
+        // Load the highest `no` value from the DB then increment it to get the
+        // next value
         $sql = "INSERT INTO playlistvideos (no, playlist, video)
-                VALUES (:num, :playlist, :video)";
+                VALUES ((SELECT IFNULL(MAX(no), 0) + 1 FROM playlistvideos AS `stupid_mysql` WHERE playlist = :playlist), :playlist, :video)";
         $dbh = DB::getPDO();
         $stmt = $dbh->prepare($sql);
 
         // Insert values
-        $stmt->bindValue(":num", $this->lastInserted + 1);
-        $stmt->bindParam(":playlist",$playlistId);
+        $stmt->bindParam(":playlist",$this->getId());
         $stmt->bindParam(":video",$videoId);
 
-        // Increment the last inserted ID if the insert was successful
-        $success = $stmt->execute();
-        if ($success) {
-            $this->lastInserted++;
-        }
-
-        return $success;
-
+        return $stmt->execute();
     }
 
     /**
@@ -358,9 +352,9 @@ class Playlist
 
         }
         $dbh = DB::getPDO();
-        $sql = "DELETE FROM playlistvideos WHERE video = $video";
+        $sql = "DELETE FROM playlistvideos WHERE video = ? AND playlist = ?";
         $stmt = $dbh->prepare($sql);
-        if($stmt->execute()) {
+        if($stmt->execute([$video, $this->id])) {
             $this->lastInserted--;
             return true;
         }
@@ -378,9 +372,9 @@ class Playlist
     public function getIdByOrderNo($no)
     {
         $dbh = DB::getPDO();
-        $sql = "SELECT video FROM playlistvideos WHERE no = $no";
+        $sql = "SELECT video FROM playlistvideos WHERE no = ?";
         $stmt = $dbh->prepare($sql);
-        $stmt->execute();
+        $stmt->execute([$no]);
         $result = $stmt->fetch(PDO::FETCH_COLUMN);
 
         return $result;
@@ -395,9 +389,9 @@ class Playlist
     public function countVideos($playlist)
     {
         $dbh = DB::getPDO();
-        $sql = "SELECT COUNT(*) FROM playlistvideos WHERE playlist = $playlist";
+        $sql = "SELECT COUNT(*) FROM playlistvideos WHERE playlist = ?";
         $stmt = $dbh->prepare($sql);
-        $stmt->execute();
+        $stmt->execute([$playlist]);
         $result = $stmt->fetch(PDO::FETCH_COLUMN);
 
         return $result;
