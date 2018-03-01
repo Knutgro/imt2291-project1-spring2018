@@ -33,7 +33,7 @@ if (!empty($_POST)) {
     }
 
     if (empty($errors)) {
-        header("Location: /myPlaylists.php");
+        header("Location: /editPlaylist.php?playlist=" . $playlistObject->getId());
         die();
     }
 }
