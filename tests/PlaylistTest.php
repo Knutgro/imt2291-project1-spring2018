@@ -115,7 +115,7 @@ final class PlaylistTest extends TestCase {
         $this->assertTrue(count($playlist) >= 1);
         $first = $playlist[0];
         $this->assertInstanceOf(Playlist::class, $first);
-        $this->assertEquals($first->getUser(), $this->id);
+        $this->assertEquals($first->getId(), $this->id);
     }
 
     /**
@@ -148,13 +148,16 @@ final class PlaylistTest extends TestCase {
      */
     public function testRemoveVideoFromPlaylist()
     {
-        $playlist = Playlist::getPlaylistById(1);
-        $playlist->removeVideoFromPlaylist(1);
-        $videos = Playlist::getVideosByPlaylistId(1);
+        $dbh = DB::getPDO();
+        $stmt = $dbh->prepare("INSERT INTO playlistvideos (playlist, video, no) VALUES (?, ?, 0);");
+        $this->assertTrue($stmt->execute([$this->id, $this->video1id]));
+        $this->assertTrue($stmt->execute([$this->id, $this->video2id]));
+
+        $playlist = Playlist::getPlaylistById($this->id);
+        $playlist->removeVideoFromPlaylist($this->video1id);
+        $videos = Playlist::getVideosByPlaylistId($this->id);
 
         $this->assertInternalType('array',$videos);
         $this->assertEquals(1, count($videos));
-
-        $this->assertEquals($playlist->getVideoOrderNo(2), 1);
     }
 }

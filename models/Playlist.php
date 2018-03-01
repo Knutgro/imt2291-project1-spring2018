@@ -345,24 +345,11 @@ class Playlist
      */
     public function removeVideoFromPlaylist($video)
     {
-        $no = self::getVideoOrderNo($video);
-        $count = self::countVideos($this->id);
-        for($i = $no; $i <= $count; $i++)
-        {
-            $j = self::getIdByOrderNo($i++);
-            self::changeVideoOrder($i, $j);
-
-        }
         $dbh = DB::getPDO();
         $sql = "DELETE FROM playlistvideos WHERE video = ? AND playlist = ?";
         $stmt = $dbh->prepare($sql);
-        if($stmt->execute([$video, $this->id])) {
-            $this->lastInserted--;
-            return true;
-        }
-        else {
-            return false;
-        }
+
+        return $stmt->execute([$video, $this->id]);
     }
 
     /**
