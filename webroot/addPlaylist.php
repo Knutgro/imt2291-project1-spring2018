@@ -37,10 +37,6 @@ if (!empty($_POST)) {
         $errors[] = "Description can't be empty";
     }
 
-    if (empty($_POST["video"])) {
-        $errors[] = "You must select at least one video";
-    }
-
     // Insert into DB
     $playlist = new Playlist(1, $title, $description, $subject, $topic);
 
