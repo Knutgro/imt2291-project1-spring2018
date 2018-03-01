@@ -332,9 +332,34 @@ select:disabled {
 }
 
 .playbox .sidebox {
+    box-sizing: border-box;
     height: 100%;
     background: black;
     color: white;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding: 10px;
+}
+
+.sidebox .next-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.sidebox span,
+.sidebox p {
+    font-size: 12px;
+}
+
+.sidebox img {
+    width: 80%;
+    margin-bottom: 6%;
+}
+
+.playbox .subscribe {
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
 }
 
 
