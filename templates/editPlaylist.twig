@@ -2,7 +2,7 @@
 {% block title %}New playlist{% endblock %}
 
 {% block content %}
-<h2>{{playlistObject.title}}</h2>
+<h2>{{playlist.title}}</h2>
 {% if videos %}
     {% if errors %}
         <ul>
@@ -13,12 +13,13 @@
     {% endif %}
 
         <h2>Videos</h2>
+
             <form method="post" id="videoSwapAndRemove">
                 <div class="vidwrapper">
                 {% for video in videos %}
                         <div class="vidbox">
                             <div>
-                            <input type="checkbox" name="video" value="{{ video.id }}" id="video-{{ video.id }}" />
+                            <input type="checkbox" name="video" value="{{ video.id }}" id="video-{{ video.id }}-no-{{playlist.getVideoOrderNo(video.id, playlist.id)}}" />
                             <label for="videoTitle">{{ video.title }}</label>
                             <div class="videoData">  {{ video.topic }} </div>
                             <div class="videoData"> {{ video.subject }} </div>

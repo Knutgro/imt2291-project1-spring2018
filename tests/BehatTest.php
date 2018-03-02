@@ -201,13 +201,15 @@ final class BehatTest extends TestCase {
         $this->testAddVideos();
         $this->session->visit($this->baseUrl . "editPlaylist.php?playlist=" . $this->playlistId);
         $page = $this->session->getPage();
-        echo $this->videos[0]->getid();
+        $checkVidOne = ("#video-" . $this->videos[0]->getid() . '-no-' . Playlist::getVideoOrderNo($this->videos[0]->getid(),$this->playlistId));
 
         for($i = 0; $i <= 1; $i++) {
-            $page->find('css',"#video-" . $this->videos[$i]->getid())->check();
+            $page->find('css',"#video-" . $this->videos[$i]->getid() . '-no-' . Playlist::getVideoOrderNo($this->videos[$i]->getid(),$this->playlistId))->check();
 
         }
+
         $page->find('css', "#videoSwapAndRemove")->submit();
+        $this->assertNotEquals($checkVidOne,("#video-" . $this->videos[$i]->getid() . '-no-' . Playlist::getVideoOrderNo($this->videos[$i]->getid(),$this->playlistId)));
     }
     public function tearDown()
     {
