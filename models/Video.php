@@ -169,31 +169,6 @@ Class Video {
     }
 
     /**
-     * Load a video instance from the database, given video subject.
-     *
-     * @param string $subject Subject of the video that should be loaded
-     * @return array of video objects for given subject.
-     */
-    static function getBySubject($subject)
-    {
-        //Get the DB handle
-        $dbh = DB::getPDO();
-
-        // Fetch data from DB given subject
-        $stmt = $dbh->prepare("SELECT * FROM video WHERE subject = ?");
-        $stmt->execute([$subject]);
-
-        // Return the data as an initialized video object, given the result set
-        // isn't empty
-        $stmt->setFetchMode(DB::FETCH_OBJECT, "video");
-        $result = $stmt->fetch();
-
-        if ($result !== false) {
-            return $result;
-        }
-    }
-
-    /**
      * Load a video instance from the database, given video user ID.
      *
      * @param int $user user ID of the owner of the video
