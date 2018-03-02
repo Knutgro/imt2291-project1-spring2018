@@ -225,9 +225,11 @@ final class UserTest extends TestCase
      */
     public function testValidate()
     {
+        // Add user to check for the existing user case
         $user = new User("test-existing@donot.steal", "Some User", "asdfasdf", "student");
         $this->assertNotFalse($user->insert());
 
+        // Some basic missing fields
         $errors = User::validate("asdf", "", "aaa", "bbb", "admin");
 
         $this->assertContains("Invalid email", $errors);
@@ -236,10 +238,12 @@ final class UserTest extends TestCase
         $this->assertContains("Passwords do not match", $errors);
         $this->assertContains("Invalid user type", $errors);
 
-        $errors = User::validate($user->getEmail(), "a23456789", "a23456789",
+        // Existing email
+        $errors = User::validate($user->getEmail(), "Some Name", "a23456789", "a23456789",
             "lecturer");
         $this->assertContains("Email already exists", $errors);
 
+        // Successful registration
         $errors = User::validate("test@email.no", "Some Name", "a23456789", "a23456789", "student");
         $this->assertEmpty($errors);
     }
