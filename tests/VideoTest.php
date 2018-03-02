@@ -17,7 +17,7 @@ class VideoTest extends TestCase
         $dbh = DB::getPDO();
         $dbh->beginTransaction();
 
-        $this->user = new User( "mock@email.donotuse", "nopass", "lecturer" );
+        $this->user = new User( "mock@email.donotuse", "Some User", "nopass", "lecturer" );
         $this->assertNotFalse($this->user->insert());
     }
 
@@ -141,6 +141,9 @@ class VideoTest extends TestCase
         $this->checkVideoIsPresent($testVideo->getId(), $video);
 
         $video = Video::getBySearch($this->user->getEmail());
+        $this->checkVideoIsPresent($testVideo->getId(), $video);
+
+        $video = Video::getBySearch($this->user->getName());
         $this->checkVideoIsPresent($testVideo->getId(), $video);
     }
 

@@ -211,7 +211,8 @@ Class Video {
                                       WHERE video.subject LIKE :search OR 
                                       video.title LIKE :search OR 
                                       video.topic LIKE :search OR
-                                      user.email LIKE :search");
+                                      user.email LIKE :search OR
+                                      user.name LIKE :search");
         $stmt->bindValue(':search', "%{$search}%");
 
         $stmt->execute();

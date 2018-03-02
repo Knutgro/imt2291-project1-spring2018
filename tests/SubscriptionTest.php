@@ -22,7 +22,7 @@ final class SubscriptionTest extends TestCase {
         $dbh->beginTransaction();
 
         // Mock data
-        $this->user = new User( "mock@email.donotuse", "nopass", "student" );
+        $this->user = new User( "mock@email.donotuse", "Some User", "nopass", "student" );
         $this->user->insert();
 
         $this->playlist = new Playlist( $this->user->getId(), "title", "desc", "subj", "topic" );

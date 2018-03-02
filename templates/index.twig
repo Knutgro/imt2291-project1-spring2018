@@ -5,7 +5,7 @@
 {% block content %}
     {% if user %}
     <p>
-        Hello {{ user.email }}!
+        Hello {{ user.name }}!
         <div class="search-results">
             <h1>Subscribed Playlists</h1>
             {% for playlist in playlistResult %}
@@ -24,6 +24,10 @@
                         </div>
                     </div>
                 </a>
+            {% else %}
+            <p>
+                You currently have no subscriptions
+            </p>
             {% endfor %}
         </div>
 

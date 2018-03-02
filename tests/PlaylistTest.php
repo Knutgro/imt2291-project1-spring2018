@@ -37,7 +37,7 @@ final class PlaylistTest extends TestCase {
         $dbh = DB::getPDO();
         $dbh->beginTransaction();
 
-        $this->user = new User( "mock@email.donotuse", "nopass", "lecturer" );
+        $this->user = new User( "mock@email.donotuse", "Some User", "nopass", "lecturer" );
         $this->user->insert();
 
         $this->video1 = $this->createDummyVideo();

@@ -9,6 +9,7 @@ USE www_proj1;
 create table user  (
     id              int NOT NULL auto_increment,
 
+    name            text NOT NULL,
     email           varchar(255) NOT NULL UNIQUE,  -- MySQL er sær på UCer mot TEXT
     password        tinytext NOT NULL, 
     type            enum('admin','student','lecturer')  NOT NULL,
@@ -87,11 +88,11 @@ create table subscription  (
 
 
 /* INSERTING VALUES TO DATABASE */  
-INSERT INTO user (email, password, type, verified)
+INSERT INTO user (email, name, password, type, verified)
 VALUES
     -- Password: "do not use in production"
-('video-admin@ntnu.no', '$2y$10$7kPPWtRzSWCoAeog/WfQru0rRYQXelbklzg4kvBrcHJIeR5VQfRRe', 'admin', 1),
-('lecturer@ntnu.no', '$2y$10$7kPPWtRzSWCoAeog/WfQru0rRYQXelbklzg4kvBrcHJIeR5VQfRRe', 'lecturer', 0);
+('video-admin@ntnu.no', 'NTNU Admin', '$2y$10$7kPPWtRzSWCoAeog/WfQru0rRYQXelbklzg4kvBrcHJIeR5VQfRRe', 'admin', 1),
+('lecturer@ntnu.no', 'NTNU Lecturer', '$2y$10$7kPPWtRzSWCoAeog/WfQru0rRYQXelbklzg4kvBrcHJIeR5VQfRRe', 'lecturer', 0);
 
 INSERT INTO video (id, title, description, videoPath, thumbnailPath, subject, topic, user)
     VALUES 

@@ -16,10 +16,10 @@ final class RatingTest extends TestCase {
         $dbh = DB::getPDO();
         $dbh->beginTransaction();
 
-        $this->user = new User( "mock@email.donotuse", "nopass", "lecturer" );
+        $this->user = new User( "mock@email.donotuse", "Some User", "nopass", "lecturer" );
         $this->assertNotFalse($this->user->insert());
 
-        $this->extraUser = new User( "eemock@email.donotuse", "nopass", "lecturer" );
+        $this->extraUser = new User( "eemock@email.donotuse", "Another User", "nopass", "lecturer" );
         $this->assertNotFalse($this->extraUser->insert());
 
         $this->video = $this->createDummyVideo();

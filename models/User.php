@@ -12,6 +12,7 @@ class User {
 
     private $id;
     private $email;
+    private $name;
     private $password;
     private $type;
 
@@ -26,10 +27,13 @@ class User {
      * error so everything's A-OK.
      *
      * @param string $email Email address for this user
+     * @param string $name The name of this user
      * @param string $pass Unhashed password for this user
+     * @param string $type The string value of the user's type
      */
-    public function __construct($email=null, $password=null, $type=null) {
+    public function __construct($email=null, $name=null, $password=null, $type=null) {
         $this->email = $email;
+        $this->name = $name;
         $this->type = $type;
 
         if (!is_null($password)) {
@@ -69,6 +73,16 @@ class User {
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Get the user's name
+     *
+     * @return string The user's name
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -248,7 +262,7 @@ class User {
         return false;
     }
 
-    static function validate($email, $password, $password2, $type)
+    static function validate($email, $name, $password, $password2, $type)
     {
         $errors = [];
 
@@ -276,6 +290,11 @@ class User {
             $errors[] = "Password should be stronger";
         }
 
+        // Check that name isn't empty
+        if (empty($name)) {
+            $errors[] = "Name cannot be empty";
+        }
+
         // Check that the passwords match
         if ($password !== $password2) {
             $errors[] = "Passwords do not match";
@@ -301,12 +320,13 @@ class User {
      * @return mixed False if insertion failed, otherwise the ID of the inserted row.
      */
     public function insert() {
-        $sql = "INSERT INTO user (email, password, type) "
-            . "VALUES (:email, :password, :type)";
+        $sql = "INSERT INTO user (name, email, password, type) "
+            . "VALUES (:name, :email, :password, :type)";
 
         $dbh = DB::getPDO();
         $stmt = $dbh->prepare($sql);
 
+        $stmt->bindParam("name", $this->name);
         $stmt->bindParam("email", $this->email);
         $stmt->bindParam("password", $this->password);
         $stmt->bindParam("type", $this->type);

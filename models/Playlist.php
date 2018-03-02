@@ -273,7 +273,8 @@ class Playlist
                 WHERE p.title LIKE Concat('%',:keyword,'%')
                 OR p.subject LIKE Concat('%',:keyword,'%') 
                 OR p.topic  LIKE Concat('%',:keyword,'%')
-                OR u.email LIKE Concat ('%',:keyword,'%')";
+                OR u.email LIKE Concat ('%',:keyword,'%')
+                OR u.name LIKE Concat ('%',:keyword,'%')";
         $dbh = DB::getPDO();
         $stmt = $dbh->prepare($sql);
         $stmt->bindParam(":keyword", $keyword);

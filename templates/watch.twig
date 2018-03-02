@@ -64,7 +64,7 @@
                 {% endif %}
             {% endif %}
         </div>
-        <div class="uploader"><a href="user.php?id={{ video.user }}">{{ video.uploader.email }}</a></div>
+        <div class="uploader"><a href="user.php?id={{ video.user }}">{{ video.uploader.name }}</a></div>
         <p>
             {{ video.description }}
         </p>
@@ -115,7 +115,7 @@
 {% for comment in comments %}
     <div class="comment">
         <div class="response">{{ comment.text }}</div>
-        <div class="user">{{ comment.commenter.email }}</div>
+        <div class="user">{{ comment.commenter.name }}</div>
     </div>
 {% else %}
     There are no comments for this video

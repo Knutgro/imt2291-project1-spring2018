@@ -43,7 +43,7 @@ final class BehatTest extends TestCase {
     {
         $this->user_pwd = "Test Password";
 
-        $this->user = new User( "behat@test.user", $this->user_pwd, "lecturer" );
+        $this->user = new User( "behat@test.user", "Some Name", $this->user_pwd, "lecturer" );
         $this->assertNotFalse($this->user->insert());
 
         $this->user->setVerified(true);
@@ -199,6 +199,7 @@ final class BehatTest extends TestCase {
     public function testSwapDeedoo()
     {
         $this->testAddVideos();
+
         $this->session->visit($this->baseUrl . "editPlaylist.php?playlist=" . $this->playlistId);
         $page = $this->session->getPage();
         $checkVidOne = ("#video-" . $this->videos[0]->getid() . '-no-' . Playlist::getVideoOrderNo($this->videos[0]->getid(),$this->playlistId));
@@ -211,6 +212,7 @@ final class BehatTest extends TestCase {
         $page->find('css', "#videoSwapAndRemove")->submit();
         $this->assertNotEquals($checkVidOne,("#video-" . $this->videos[$i]->getid() . '-no-' . Playlist::getVideoOrderNo($this->videos[$i]->getid(),$this->playlistId)));
     }
+
     public function tearDown()
     {
         // Delete the user, which will cascade delete videos and playlists

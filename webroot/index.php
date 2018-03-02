@@ -5,6 +5,7 @@ $user = User::loggedIn();
 
 $playlistResult = null;
 if ($user) {
-$playlistResult = Subscription::getPlaylistSubscriptionsByUserId($user->getid());
+    $playlistResult = Subscription::getPlaylistSubscriptionsByUserId($user->getid());
 }
+
 echo $twig->render('index.twig', ['user' => $user, 'playlistResult' => $playlistResult]);

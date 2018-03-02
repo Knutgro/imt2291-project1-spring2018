@@ -60,7 +60,7 @@ final class UserTest extends TestCase
      */
     public function testType()
     {
-        $user = new User(null, null, "student");
+        $user = new User(null, null, null, "student");
         $this->assertEquals("student", $user->getType());
 
         $user->setType("wrong");
@@ -85,8 +85,8 @@ final class UserTest extends TestCase
         // its tests depends on us.
         $dbh = DB::getPDO();
         $stmt = $dbh->prepare(
-            "INSERT INTO user (email, password, type) "
-          . "VALUES ('test@user.nosteal', 'lmao', 'student');"
+            "INSERT INTO user (email, name, password, type) "
+          . "VALUES ('test@user.nosteal', 'Some User', 'lmao', 'student');"
         );
         $this->assertTrue($stmt->execute());
 
@@ -127,7 +127,7 @@ final class UserTest extends TestCase
     public function testInsertUpdate()
     {
         // Prepare a basic user and insert it into the database
-        $user = new User("test@user", "test-pass", "student");
+        $user = new User("test@user", "Some User", "test-pass", "student");
         $id = $user->insert();
         // Ensure that the insert was successful
         $this->assertNotEquals(false, $id);
@@ -166,7 +166,7 @@ final class UserTest extends TestCase
      */
     public function testGetLoggedInUser()
     {
-        $user = new User("mock@pls2not.disturb", "asdf", "student");
+        $user = new User("mock@pls2not.disturb", "Some User", "asdf", "student");
         $user->insert();
 
         unset($_SESSION["user_id"]);
@@ -185,7 +185,7 @@ final class UserTest extends TestCase
      */
     public function testGetUserByEmail()
     {
-        $mockUser = new User("mock@pls2not.disturb", "asdf", "student");
+        $mockUser = new User("mock@pls2not.disturb", "Some User", "asdf", "student");
         $mockUser->insert();
 
         $user = User::getByEmail($mockUser->getEmail());
@@ -205,7 +205,7 @@ final class UserTest extends TestCase
      */
     public function testDoLogin()
     {
-        $mockUser = new User("mock@pls2not.disturb", "asdf", "student");
+        $mockUser = new User("mock@pls2not.disturb", "Some User", "asdf", "student");
         $mockUser->insert();
 
         // Invalid email
@@ -225,12 +225,13 @@ final class UserTest extends TestCase
      */
     public function testValidate()
     {
-        $user = new User("test-existing@donot.steal", "asdfasdf", "student");
+        $user = new User("test-existing@donot.steal", "Some User", "asdfasdf", "student");
         $this->assertNotFalse($user->insert());
 
-        $errors = User::validate("asdf", "aaa", "bbb", "admin");
+        $errors = User::validate("asdf", "", "aaa", "bbb", "admin");
 
         $this->assertContains("Invalid email", $errors);
+        $this->assertContains("Name cannot be empty", $errors);
         $this->assertContains("Password should be stronger", $errors);
         $this->assertContains("Passwords do not match", $errors);
         $this->assertContains("Invalid user type", $errors);
@@ -239,7 +240,7 @@ final class UserTest extends TestCase
             "lecturer");
         $this->assertContains("Email already exists", $errors);
 
-        $errors = User::validate("test@email.no", "a23456789", "a23456789", "student");
+        $errors = User::validate("test@email.no", "Some Name", "a23456789", "a23456789", "student");
         $this->assertEmpty($errors);
     }
 
@@ -249,23 +250,23 @@ final class UserTest extends TestCase
     public function testAccessLevel()
     {
         // Verify student levels
-        $user = new User(null, null, "student");
+        $user = new User(null, null, null, "student");
 
         $user->setVerified(false);
         $this->assertEquals($user->getAccessLevel(), User::STUDENT);
         $user->setVerified(true);
         $this->assertEquals($user->getAccessLevel(), User::STUDENT);
 
-        // Verify student levels
-        $user = new User(null, null, "lecturer");
+        // Verify lecturer levels
+        $user = new User(null, null, null, "lecturer");
 
         $user->setVerified(false);
         $this->assertEquals($user->getAccessLevel(), User::STUDENT);
         $user->setVerified(true);
         $this->assertEquals($user->getAccessLevel(), User::LECTURER);
 
-        // Verify student levels
-        $user = new User(null, null, "admin");
+        // Verify admin levels
+        $user = new User(null, null, null, "admin");
 
         $user->setVerified(false);
         $this->assertEquals($user->getAccessLevel(), User::STUDENT);
@@ -278,7 +279,7 @@ final class UserTest extends TestCase
      */
     public function testHasAccess()
     {
-        $user = new User(null, null, "admin");
+        $user = new User(null, null, null, "admin");
 
         $this->assertTrue($user->is(User::STUDENT));
         $this->assertTrue($user->isStudent());
