@@ -140,16 +140,16 @@ final class BehatTest extends TestCase {
         $this->testCreatePlaylist();
 
         // Add some dummy videos to this user for use in testing
-        $videos = [
+        $this->videos = [
             $this->createDummyVideo(),
             $this->createDummyVideo(),
             $this->createDummyVideo(),
         ];
-        foreach ( $videos as $video )
+        foreach ( $this->videos as $video )
             $this->assertNotFalse( $video->insert(), "Unable to prepare video" );
 
         // Go over each video, adding them to the playlist
-        foreach ( $videos as $video )
+        foreach ( $this->videos as $video )
         {
             // Load the playlist page
             $this->session->visit($this->baseUrl . "playlistSelect.php?v=" . $this->playlistId);
@@ -184,7 +184,7 @@ final class BehatTest extends TestCase {
         $this->session->visit($this->baseUrl . "playlistSelect.php?v=" . $this->playlistId);
         $page = $this->session->getPage();
 
-        foreach ( $videos as $video ) {
+        foreach ( $this->videos as $video ) {
             // Verify that the video is present
             $videoRowSelector = "#playlist-" . $this->playlistId . "-video-" . $video->getId();
             $videoRow = $page->find('css', $videoRowSelector);
@@ -193,8 +193,22 @@ final class BehatTest extends TestCase {
     }
 
     /**
-     * Clean up after the test
+     * @Depends testAddPlaylist
      */
+
+    public function testSwapDeedoo()
+    {
+        $this->testAddVideos();
+        $this->session->visit($this->baseUrl . "editPlaylist.php?playlist=" . $this->playlistId);
+        $page = $this->session->getPage();
+        echo $this->videos[0]->getid();
+
+        for($i = 0; $i <= 1; $i++) {
+            $page->find('css',"#video-" . $this->videos[$i]->getid())->check();
+
+        }
+        $page->find('css', "#videoSwapAndRemove")->submit();
+    }
     public function tearDown()
     {
         // Delete the user, which will cascade delete videos and playlists

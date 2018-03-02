@@ -13,12 +13,12 @@
     {% endif %}
 
         <h2>Videos</h2>
-            <form method="post">
+            <form method="post" id="videoSwapAndRemove">
                 <div class="vidwrapper">
                 {% for video in videos %}
                         <div class="vidbox">
                             <div>
-                            <input type="checkbox" name="video[]" id="video" value="{{ video.id }}" />
+                            <input type="checkbox" name="video" value="{{ video.id }}" id="video-{{ video.id }}" />
                             <label for="videoTitle">{{ video.title }}</label>
                             <div class="videoData">  {{ video.topic }} </div>
                             <div class="videoData"> {{ video.subject }} </div>
