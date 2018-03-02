@@ -17,6 +17,7 @@
         <table>
             <thead>
                 <tr>
+                    <th width="40%">Name</th>
                     <th>E-mail</th>
                     <th width="10%">Role</th>
                     <th width="130px"></th>
@@ -30,6 +31,7 @@
             {% else %}
             {% for unverifiedUser in pendingUsers %}
                 <tr>
+                    <td>{{ unverifiedUser.name }}</td>
                     <td>{{ unverifiedUser.email }}</td>
                     <td>{{ unverifiedUser.type }}</td>
                     <td>
@@ -48,6 +50,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>Name</th>
                     <th>E-mail</th>
                     <th width="10%">Role</th>
                     <th width="130px"></th>
@@ -57,6 +60,7 @@
             {% for registeredUser in users %}
                 <form action="admin.php?action=role&id={{ registeredUser.id }}" method="post">
                     <tr>
+                        <td>{{ registeredUser.name }}</td>
                         <td>{{ registeredUser.email }}</td>
                         <td colspan="2">
                             <select name="role" {{ user.id == registeredUser.id ? "disabled" }}>
