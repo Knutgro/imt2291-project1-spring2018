@@ -19,7 +19,7 @@
                 {% for video in videos %}
                         <div class="vidbox">
                             <div>
-                            <input type="checkbox" name="video" value="{{ video.id }}" id="video-{{ video.id }}-no-{{playlist.getVideoOrderNo(video.id, playlist.id)}}" />
+                            <input type="checkbox" name="video[]" value="{{ video.id }}" id="video-{{ video.id }}-no-{{playlist.getVideoOrderNo(video.id, playlist.id)}}" />
                             <label for="videoTitle">{{ video.title }}</label>
                             <div class="videoData">  {{ video.topic }} </div>
                             <div class="videoData"> {{ video.subject }} </div>
@@ -31,11 +31,11 @@
                     </div>
                     <div class="submitbutton">
                         <label></label>
-                        <input type="submit" value = "Remove" name = "remove" />
+                        <input type="submit" value="Remove" name="remove" />
                     </div>
                     <div class="submitbutton">
                         <label></label>
-                        <input type="submit" value = "Swap order" name = "swap" />
+                        <input type="submit" id="swapButton" value="Swap order" name="swap" />
                     </div>
             </form>
 {% else %}

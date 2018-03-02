@@ -192,25 +192,49 @@ final class BehatTest extends TestCase {
         }
     }
 
+    private function selector($i) {
+        return "#video-" . $this->videos[$i]->getid() . '-no-' . $this->videoNr[$i];
+    }
+
     /**
      * @Depends testAddPlaylist
      */
-
     public function testSwapDeedoo()
     {
         $this->testAddVideos();
 
         $this->session->visit($this->baseUrl . "editPlaylist.php?playlist=" . $this->playlistId);
         $page = $this->session->getPage();
-        $checkVidOne = ("#video-" . $this->videos[0]->getid() . '-no-' . Playlist::getVideoOrderNo($this->videos[0]->getid(),$this->playlistId));
 
-        for($i = 0; $i <= 1; $i++) {
-            $page->find('css',"#video-" . $this->videos[$i]->getid() . '-no-' . Playlist::getVideoOrderNo($this->videos[$i]->getid(),$this->playlistId))->check();
+        $this->videoNr = [];
+        foreach ($this->videos as $video)
+            $this->videoNr[] = Playlist::getVideoOrderNo($video->getId(), $this->playlistId);
 
+
+        for ($i = 0; $i < count($this->videos); $i++)
+        {
+            var_dump($this->selector($i));
+            $this->assertNotNull($page->find('css', $this->selector($i)));
         }
 
-        $page->find('css', "#videoSwapAndRemove")->submit();
-        $this->assertNotEquals($checkVidOne,("#video-" . $this->videos[$i]->getid() . '-no-' . Playlist::getVideoOrderNo($this->videos[$i]->getid(),$this->playlistId)));
+        $page->find('css', $this->selector(0))->check();
+        $page->find('css', $this->selector(1))->check();
+
+        $page->find('css', "#swapButton")->click();
+
+
+        $page = $this->session->getPage();
+
+        $tmp = $this->videoNr[0];
+        $this->videoNr[0] = $this->videoNr[1];
+        $this->videoNr[1] = $tmp;
+
+        for ($i = 0; $i < count($this->videos); $i++)
+        {
+            var_dump($this->selector($i));
+            $this->assertNotNull($page->find('css', $this->selector($i)));
+        }
+
     }
 
     public function tearDown()

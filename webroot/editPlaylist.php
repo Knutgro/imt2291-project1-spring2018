@@ -39,6 +39,7 @@ if (!empty($_POST)) {
         }
     } elseif (isset($_POST['swap'])) {
         $videoSwap = $_POST["video"];
+        var_dump($videoSwap);
         if (count($videoSwap) === 2) {
             $playlistObject->changeVideoOrder($videoSwap[0], $videoSwap[1]);
         } else {
