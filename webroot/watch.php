@@ -68,7 +68,7 @@ if ($user && !empty($_POST)) {
 
 $playlist = null;
 $nextVideo = null;
-$playIndex = (int) $_GET["i"];
+$playIndex = isset($_GET["i"]) ? $_GET["i"] : 0;
 $isSubscribed = false;
 if (!empty($_GET["p"])) {
     $playlist = Playlist::getPlaylistById($_GET["p"]);
@@ -81,6 +81,7 @@ if (!empty($_GET["p"])) {
     }
 }
 
+$sub = null;
 if ($user && $playlist)  {
     $sub = Subscription::getSubscription($user->getId(),
         $playlist->getId());
