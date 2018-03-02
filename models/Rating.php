@@ -89,8 +89,8 @@ class Rating
     static public function getUserRating($user, $video)
     {
         $dbh = DB::getPDO();
-        $stmt = $dbh->prepare("SELECT rating FROM rating WHERE user = $user AND video = $video");
-        $stmt->execute();
+        $stmt = $dbh->prepare("SELECT rating FROM rating WHERE user = ? AND video = ?");
+        $stmt->execute([$user, $video]);
         $result = $stmt->fetch(PDO::FETCH_COLUMN);
 
         return $result;
@@ -105,8 +105,8 @@ class Rating
     static public function getTotalRating($video)
     {
         $dbh = DB::getPDO();
-        $stmt = $dbh->prepare("SELECT AVG(rating) average FROM rating WHERE video = $video");
-        $stmt->execute();
+        $stmt = $dbh->prepare("SELECT AVG(rating) average FROM rating WHERE video = ?");
+        $stmt->execute([$video]);
         $result = $stmt->fetch(PDO::FETCH_COLUMN);
 
         return $result;
