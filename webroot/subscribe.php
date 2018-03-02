@@ -4,7 +4,7 @@ require_once dirname(dirname(__FILE__)) . "/lib.php";
 
 $user = User::loggedIn();
 
-// Redirect the user away if they aren't logged in or doesn't have admin privileges
+// Redirect the user away if they aren't logged in
 if (is_null($user)) {
     header("Location: .");
     die();

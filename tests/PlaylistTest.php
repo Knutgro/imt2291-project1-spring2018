@@ -238,15 +238,18 @@ final class PlaylistTest extends TestCase {
         $this->playlist = new Playlist( $this->user->getId(), "title", "desc", "subj", "topic" );
         $this->id = $this->playlist->insertPlaylist();
 
+        // Prepare playlist entries
         $dbh = DB::getPDO();
         $stmt = $dbh->prepare("INSERT INTO playlistvideos (playlist, video, no) VALUES (?, ?, 0);");
         $this->assertTrue($stmt->execute([$this->id, $this->video1id]));
         $this->assertTrue($stmt->execute([$this->id, $this->video2id]));
 
+        // Remove a video from the playlist
         $playlist = Playlist::getPlaylistById($this->id);
         $playlist->removeVideoFromPlaylist($this->video1id);
-        $videos = Playlist::getVideosByPlaylistId($this->id);
 
+        // Verify that the video is not present in the playlist anymore
+        $videos = Playlist::getVideosByPlaylistId($this->id);
         $this->assertInternalType('array',$videos);
         $this->assertEquals(1, count($videos));
     }

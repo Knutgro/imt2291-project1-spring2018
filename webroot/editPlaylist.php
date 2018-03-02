@@ -29,19 +29,31 @@ $videos = $playlistObject->getVideosByPlaylistId($_GET["playlist"]);
 
 // Performs video removal or video swap depending on which button is activated.
 if (!empty($_POST)) {
+
+    // Remove video from playlist
     if (isset($_POST['remove'])) {
+
+        // Verify that the user selected a video at all
         if ($_POST["video"]) {
+
+            // Loop over all videos and remove them
             foreach ($_POST["video"] as $video) {
                 $playlistObject->removeVideoFromPlaylist($video);
             }
+
         } else {
             $errors = "Please select a video to remove";
         }
+
+    // Swap two videos
     } elseif (isset($_POST['swap'])) {
         $videoSwap = $_POST["video"];
-        var_dump($videoSwap);
+
+        // Check that there's only two videos selected, wwapping them if that is
+        // the case
         if (count($videoSwap) === 2) {
             $playlistObject->changeVideoOrder($videoSwap[0], $videoSwap[1]);
+
         } else {
             $errors = "Please select two videos to swap";
         }

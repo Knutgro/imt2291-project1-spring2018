@@ -41,6 +41,7 @@ if ($user && !empty($_POST)) {
         }
     }
 
+    // Add to playlist
     if ( $_POST["action"] == "playlist" )
     {
         $playlist = Playlist::getPlaylistById( $_POST["playlist"] );
