@@ -13,12 +13,6 @@ $ php -S 127.0.0.1:8080
 The web root for this project is `webroot`. The `DocumentRoot` directive in
 Apache HTTPD should be configured to serve files from that directory.
 
-# Running tests
-Please run tests on a **clean** copy of the database. As it stands now, the tests
-are way too integrated towards the database than what the should be, making them
-unreliable in certain cases (playlist editing, unsubscriptions...)
-
-
 # Prosjektdeltakere #
 Simen Lybekk\
 Philip Nyblom\
