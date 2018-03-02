@@ -152,15 +152,13 @@ class Playlist
      * @param int $playlist The playlist's ID
      * @return int order number of the video
      */
-    static public function getVideoOrderNo($video, $playlist)
+    static function getVideoOrderNo($video, $playlist)
     {
         $dbh = DB::getPDO();
         $stmt = $dbh->prepare("SELECT no FROM playlistvideos WHERE video = ? "
                             . "AND playlist = ?");
         $stmt->execute([$video, $playlist]);
-        $result = $stmt->fetch(PDO::FETCH_COLUMN);
-
-        return $result;
+        return $stmt->fetch(PDO::FETCH_COLUMN);
     }
 
     /**
